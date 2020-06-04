@@ -6,11 +6,13 @@ namespace Sms.Cpu
     {
         private Z80 Z80 { get; }
         public Registers8Bit Registers8Bit { get; }
+        public Registers16Bit Registers16Bit { get; }
 
         public Alu(Z80 z80)
         {
             Z80 = z80;
             Registers8Bit = new Registers8Bit(z80.Registers);
+            Registers16Bit = new Registers16Bit(z80.Registers);
         }
 
         public int Exchange(ref ushort ex1, ref ushort ex2)

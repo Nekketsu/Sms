@@ -139,6 +139,22 @@ namespace Sms.Memory
             }
         }
 
+        public ushort ReadWord(ushort address)
+        {
+            var value1 = this[(ushort)(address + 1)];
+            var value2 = this[address];
+
+            var value = (ushort)((value1 << 8) | value2);
+
+            return value;
+        }
+
+        public void WriteWord(ushort address, ushort value)
+        {
+            this[(ushort)(address + 1)] = (byte)(value >> 8);
+            this[address] = (byte)value;
+        }
+
         private void DoMemPage(ushort address, byte data)
         {
             var page = (byte)(cartridge.IsOneMegCartridge ? data & 0x3F : data & 0x1F);

@@ -19,6 +19,24 @@ namespace Sms.Tests
             Assert.True(NoRepeated<CbInstruction>());
         }
 
+        [Fact]
+        public void NoDdInstructionOpCodeRepeated()
+        {
+            Assert.True(NoRepeated<DdInstruction>());
+        }
+
+        [Fact]
+        public void NoEdInstructionOpCodeRepeated()
+        {
+            Assert.True(NoRepeated<EdInstruction>());
+        }
+
+        [Fact]
+        public void NoFdInstructionOpCodeRepeated()
+        {
+            Assert.True(NoRepeated<FdInstruction>());
+        }
+
         private bool NoRepeated<TInstruction>() where TInstruction : Instruction
         {
             var z80 = new Z80();
@@ -31,7 +49,10 @@ namespace Sms.Tests
                 .Where(i => i.BaseType == instructionType && !i.IsAbstract)
                 .Select(i => (TInstruction)Activator.CreateInstance(i, z80));
 
-            return instructions.GroupBy(i => i.OpCode).All(i => i.Count() == 1);
+            return instructions
+                .SelectMany(instruction => instruction.OpCodes.Select(opCode => new { Instruction = instruction, OpCode = opCode }))
+                .GroupBy(instruction => instruction.OpCode)
+                .All(i => i.Count() == 1);
         }
     }
 }

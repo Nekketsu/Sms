@@ -18,10 +18,10 @@ namespace Sms.Cpu.Instructions.Load8Bit
 
         protected override void InnerExecute(byte opCode)
         {
-            var destination = (opCode & 0b00111000) >> 3;
-            var source = opCode & 0b00000111;
+            var rDestination = (opCode & 0b00111000) >> 3;
+            var rSource = opCode & 0b00000111;
 
-            Z80.Alu.Registers8Bit[destination] = Z80.Alu.Registers8Bit[source];
+            Z80.Alu.Registers8Bit[rDestination] = Z80.Alu.Registers8Bit[rSource];
         }
     }
 }
