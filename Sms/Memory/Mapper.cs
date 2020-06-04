@@ -176,7 +176,7 @@ namespace Sms.Memory
 
         private void DoMemPageCm(ushort address, byte data)
         {
-            byte page = (byte)(cartridge.IsOneMegCartridge ? data & 0x3F : data &0x1F);
+            byte page = (byte)(cartridge.IsOneMegCartridge ? data & 0x3F : data & 0x1F);
             switch (address)
             {
                 case 0x0:

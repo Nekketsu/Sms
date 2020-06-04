@@ -7,6 +7,7 @@ namespace Sms.Cpu.Instructions.Load8Bit
         public override uint Cycles => 1;
         public override byte[] OpCodes { get; }
 
+
         public LD_r_r(Z80 z80) : base(z80)
         {
             var opCodeBase = (byte)0b01000000;

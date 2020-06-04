@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-
-namespace Sms
+﻿namespace Sms
 {
     public class MasterSystem
     {

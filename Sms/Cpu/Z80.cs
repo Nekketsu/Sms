@@ -3,7 +3,6 @@ using Sms.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
 
 namespace Sms
 {
@@ -18,6 +17,7 @@ namespace Sms
         private Dictionary<byte, Instruction> instructions;
         private Dictionary<byte, CbInstruction> cbInstructions;
         private Dictionary<byte, DdInstruction> ddInstructions;
+        private Dictionary<byte, EdInstruction> edInstructions;
         private Dictionary<byte, FdInstruction> fdInstructions;
 
         public Z80()
@@ -30,6 +30,7 @@ namespace Sms
             instructions = GetInstructions<Instruction>();
             cbInstructions = GetInstructions<CbInstruction>();
             ddInstructions = GetInstructions<DdInstruction>();
+            edInstructions = GetInstructions<EdInstruction>();
             fdInstructions = GetInstructions<FdInstruction>();
 
         }

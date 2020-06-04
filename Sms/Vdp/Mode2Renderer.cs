@@ -1,7 +1,4 @@
-﻿using System;
-using System.Data;
-
-namespace Sms.Vdp
+﻿namespace Sms.Vdp
 {
     public class Mode2Renderer : IVdpRenderer
     {
@@ -158,7 +155,7 @@ namespace Sms.Vdp
                     {
                         continue;
                     }
-                    
+
                     if (xPos >= TMS9918A.NumResHorizontal)
                     {
                         continue;

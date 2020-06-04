@@ -77,7 +77,7 @@ namespace Sms
         public ushort ColorTableBase => (ushort)(Registers[3].HasBit(7) ? 0x2000 : 0x0);
         public byte ColAnd => ((byte)((Registers[3] & 127) << 1)).SetBit(0);
 
-        public ushort PatternTableBase => (ushort)(Registers[4].HasBit(2) ? 0x2000: 0x0);
+        public ushort PatternTableBase => (ushort)(Registers[4].HasBit(2) ? 0x2000 : 0x0);
         public int PgTable
         {
             get
