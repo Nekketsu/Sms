@@ -1,4 +1,6 @@
-﻿namespace Sms.Cpu
+﻿using System;
+
+namespace Sms.Cpu
 {
     public class Registers
     {
@@ -112,6 +114,7 @@
             }
         }
 
+        [Flags]
         public enum Flags : byte
         {
             /// <summary>
