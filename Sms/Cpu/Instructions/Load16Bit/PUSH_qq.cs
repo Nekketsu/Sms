@@ -4,7 +4,7 @@ namespace Sms.Cpu.Instructions.Load16Bit
 {
     public class PUSH_qq : Instruction
     {
-        public override uint Cycles => 3;
+        public override uint Cycles => 11;
         public override byte[] OpCodes { get; }
 
         public PUSH_qq(Z80 z80) : base(z80)

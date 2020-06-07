@@ -2,7 +2,7 @@
 {
     public class PUSH_IX : DdInstruction
     {
-        public override uint Cycles => 4;
+        public override uint Cycles => 15;
         public override byte[] OpCodes { get; } = { 0b11100101 };
 
         public PUSH_IX(Z80 z80) : base(z80) { }

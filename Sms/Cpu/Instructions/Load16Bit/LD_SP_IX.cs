@@ -2,7 +2,7 @@
 {
     public class LD_SP_IX : DdInstruction
     {
-        public override uint Cycles => 2;
+        public override uint Cycles => 10;
         public override byte[] OpCodes { get; } = { 0b11111001 };
 
         public LD_SP_IX(Z80 z80) : base(z80) { }

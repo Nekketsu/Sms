@@ -2,7 +2,7 @@
 {
     public class LD_HL__nn_ : Instruction
     {
-        public override uint Cycles => 5;
+        public override uint Cycles => 16;
         public override byte[] OpCodes { get; } = { 0b00101010 };
 
         public LD_HL__nn_(Z80 z80) : base(z80) { }

@@ -2,7 +2,7 @@
 {
     public class POP_IY : FdInstruction
     {
-        public override uint Cycles => 4;
+        public override uint Cycles => 14;
         public override byte[] OpCodes { get; } = { 0b11100001 };
 
         public POP_IY(Z80 z80) : base(z80) { }

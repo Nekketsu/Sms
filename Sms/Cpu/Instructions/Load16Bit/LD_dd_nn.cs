@@ -4,7 +4,7 @@ namespace Sms.Cpu.Instructions.Load16Bit
 {
     public class LD_dd_nn : Instruction
     {
-        public override uint Cycles => 2;
+        public override uint Cycles => 10;
         public override byte[] OpCodes { get; }
 
         public LD_dd_nn(Z80 z80) : base(z80)
