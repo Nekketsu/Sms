@@ -2,7 +2,7 @@
 {
     public class LD_A_R : EdInstruction
     {
-        public override uint Cycles => 2;
+        public override uint Cycles => 9;
         public override byte[] OpCodes { get; } = { 0b1011111 };
 
         public LD_A_R(Z80 z80) : base(z80) { }

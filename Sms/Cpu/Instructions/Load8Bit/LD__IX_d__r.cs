@@ -4,7 +4,7 @@ namespace Sms.Cpu.Instructions.Load8Bit
 {
     public class LD__IX_d__r : DdInstruction
     {
-        public override uint Cycles => 5;
+        public override uint Cycles => 19;
         public override byte[] OpCodes { get; }
 
         public LD__IX_d__r(Z80 z80) : base(z80)

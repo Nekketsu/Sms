@@ -4,7 +4,7 @@ namespace Sms.Cpu.Instructions.Load8Bit
 {
     public class LD_r_r : Instruction
     {
-        public override uint Cycles => 1;
+        public override uint Cycles => 4;
         public override byte[] OpCodes { get; }
 
 
