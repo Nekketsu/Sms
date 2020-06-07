@@ -20,7 +20,7 @@
             Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.H, (Z80.Registers.A & 0b00001111) == 0);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.PV, Z80.Registers.BC == 0);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.N, true);
-            
+
             if (Z80.Registers.BC != 0 && result != 0)
             {
                 Z80.Registers.PC -= 2;
