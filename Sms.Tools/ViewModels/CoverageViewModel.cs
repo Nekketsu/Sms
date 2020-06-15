@@ -3,6 +3,7 @@ using Sms.Tools.Models;
 using Sms.Tools.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Sms.Tools.ViewModels
@@ -41,6 +42,10 @@ namespace Sms.Tools.ViewModels
                 var fullInstructions = new Instruction[256];
                 foreach (var instruction in instructions.Value.Instructions)
                 {
+                    if (fullInstructions[instruction.OpCode] != null)
+                    {
+                        Debug.WriteLine($"{fullInstructions[instruction.OpCode].Name} - {instruction.Name} - {instruction.OpCode:X2}");
+                    }
                     fullInstructions[instruction.OpCode] = instruction;
                 }
 

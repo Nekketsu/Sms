@@ -126,6 +126,19 @@ namespace Sms.Cpu
             return result;
         }
 
+        public byte Dec(byte value)
+        {
+            var result = (byte)(value - 1);
+
+            Z80.Registers.F.SetFlags(Flags.S, result.HasBit(7));
+            Z80.Registers.F.SetFlags(Flags.Z, result == 0);
+            Z80.Registers.F.SetFlags(Flags.H, ((value ^ result) & 0xF) != 0);
+            Z80.Registers.F.SetFlags(Flags.PV, value == 0x80);
+            Z80.Registers.F.SetFlags(Flags.N, true);
+
+            return result;
+        }
+
         public int JumpImmediate(bool useCondition, Flags flag, bool condition)
         {
             var opCodeCycles = 12;
@@ -150,36 +163,6 @@ namespace Sms.Cpu
             Z80.Registers.PC++;
 
             return opCodeCycles;
-        }
-
-        public int Decrement8Bit(ref byte register, int cycles)
-        {
-            var opCodeCyles = cycles;
-
-            byte before = register;
-
-            register--;
-
-            var flags = Z80.Registers.F;
-
-            // Set Z flag if result is negative
-            flags = flags.SetFlags(Flags.Z, register == 0);
-
-            // Set H flag if lower nibble is 0, meaning it will carry from bit 4
-            flags = flags.SetFlags(Flags.H, (before & 0x0F) == 0);
-
-            // V is calculated not P
-            flags = flags.SetFlags(Flags.PV, (sbyte)before == -128);
-
-            // Set substract flag
-            flags |= Flags.N;
-
-            // Set sign flag to bit 7 of the result
-            flags.SetFlags(Flags.S, register.HasBit(7));
-
-            Z80.Registers.F = flags;
-
-            return opCodeCyles;
         }
 
         public void PushWordOnStack(ushort word)

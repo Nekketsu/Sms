@@ -3,7 +3,7 @@
     public class FD_Instruction : Instruction
     {
         public override uint Cycles => 0;
-        public override byte[] OpCodes { get; } = { 0xCB };
+        public override byte[] OpCodes { get; } = { 0xFD };
 
         public FD_Instruction(Z80 z80) : base(z80) { }
 

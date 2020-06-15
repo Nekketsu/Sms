@@ -27,11 +27,11 @@ namespace Sms
             Ports = new Ports();
             State = new State();
 
-            //instructions = GetInstructions<Instruction>();
-            //cbInstructions = GetInstructions<CbInstruction>();
-            //ddInstructions = GetInstructions<DdInstruction>();
-            //edInstructions = GetInstructions<EdInstruction>();
-            //fdInstructions = GetInstructions<FdInstruction>();
+            instructions = GetInstructions<Instruction>();
+            cbInstructions = GetInstructions<CbInstruction>();
+            ddInstructions = GetInstructions<DdInstruction>();
+            edInstructions = GetInstructions<EdInstruction>();
+            fdInstructions = GetInstructions<FdInstruction>();
 
         }
 
