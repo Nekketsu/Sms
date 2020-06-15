@@ -24,6 +24,108 @@ namespace Sms.Cpu
             return opCodeCyles;
         }
 
+        public void Add(byte value, int carry = 0)
+        {
+            var before = Z80.Registers.A;
+            var result = before + value + carry;
+
+            Z80.Registers.A = (byte)result;
+
+            Z80.Registers.F.SetFlags(Flags.S, Z80.Registers.A.HasBit(7));
+            Z80.Registers.F.SetFlags(Flags.Z, Z80.Registers.A == 0);
+            Z80.Registers.F.SetFlags(Flags.H, ((before ^ result) & 0xF) != 0);
+            Z80.Registers.F.SetFlags(Flags.PV, before.HasBit(7) == value.HasBit(7) && before.HasBit(7) != Z80.Registers.A.HasBit(7));
+            Z80.Registers.F.SetFlags(Flags.N, false);
+            Z80.Registers.F.SetFlags(Flags.C, result > 0xFF);
+        }
+
+        public void Sub(byte value, int carry = 0)
+        {
+            var before = Z80.Registers.A;
+            var result = before - value - carry;
+
+            Z80.Registers.A = (byte)result;
+
+            Z80.Registers.F.SetFlags(Flags.S, Z80.Registers.A.HasBit(7));
+            Z80.Registers.F.SetFlags(Flags.Z, Z80.Registers.A == 0);
+            Z80.Registers.F.SetFlags(Flags.H, ((before ^ result) & 0x10) != 0);
+            Z80.Registers.F.SetFlags(Flags.PV, before.HasBit(7) == value.HasBit(7) && before.HasBit(7) != Z80.Registers.A.HasBit(7));
+            Z80.Registers.F.SetFlags(Flags.N, true);
+            Z80.Registers.F.SetFlags(Flags.C, result < 0);
+        }
+
+        public void And(byte value)
+        {
+            var before = Z80.Registers.A;
+            var result = before & value;
+
+            Z80.Registers.A = (byte)result;
+
+            Z80.Registers.F.SetFlags(Flags.S, Z80.Registers.A.HasBit(7));
+            Z80.Registers.F.SetFlags(Flags.Z, Z80.Registers.A == 0);
+            Z80.Registers.F.SetFlags(Flags.H, true);
+            Z80.Registers.F.SetFlags(Flags.PV, before.HasBit(7) == value.HasBit(7) && before.HasBit(7) != Z80.Registers.A.HasBit(7));
+            Z80.Registers.F.SetFlags(Flags.N, false);
+            Z80.Registers.F.SetFlags(Flags.C, false);
+        }
+
+        public void Or(byte value)
+        {
+            var before = Z80.Registers.A;
+            var result = before | value;
+
+            Z80.Registers.A = (byte)result;
+
+            Z80.Registers.F.SetFlags(Flags.S, Z80.Registers.A.HasBit(7));
+            Z80.Registers.F.SetFlags(Flags.Z, Z80.Registers.A == 0);
+            Z80.Registers.F.SetFlags(Flags.H, false);
+            Z80.Registers.F.SetFlags(Flags.PV, before.HasBit(7) == value.HasBit(7) && before.HasBit(7) != Z80.Registers.A.HasBit(7));
+            Z80.Registers.F.SetFlags(Flags.N, false);
+            Z80.Registers.F.SetFlags(Flags.C, false);
+        }
+
+        public void Xor(byte value)
+        {
+            var before = Z80.Registers.A;
+            var result = before ^ value;
+
+            Z80.Registers.A = (byte)result;
+
+            Z80.Registers.F.SetFlags(Flags.S, Z80.Registers.A.HasBit(7));
+            Z80.Registers.F.SetFlags(Flags.Z, Z80.Registers.A == 0);
+            Z80.Registers.F.SetFlags(Flags.H, false);
+            Z80.Registers.F.SetFlags(Flags.PV, before.HasBit(7) == value.HasBit(7) && before.HasBit(7) != Z80.Registers.A.HasBit(7));
+            Z80.Registers.F.SetFlags(Flags.N, false);
+            Z80.Registers.F.SetFlags(Flags.C, false);
+        }
+
+        public void Compare(byte value)
+        {
+            var before = Z80.Registers.A;
+            var result = before - value;
+            var byteResult = (byte)result;
+
+            Z80.Registers.F.SetFlags(Flags.S, byteResult.HasBit(7));
+            Z80.Registers.F.SetFlags(Flags.Z, byteResult == 0);
+            Z80.Registers.F.SetFlags(Flags.H, ((before ^ result) & 0x10) != 0);
+            Z80.Registers.F.SetFlags(Flags.PV, before.HasBit(7) == value.HasBit(7) && before.HasBit(7) != byteResult.HasBit(7));
+            Z80.Registers.F.SetFlags(Flags.N, true);
+            Z80.Registers.F.SetFlags(Flags.C, result < 0);
+        }
+
+        public byte Inc(byte value)
+        {
+            var result = (byte)(value + 1);
+
+            Z80.Registers.F.SetFlags(Flags.S, result.HasBit(7));
+            Z80.Registers.F.SetFlags(Flags.Z, result == 0);
+            Z80.Registers.F.SetFlags(Flags.H, ((value ^ result) & 0xF) != 0);
+            Z80.Registers.F.SetFlags(Flags.PV, value == 0x7F);
+            Z80.Registers.F.SetFlags(Flags.N, false);
+
+            return result;
+        }
+
         public int JumpImmediate(bool useCondition, Flags flag, bool condition)
         {
             var opCodeCycles = 12;

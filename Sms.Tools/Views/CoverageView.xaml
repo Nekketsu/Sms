@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="Sms.Tools.Views.CoverageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Sms.Tools.Views"
+             xmlns:Converters="clr-namespace:Sms.Tools.Converters"
+             xmlns:Prism="http://prismlibrary.com/"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             Prism:ViewModelLocator.AutoWireViewModel="True">
+    <UserControl.Resources>
+        <Converters:NullToBrushConverter x:Key="NullToBrushConverter" NullBrush="Red" NotNullBrush="Green" />
+        <Converters:ZeroToBooleanConverter x:Key="ZeroToBooleanConverter" ZeroValue="false" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="{Binding Total, StringFormat={}Total: {0}}" />
+
+        <ScrollViewer Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding FullInstructionsByType}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <Expander IsExpanded="{Binding Value.ImplementedCount, Mode=OneTime, Converter={StaticResource ZeroToBooleanConverter}}">
+                                <Expander.Header>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0}: {1}">
+                                                <Binding Path="Key.Name" />
+                                                <Binding Path="Value.ImplementedCount" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </Expander.Header>
+                                
+                                <ListBox ItemsSource="{Binding Value.Instructions}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <UniformGrid Columns="16" />
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border BorderBrush="{Binding Converter={StaticResource NullToBrushConverter}}" BorderThickness="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                    <TextBlock Text="{Binding OpCode, StringFormat={}{0:X2}}" />
+                                                    <TextBlock Text="{Binding Name}" />
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Expander>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

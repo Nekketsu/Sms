@@ -1,4 +1,7 @@
-﻿namespace Sms
+﻿using System;
+using System.Diagnostics;
+
+namespace Sms
 {
     public class MasterSystem
     {
@@ -43,22 +46,29 @@
             // Emulate 1/60th of a seconds amount of machine clicks
             while (clicksThisUpdate < MachineClickPerFrame)
             {
-                var z80ClockCycles = Z80.ExecuteNextInstruction();
+                try
+                {
+                    var z80ClockCycles = Z80.ExecuteNextInstruction();
 
-                HandleInterrupts();
-                // The machine clock is 3 times faster than the z80 clock
-                var machineClicks = z80ClockCycles * 3u;
+                    HandleInterrupts();
+                    // The machine clock is 3 times faster than the z80 clock
+                    var machineClicks = z80ClockCycles * 3u;
 
-                // The VDP clock is half the speed of the machine clock
-                var vdpCyles = (float)machineClicks / 2;
+                    // The VDP clock is half the speed of the machine clock
+                    var vdpCyles = (float)machineClicks / 2;
 
-                // The sound clock is the same speed as the Z80
-                var soundCycles = z80ClockCycles;
+                    // The sound clock is the same speed as the Z80
+                    var soundCycles = z80ClockCycles;
 
-                Vdp.Update(vdpCyles);
-                //Sound.Update(soundCycles);
+                    Vdp.Update(vdpCyles);
+                    //Sound.Update(soundCycles);
 
-                clicksThisUpdate += machineClicks;
+                    clicksThisUpdate += machineClicks;
+                }
+                catch (NotImplementedException e)
+                {
+                    Debug.WriteLine($"The OP Code {e.Message} is not implemented");
+                }
             }
         }
 
