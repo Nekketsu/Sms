@@ -23,7 +23,7 @@ namespace Sms.Tools.ViewModels
             var z80 = new Z80();
 
             InstructionsByType = InstructionTypes
-                .Select(instructionType => new { Type = instructionType, Instructions = new InstructionCollectionInfo(instructionService.GetInstructions(instructionType, z80)) })                .ToDictionary(i => i.Type, i => i.Instructions);
+                .Select(instructionType => new { Type = instructionType, Instructions = new InstructionCollectionInfo(instructionService.GetInstructions(instructionType, z80)) }).ToDictionary(i => i.Type, i => i.Instructions);
 
             Total = InstructionsByType.Aggregate(0, (result, element) => result + element.Value.Instructions.Length);
 

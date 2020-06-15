@@ -12,7 +12,7 @@ namespace Sms.Tools.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (value is null) ? NullBrush: NotNullBrush;
+            return (value is null) ? NullBrush : NotNullBrush;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
