@@ -72,6 +72,16 @@ namespace Sms
             throw new NotImplementedException($"{opCode}");
         }
 
+        public uint ExecuteEdOpCodebyte(byte opCode)
+        {
+            if (edInstructions.TryGetValue(opCode, out var instruction))
+            {
+                return instruction.Execute(opCode);
+            }
+
+            throw new NotImplementedException($"{opCode}");
+        }
+
         public uint ExecuteFdOpCodebyte(byte opCode)
         {
             if (fdInstructions.TryGetValue(opCode, out var instruction))

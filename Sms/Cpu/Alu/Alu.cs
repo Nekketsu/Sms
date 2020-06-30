@@ -24,10 +24,10 @@ namespace Sms.Cpu
             return opCodeCyles;
         }
 
-        public void Add(byte value, int carry = 0)
+        public void Add(byte value, bool carry = false)
         {
             var before = Z80.Registers.A;
-            var result = before + value + carry;
+            var result = before + value + (carry ? 1 : 0);
 
             Z80.Registers.A = (byte)result;
 
@@ -39,10 +39,41 @@ namespace Sms.Cpu
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.C, result > 0xFF);
         }
 
-        public void Sub(byte value, int carry = 0)
+        public ushort Add(ushort destination, ushort value)
+        {
+            var before = destination;
+            var result = before + value;
+
+            var ushortResult = (ushort)result;
+
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, ((before ^ result) & 0xFFF) != 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, false);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.C, result > 0xFFFF);
+
+            return ushortResult;
+        }
+
+        public ushort Add(ushort destination, ushort value, bool carry)
+        {
+            var before = destination;
+            var result = before + value + (carry ? 1 : 0);
+
+            var ushortResult = (ushort)result;
+
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.S, ushortResult.HasBit(15));
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.Z, ushortResult == 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, ((before ^ result) & 0xFFF) != 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, before.HasBit(15) == value.HasBit(15) && before.HasBit(15) != Z80.Registers.A.HasBit(15));
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, false);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.C, result > 0xFFFF);
+
+            return ushortResult;
+        }
+
+        public void Sub(byte value, bool carry = false)
         {
             var before = Z80.Registers.A;
-            var result = before - value - carry;
+            var result = before - value - (carry ? 1 : 0);
 
             Z80.Registers.A = (byte)result;
 
@@ -52,6 +83,23 @@ namespace Sms.Cpu
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, before.HasBit(7) == value.HasBit(7) && before.HasBit(7) != Z80.Registers.A.HasBit(7));
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, true);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.C, result < 0);
+        }
+
+        public ushort Sub(ushort destination, ushort value, bool carry = false)
+        {
+            var before = destination;
+            var result = before - value - (carry ? 1 : 0);
+
+            var ushortResult = (ushort)result;
+
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.S, Z80.Registers.A.HasBit(15));
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.Z, Z80.Registers.A == 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, ((before ^ result) & 0x1000) != 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, before.HasBit(15) == value.HasBit(15) && before.HasBit(15) != ushortResult.HasBit(15));
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, true);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.C, result < 0);
+
+            return ushortResult;
         }
 
         public void And(byte value)
@@ -126,6 +174,11 @@ namespace Sms.Cpu
             return result;
         }
 
+        public ushort Inc(ushort value)
+        {
+            return (ushort)(value + 1);
+        }
+
         public byte Dec(byte value)
         {
             var result = (byte)(value - 1);
@@ -137,6 +190,11 @@ namespace Sms.Cpu
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, true);
 
             return result;
+        }
+
+        public ushort Dec(ushort value)
+        {
+            return (ushort)(value - 1);
         }
 
         public int JumpImmediate(bool useCondition, Flags flag, bool condition)

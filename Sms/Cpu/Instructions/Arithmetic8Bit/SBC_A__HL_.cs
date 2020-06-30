@@ -9,7 +9,7 @@
         protected override void InnerExecute(byte opCode)
         {
             var value = Z80.Memory[Z80.Registers.HL];
-            var CY = Z80.Registers.F.HasFlag(Registers.Flags.C) ? 1 : 0;
+            var CY = Z80.Registers.F.HasFlag(Registers.Flags.C);
 
             Z80.Alu.Sub(value, CY);
         }

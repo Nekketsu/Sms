@@ -10,7 +10,7 @@
         {
             var d = Z80.Memory[Z80.Registers.PC++];
             var value = Z80.Memory[(ushort)(Z80.Registers.IX + d)];
-            var CY = Z80.Registers.F.HasFlag(Registers.Flags.C) ? 1 : 0;
+            var CY = Z80.Registers.F.HasFlag(Registers.Flags.C);
 
             Z80.Alu.Add(value, CY);
         }

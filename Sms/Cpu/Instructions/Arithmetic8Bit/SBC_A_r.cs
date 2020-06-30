@@ -17,7 +17,7 @@ namespace Sms.Cpu.Instructions.Arithmetic8Bit
         {
             var r = opCode & 0b00000111;
             var value = Z80.Alu.Registers8Bit[r];
-            var CY = Z80.Registers.F.HasFlag(Registers.Flags.C) ? 1 : 0;
+            var CY = Z80.Registers.F.HasFlag(Registers.Flags.C);
 
             Z80.Alu.Sub(value, CY);
         }
