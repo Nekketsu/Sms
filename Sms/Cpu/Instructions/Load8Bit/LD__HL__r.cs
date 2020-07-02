@@ -16,7 +16,7 @@ namespace Sms.Cpu.Instructions.Load8Bit
 
         protected override void InnerExecute(byte opCode)
         {
-            var r = (opCode & 0b00000111) << 3;
+            var r = opCode & 0b00000111;
 
             Z80.Memory[Z80.Registers.HL] = Z80.Alu.Registers8Bit[r];
         }

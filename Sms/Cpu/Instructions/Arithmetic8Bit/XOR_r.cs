@@ -15,7 +15,7 @@ namespace Sms.Cpu.Instructions.Arithmetic8Bit
 
         protected override void InnerExecute(byte opCode)
         {
-            var r = (opCode & 0b00000111) << 3;
+            var r = opCode & 0b00000111;
             var value = Z80.Alu.Registers8Bit[r];
 
             Z80.Alu.Xor(value);

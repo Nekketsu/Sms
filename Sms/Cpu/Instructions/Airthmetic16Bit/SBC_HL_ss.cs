@@ -10,7 +10,7 @@ namespace Sms.Cpu.Instructions.Airthmetic16Bit
 
         public SBC_HL_ss(Z80 z80) : base(z80)
         {
-            var opCodeBase = (byte)0b0100010;
+            var opCodeBase = (byte)0b01000010;
 
             OpCodes = Z80.Alu.Registers16Bit.Indices.Select(r => (byte)(opCodeBase | (r << 4))).ToArray();
         }

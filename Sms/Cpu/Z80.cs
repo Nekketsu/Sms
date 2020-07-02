@@ -19,6 +19,8 @@ namespace Sms
         private Dictionary<byte, DdInstruction> ddInstructions;
         private Dictionary<byte, EdInstruction> edInstructions;
         private Dictionary<byte, FdInstruction> fdInstructions;
+        private Dictionary<byte, DdCbInstruction> ddCbInstructions;
+        private Dictionary<byte, FdCbInstruction> fdCbInstructions;
 
         public Z80()
         {
@@ -27,12 +29,13 @@ namespace Sms
             Ports = new Ports();
             State = new State();
 
-            instructions = GetInstructions<Instruction>();
-            cbInstructions = GetInstructions<CbInstruction>();
-            ddInstructions = GetInstructions<DdInstruction>();
-            edInstructions = GetInstructions<EdInstruction>();
-            fdInstructions = GetInstructions<FdInstruction>();
-
+            //instructions = GetInstructions<Instruction>();
+            //cbInstructions = GetInstructions<CbInstruction>();
+            //ddInstructions = GetInstructions<DdInstruction>();
+            //edInstructions = GetInstructions<EdInstruction>();
+            //fdInstructions = GetInstructions<FdInstruction>();
+            //ddCbInstructions = GetInstructions<DdCbInstruction>();
+            //fdCbInstructions = GetInstructions<FdCbInstruction>();
         }
 
         public uint ExecuteNextInstruction()
@@ -85,6 +88,26 @@ namespace Sms
         public uint ExecuteFdOpCodebyte(byte opCode)
         {
             if (fdInstructions.TryGetValue(opCode, out var instruction))
+            {
+                return instruction.Execute(opCode);
+            }
+
+            throw new NotImplementedException($"{opCode}");
+        }
+
+        public uint ExecuteDdCbOpCodebyte(byte opCode)
+        {
+            if (ddCbInstructions.TryGetValue(opCode, out var instruction))
+            {
+                return instruction.Execute(opCode);
+            }
+
+            throw new NotImplementedException($"{opCode}");
+        }
+
+        public uint ExecuteFdCbOpCodebyte(byte opCode)
+        {
+            if (fdCbInstructions.TryGetValue(opCode, out var instruction))
             {
                 return instruction.Execute(opCode);
             }
