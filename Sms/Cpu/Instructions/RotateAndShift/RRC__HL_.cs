@@ -3,7 +3,7 @@
     public class RRC__HL_ : CbInstruction
     {
         public override uint Cycles => 15;
-        public override byte[] OpCodes { get; } = { 0b11001011 };
+        public override byte[] OpCodes { get; } = { 0b00001110 };
 
         public RRC__HL_(Z80 z80) : base(z80) { }
 
