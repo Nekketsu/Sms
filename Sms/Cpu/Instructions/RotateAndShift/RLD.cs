@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Sms.Cpu.Instructions.RotateAndShift
+﻿namespace Sms.Cpu.Instructions.RotateAndShift
 {
     public class RLD : EdInstruction
     {
