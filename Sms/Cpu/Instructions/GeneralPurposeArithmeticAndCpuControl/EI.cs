@@ -9,8 +9,8 @@
 
         protected override void InnerExecute(byte opCode)
         {
-            Z80.Registers.FF1 = true;
-            Z80.Registers.FF2 = true;
+            Z80.Registers.IFF1 = true;
+            Z80.Registers.IFF2 = true;
         }
     }
 }

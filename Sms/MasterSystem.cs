@@ -78,7 +78,7 @@ namespace Sms
             {
                 Z80.State.NMIServicing = true;
                 Z80.Registers.NMI = false;
-                Z80.Registers.FF1 = false;
+                Z80.Registers.IFF1 = false;
                 Z80.State.Halted = false;
                 Z80.Alu.PushWordOnStack(Z80.Registers.PC);
                 Z80.Registers.PC = 0x66;
@@ -86,13 +86,13 @@ namespace Sms
 
             if (Vdp.IsRequestingInterrupt)
             {
-                if (Z80.Registers.FF1 && Z80.State.InterruptMode == 1)
+                if (Z80.Registers.IFF1 && Z80.State.InterruptMode == 1)
                 {
                     Z80.State.Halted = false;
                     Z80.Alu.PushWordOnStack(Z80.Registers.PC);
                     Z80.Registers.PC = 0x38;
-                    Z80.Registers.FF1 = false;
-                    Z80.Registers.FF2 = false;
+                    Z80.Registers.IFF1 = false;
+                    Z80.Registers.IFF2 = false;
                 }
             }
         }

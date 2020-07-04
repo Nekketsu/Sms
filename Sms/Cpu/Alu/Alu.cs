@@ -1,4 +1,5 @@
-﻿using static Sms.Cpu.Registers;
+﻿using System;
+using static Sms.Cpu.Registers;
 
 namespace Sms.Cpu
 {
@@ -195,6 +196,22 @@ namespace Sms.Cpu
         public ushort Dec(ushort value)
         {
             return (ushort)(value - 1);
+        }
+
+        public bool CheckFlags(int cc)
+        {
+            return cc switch
+            {
+                0b000 => !Z80.Registers.F.HasFlag(Registers.Flags.Z),
+                0b001 => Z80.Registers.F.HasFlag(Registers.Flags.Z),
+                0b010 => !Z80.Registers.F.HasFlag(Registers.Flags.C),
+                0b011 => Z80.Registers.F.HasFlag(Registers.Flags.C),
+                0b100 => !Z80.Registers.F.HasFlag(Registers.Flags.PV),
+                0b101 => Z80.Registers.F.HasFlag(Registers.Flags.PV),
+                0b110 => !Z80.Registers.F.HasFlag(Registers.Flags.S),
+                0b111 => Z80.Registers.F.HasFlag(Registers.Flags.S),
+                _ => throw new NotImplementedException()
+            };
         }
 
         public int JumpImmediate(bool useCondition, Flags flag, bool condition)

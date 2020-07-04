@@ -4,8 +4,8 @@ namespace Sms.Cpu
 {
     public class Registers
     {
-        public bool FF1 { get; set; }
-        public bool FF2 { get; set; }
+        public bool IFF1 { get; set; }
+        public bool IFF2 { get; set; }
 
         public bool NMI { get; set; }
 

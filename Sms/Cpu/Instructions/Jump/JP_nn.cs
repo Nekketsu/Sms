@@ -12,9 +12,9 @@
             var n1 = Z80.Memory[Z80.Registers.PC++];
             var n2 = Z80.Memory[Z80.Registers.PC++];
 
-            var n = (ushort)((n1 << 8) | n2);
+            var nn = (ushort)((n1 << 8) | n2);
 
-            Z80.Registers.PC = n;
+            Z80.Registers.PC = nn;
         }
     }
 }
