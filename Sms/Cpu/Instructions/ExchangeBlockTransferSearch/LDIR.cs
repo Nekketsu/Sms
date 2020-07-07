@@ -10,8 +10,6 @@
 
         protected override void InnerExecute(byte opCode)
         {
-            cycles = Z80.Registers.BC != 0 ? 16u : 21u;
-
             var value = Z80.Memory.ReadWord(Z80.Registers.HL);
             Z80.Memory.WriteWord(Z80.Registers.DE, value);
             Z80.Registers.DE++;
@@ -25,6 +23,12 @@
             if (Z80.Registers.BC != 0)
             {
                 Z80.Registers.PC -= 2;
+
+                cycles = 21;
+            }
+            else
+            {
+                cycles = 16;
             }
         }
     }

@@ -202,14 +202,14 @@ namespace Sms.Cpu
         {
             return cc switch
             {
-                0b000 => !Z80.Registers.F.HasFlag(Registers.Flags.Z),
-                0b001 => Z80.Registers.F.HasFlag(Registers.Flags.Z),
-                0b010 => !Z80.Registers.F.HasFlag(Registers.Flags.C),
-                0b011 => Z80.Registers.F.HasFlag(Registers.Flags.C),
-                0b100 => !Z80.Registers.F.HasFlag(Registers.Flags.PV),
-                0b101 => Z80.Registers.F.HasFlag(Registers.Flags.PV),
-                0b110 => !Z80.Registers.F.HasFlag(Registers.Flags.S),
-                0b111 => Z80.Registers.F.HasFlag(Registers.Flags.S),
+                0b000 => !Z80.Registers.F.HasFlag(Flags.Z),
+                0b001 => Z80.Registers.F.HasFlag(Flags.Z),
+                0b010 => !Z80.Registers.F.HasFlag(Flags.C),
+                0b011 => Z80.Registers.F.HasFlag(Flags.C),
+                0b100 => !Z80.Registers.F.HasFlag(Flags.PV),
+                0b101 => Z80.Registers.F.HasFlag(Flags.PV),
+                0b110 => !Z80.Registers.F.HasFlag(Flags.S),
+                0b111 => Z80.Registers.F.HasFlag(Flags.S),
                 _ => throw new NotImplementedException()
             };
         }

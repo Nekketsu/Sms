@@ -24,9 +24,11 @@
             if (Z80.Registers.BC != 0 && result != 0)
             {
                 Z80.Registers.PC -= 2;
+
+                cycles = 21;
             }
 
-            cycles = Z80.Registers.BC != 0 && result != 0 ? 21u : 16u;
+            cycles = 16;
         }
     }
 }
