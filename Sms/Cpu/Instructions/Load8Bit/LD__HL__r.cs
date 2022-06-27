@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Sms.Cpu.Instructions.Load8Bit
+﻿namespace Sms.Cpu.Instructions.Load8Bit
 {
     public class LD__HL__r : Instruction
     {

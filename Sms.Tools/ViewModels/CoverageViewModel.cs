@@ -1,10 +1,7 @@
 ﻿using Prism.Mvvm;
 using Sms.Tools.Models;
 using Sms.Tools.Services;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 namespace Sms.Tools.ViewModels
 {

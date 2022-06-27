@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Sms.Cpu
+﻿namespace Sms.Cpu
 {
     public class Registers
     {

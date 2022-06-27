@@ -1,5 +1,4 @@
-﻿using System;
-using static Sms.Cpu.Registers;
+﻿using static Sms.Cpu.Registers;
 
 namespace Sms.Cpu
 {

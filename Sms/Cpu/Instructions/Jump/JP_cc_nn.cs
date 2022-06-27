@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Sms.Cpu.Instructions.Jump
+﻿namespace Sms.Cpu.Instructions.Jump
 {
     public class JP_cc_nn : Instruction
     {

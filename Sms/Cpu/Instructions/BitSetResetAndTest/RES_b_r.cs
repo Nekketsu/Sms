@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Sms.Cpu.Instructions.BitSetResetAndTest
+﻿namespace Sms.Cpu.Instructions.BitSetResetAndTest
 {
     public class RES_b_r : CbInstruction
     {

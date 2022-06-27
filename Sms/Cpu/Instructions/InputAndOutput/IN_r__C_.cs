@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Sms.Cpu.Instructions.InputAndOutput
+﻿namespace Sms.Cpu.Instructions.InputAndOutput
 {
     public class IN_r__C_ : EdInstruction
     {

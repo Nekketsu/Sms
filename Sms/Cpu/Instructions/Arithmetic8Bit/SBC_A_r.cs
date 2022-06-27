@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Sms.Cpu.Instructions.Arithmetic8Bit
+﻿namespace Sms.Cpu.Instructions.Arithmetic8Bit
 {
     public class SBC_A_r : Instruction
     {

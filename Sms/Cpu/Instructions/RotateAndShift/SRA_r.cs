@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Sms.Cpu.Instructions.RotateAndShift
+﻿namespace Sms.Cpu.Instructions.RotateAndShift
 {
     public class SRA_r : CbInstruction
     {

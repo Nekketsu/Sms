@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Sms
+﻿namespace Sms
 {
     public class Joypads : IPortMapping
     {

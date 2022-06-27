@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Sms.Tools.Models
+﻿namespace Sms.Tools.Models
 {
     public class InstructionCollectionInfo
     {

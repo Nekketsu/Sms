@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Sms.Cpu.Instructions.CallAndReturn
+﻿namespace Sms.Cpu.Instructions.CallAndReturn
 {
     public class RET_cc : Instruction
     {

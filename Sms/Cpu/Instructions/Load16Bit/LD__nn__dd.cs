@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Sms.Cpu.Instructions.Load16Bit
+﻿namespace Sms.Cpu.Instructions.Load16Bit
 {
     public class LD__nn__dd : EdInstruction
     {

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Sms
+﻿namespace Sms
 {
     public interface IMemory<TAddress> : IEnumerable<byte>
     {

@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Sms.Cpu.Instructions.Airthmetic16Bit
+﻿namespace Sms.Cpu.Instructions.Airthmetic16Bit
 {
     public class DEC_ss : Instruction
     {
