@@ -12,5 +12,10 @@
             Z80.Registers.IFF1 = false;
             Z80.Registers.IFF2 = false;
         }
+
+        public override string ToString(byte opCode)
+        {
+            return "di";
+        }
     }
 }

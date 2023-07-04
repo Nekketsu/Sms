@@ -12,5 +12,12 @@
 
             Z80.Alu.And(n);
         }
+
+        public override string ToString(byte opCode)
+        {
+            var n = Z80.Memory[(ushort)(Z80.Registers.PC + 1)];
+
+            return $"and 0x{n:x}";
+        }
     }
 }

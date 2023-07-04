@@ -12,5 +12,10 @@
 
             Z80.Memory[Z80.Registers.HL] = Z80.Alu.Inc(value);
         }
+
+        public override string ToString(byte opCode)
+        {
+            return "inc (hl)";
+        }
     }
 }

@@ -9,16 +9,30 @@
         public ADD_IX_pp(Z80 z80) : base(z80)
         {
             var opCodeBase = (byte)0b00001001;
-
+            
             OpCodes = Z80.Alu.Registers16Bit.Indices.Select(r => (byte)(opCodeBase | (r << 4))).ToArray();
         }
 
         protected override void InnerExecute(byte opCode)
         {
-            var r = (opCode & 0b00110000) >> 4;
-            var value = Z80.Alu.Registers16Bit[r];
+            var pp = (opCode & 0b00110000) >> 4;
+            
+            var value = (pp == 0b10)
+                ? Z80.Registers.IX
+                : Z80.Alu.Registers16Bit[pp];
 
             Z80.Registers.IX = Z80.Alu.Add(Z80.Registers.IX, value);
+        }
+
+        public override string ToString(byte opCode)
+        {
+            var pp = (opCode & 0b00110000) >> 4;
+
+            var register = (pp == 0b10)
+                ? "ix"
+                : Z80.Alu.Registers16Bit.Names[pp];
+
+            return $"add ix, {register}";
         }
     }
 }

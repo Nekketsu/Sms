@@ -11,5 +11,10 @@
         {
             Z80.Registers.PC = Z80.Memory[Z80.Registers.HL];
         }
+
+        public override string ToString(byte opCode)
+        {
+            return "jp (hl)";
+        }
     }
 }

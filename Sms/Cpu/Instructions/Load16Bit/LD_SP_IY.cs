@@ -11,5 +11,10 @@
         {
             Z80.Registers.SP = Z80.Registers.IX;
         }
+
+        public override string ToString(byte opCode)
+        {
+            return "ld sp, iy";
+        }
     }
 }

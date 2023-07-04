@@ -12,5 +12,10 @@
 
             Z80.Alu.Compare(value);
         }
+
+        public override string ToString(byte opCode)
+        {
+            return "cp (hl)";
+        }
     }
 }

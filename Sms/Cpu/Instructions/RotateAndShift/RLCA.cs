@@ -17,5 +17,10 @@
             Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.N, false);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.C, cy);
         }
+
+        public override string ToString(byte opCode)
+        {
+            return "rlca";
+        }
     }
 }

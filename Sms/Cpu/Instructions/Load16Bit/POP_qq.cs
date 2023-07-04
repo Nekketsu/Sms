@@ -16,8 +16,27 @@
         {
             var qq = (opCode & 0b00110000) >> 4;
 
-            Z80.Alu.Registers16Bit[qq] = Z80.Memory.ReadWord(Z80.Registers.SP);
+            if (qq == 0b11)
+            {
+                Z80.Registers.AF = Z80.Memory.ReadWord(Z80.Registers.SP);
+            }
+            else
+            {
+                Z80.Alu.Registers16Bit[qq] = Z80.Memory.ReadWord(Z80.Registers.SP);
+            }
             Z80.Registers.SP += 2;
+        }
+
+        public override string ToString(byte opCode)
+        {
+            var qq = (opCode & 0b00110000) >> 4;
+
+            var register = qq == 0b11 ? "af" : Z80.Alu.Registers16Bit.Names[qq];
+            var value = (qq == 0b11 ? Z80.Registers.AF : Z80.Alu.Registers16Bit[qq]);
+
+            Console.WriteLine($"pop 0x{value:x}");
+
+            return $"pop {register}";
         }
     }
 }

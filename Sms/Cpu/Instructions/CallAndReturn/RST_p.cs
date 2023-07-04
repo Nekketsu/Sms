@@ -33,5 +33,24 @@
             Z80.Memory[--Z80.Registers.SP] = (byte)((Z80.Registers.PC & 0xFF00) >> 8);
             Z80.Registers.PC = p;
         }
+
+        public override string ToString(byte opCode)
+        {
+            var t = (opCode & 0b00111000) >> 3;
+            var p = (byte)(t switch
+            {
+                0b000 => 0x00,
+                0b001 => 0x08,
+                0b010 => 0x10,
+                0b011 => 0x18,
+                0b100 => 0x20,
+                0b101 => 0x28,
+                0b110 => 0x30,
+                0b111 => 0x38,
+                _ => throw new NotImplementedException()
+            });
+
+            return $"rst 0x{p:x}";
+        }
     }
 }

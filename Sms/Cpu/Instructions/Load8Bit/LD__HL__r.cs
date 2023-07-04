@@ -18,5 +18,13 @@
 
             Z80.Memory[Z80.Registers.HL] = Z80.Alu.Registers8Bit[r];
         }
+
+        public override string ToString(byte opCode)
+        {
+            var r = opCode & 0b00000111;
+            var register = Z80.Alu.Registers8Bit.Names[r];
+
+            return $"ld (hl) {register}";
+        }
     }
 }

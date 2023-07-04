@@ -10,26 +10,43 @@
 
         protected override void InnerExecute(byte opCode)
         {
-            var value = Z80.Memory.ReadWord(Z80.Registers.HL);
-            Z80.Memory.WriteWord(Z80.Registers.DE, value);
-            Z80.Registers.DE++;
-            Z80.Registers.HL++;
-            Z80.Registers.BC--;
+            cycles = 0;
 
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.H, false);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.PV, Z80.Registers.BC == 0);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.N, false);
+            var output = new List<byte>();
 
-            if (Z80.Registers.BC != 0)
+            do
             {
-                Z80.Registers.PC -= 2;
+                output.Add(Z80.Memory[Z80.Registers.HL]);
 
-                cycles = 21;
-            }
-            else
-            {
-                cycles = 16;
-            }
+                Z80.Memory[Z80.Registers.DE] = Z80.Memory[Z80.Registers.HL];
+                Z80.Registers.DE++;
+                Z80.Registers.HL++;
+                Z80.Registers.BC--;
+
+                Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.H, false);
+                Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.PV, Z80.Registers.BC == 0);
+                Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.N, false);
+
+                if (Z80.Registers.BC != 0)
+                {
+                    //Z80.Registers.PC -= 2;
+
+                    cycles += 21;
+                }
+                else
+                {
+                    cycles += 16;
+                }
+            } while (Z80.Registers.BC != 0);
+
+            var outputString = string.Join(' ', output.Select(o => o.ToString("x2")));
+
+            Console.WriteLine($"{outputString}");
+        }
+
+        public override string ToString(byte opCode)
+        {
+            return "ldir";
         }
     }
 }

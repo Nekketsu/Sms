@@ -14,11 +14,21 @@
 
         protected override void InnerExecute(byte opCode)
         {
-            var d = (opCode & 0b00110000) >> 4;
+            var dd = (opCode & 0b00110000) >> 4;
             var nn = Z80.Memory.ReadWord(Z80.Registers.PC);
             Z80.Registers.PC += 2;
 
-            Z80.Alu.Registers16Bit[d] = Z80.Memory.ReadWord(nn);
+            Z80.Alu.Registers16Bit[dd] = Z80.Memory.ReadWord(nn);
+        }
+
+        public override string ToString(byte opCode)
+        {
+            var dd = (opCode & 0b00110000) >> 4;
+            var nn = Z80.Memory.ReadWord((ushort)(Z80.Registers.PC + 1));
+
+            var regiser = Z80.Alu.Registers16Bit.Names[dd];
+
+            return $"ld {regiser}, (0x{nn:x})";
         }
     }
 }

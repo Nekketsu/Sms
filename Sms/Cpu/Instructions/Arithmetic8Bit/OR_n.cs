@@ -12,5 +12,12 @@
 
             Z80.Alu.Or(n);
         }
+
+        public override string ToString(byte opCode)
+        {
+            var n = Z80.Memory[Z80.Registers.PC++];
+
+            return $"or 0x{n:x}";
+        }
     }
 }

@@ -18,5 +18,14 @@
 
             Z80.Alu.And(value);
         }
+
+        public override string ToString(byte opCode)
+        {
+            var r = opCode & 0b00000111;
+
+            var register = Z80.Alu.Registers8Bit.Names[r];
+
+            return $"or {register}";
+        }
     }
 }

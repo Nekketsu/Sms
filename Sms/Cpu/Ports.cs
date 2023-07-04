@@ -2,9 +2,9 @@
 {
     public class Ports : IPortMapping
     {
-        public Dictionary<byte, Func<byte>> PortReaders => new Dictionary<byte, Func<byte>>();
+        public Dictionary<byte, Func<byte>> PortReaders { get; } = new Dictionary<byte, Func<byte>>();
 
-        public Dictionary<byte, Action<byte>> PortWriters => new Dictionary<byte, Action<byte>>();
+        public Dictionary<byte, Action<byte>> PortWriters { get; } = new Dictionary<byte, Action<byte>>();
 
         public void MapPorts(IPortMapping portMapping)
         {

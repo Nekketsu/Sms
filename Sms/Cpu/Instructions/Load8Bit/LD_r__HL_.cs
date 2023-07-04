@@ -14,9 +14,18 @@
 
         protected override void InnerExecute(byte opCode)
         {
-            var r = (opCode & 0b00111000) << 3;
+            var r = (opCode & 0b00111000) >> 3;
 
-            Z80.Alu.Registers8Bit[r] = Z80.Memory[Z80.Registers.HL]; ;
+            Z80.Alu.Registers8Bit[r] = Z80.Memory[Z80.Registers.HL];
+        }
+
+        public override string ToString(byte opCode)
+        {
+            var r = (opCode & 0b00111000) >> 3;
+
+            var register = Z80.Alu.Registers8Bit.Names[r];
+
+            return $"ld {register}, (hl)";
         }
     }
 }

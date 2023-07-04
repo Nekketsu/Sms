@@ -21,8 +21,8 @@ namespace Sms
 
         public Z80()
         {
-            Alu = new Alu(this);
             Registers = new Registers();
+            Alu = new Alu(this);
             Ports = new Ports();
             State = new State();
 
@@ -33,6 +33,11 @@ namespace Sms
             fdInstructions = GetInstructions<FdInstruction>();
             ddCbInstructions = GetInstructions<DdCbInstruction>();
             fdCbInstructions = GetInstructions<FdCbInstruction>();
+        }
+
+        public Z80(Mapper memory) : this()
+        {
+            Memory = memory;
         }
 
         public uint ExecuteNextInstruction()

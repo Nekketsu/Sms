@@ -14,5 +14,12 @@
 
             Z80.Memory.WriteWord(nn, Z80.Registers.HL);
         }
+
+        public override string ToString(byte opCode)
+        {
+            var nn = Z80.Memory.ReadWord((ushort)(Z80.Registers.PC + 1));
+
+            return $"ld (0x{nn:x}), hl";
+        }
     }
 }

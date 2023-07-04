@@ -20,10 +20,8 @@
 
             if (Z80.Alu.CheckFlags(cc))
             {
-                var n1 = Z80.Memory[Z80.Registers.PC++];
-                var n2 = Z80.Memory[Z80.Registers.PC++];
-
-                var nn = (ushort)((n1 << 8) | n2);
+                var nn = Z80.Memory.ReadWord(Z80.Registers.PC);
+                Z80.Registers.PC += 2;
 
                 var pcHigh = (byte)((Z80.Registers.PC & 0xFF00) >> 8);
                 var pcLow = (byte)(Z80.Registers.PC & 0x00FF);
@@ -36,8 +34,30 @@
             }
             else
             {
+                Z80.Registers.PC += 2;
                 cycles = 10;
             }
+        }
+
+        public override string ToString(byte opCode)
+        {
+            var cc = (opCode & 0b00111000) >> 3;
+            var nn = Z80.Memory.ReadWord((ushort)(Z80.Registers.PC + 1));
+
+            var condition = cc switch
+            {
+                0b000 => "nz",
+                0b001 => "z",
+                0b010 => "nc",
+                0b011 => "c",
+                0b100 => "po",
+                0b101 => "pe",
+                0b110 => "p",
+                0b111 => "m",
+                _ => throw new ArgumentException()
+            };
+
+            return $"call {condition}, 0x{nn:x}";
         }
     }
 }

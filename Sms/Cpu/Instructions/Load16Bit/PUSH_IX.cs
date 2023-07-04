@@ -12,5 +12,10 @@
             Z80.Registers.SP -= 2;
             Z80.Memory.WriteWord(Z80.Registers.SP, Z80.Registers.IX);
         }
+
+        public override string ToString(byte opCode)
+        {
+            return $"push ix";
+        }
     }
 }

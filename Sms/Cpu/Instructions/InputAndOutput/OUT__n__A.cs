@@ -13,5 +13,12 @@
 
             Z80.Ports[n] = Z80.Registers.A;
         }
+
+        public override string ToString(byte opCode)
+        {
+            var n = Z80.Memory[(ushort)(Z80.Registers.PC + 1)];
+
+            return $"out (0x{n:x}), a";
+        }
     }
 }

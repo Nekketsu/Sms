@@ -19,5 +19,15 @@
 
             Z80.Alu.Registers8Bit[r] = n;
         }
+
+        public override string ToString(byte opCode)
+        {
+            var r = (opCode & 0b00111000) >> 3;
+            var n = Z80.Memory[(ushort)(Z80.Registers.PC + 1)];
+
+            var register = Z80.Alu.Registers8Bit.Names[r];
+
+            return $"ld {register}, 0x{n:x}";
+        }
     }
 }

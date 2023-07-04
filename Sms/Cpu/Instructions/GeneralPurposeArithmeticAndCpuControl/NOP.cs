@@ -11,5 +11,10 @@
         {
             // The CPU performs no operation during this machine cycle.
         }
+
+        public override string ToString(byte opCode)
+        {
+            return "nop";
+        }
     }
 }

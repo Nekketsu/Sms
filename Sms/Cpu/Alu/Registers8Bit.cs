@@ -5,6 +5,7 @@ namespace Sms.Cpu
 {
     public class Registers8Bit
     {
+        public string[] Names { get; } = { "b", "c", "d", "e", "h", "l", null, "a" };
         public int[] Indices { get; } = { 0b111, 0b000, 0b001, 0b010, 0b011, 0b100, 0b101 };
 
         Registers registers;

@@ -11,5 +11,10 @@
         {
             Z80.Registers.A = Z80.Memory[Z80.Registers.BC];
         }
+
+        public override string ToString(byte opCode)
+        {
+            return "ld a, (bc)";
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace Sms
             IsOneMegCartridge = Length > 0x80000;
             IsCodeMasters = GetIsCodeMasters();
 
-            Mapper = new Mapper(this);
+            Mapper = new SmsMapper(this);
         }
 
         public static Cartridge FromFile(string fileName)

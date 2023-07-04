@@ -25,5 +25,15 @@
             Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.H, true);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.N, false);
         }
+
+        public override string ToString(byte opCode)
+        {
+            var b = (opCode & 0b00111000) >> 3;
+            var r = opCode & 0b00000111;
+
+            var register = Z80.Alu.Registers8Bit.Names[r];
+
+            return $"bit 0x{b:x}, {register}";
+        }
     }
 }

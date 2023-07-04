@@ -21,5 +21,16 @@
 
             Z80.Alu.Registers8Bit[rDestination] = Z80.Alu.Registers8Bit[rSource];
         }
+
+        public override string ToString(byte opCode)
+        {
+            var rDestination = (opCode & 0b00111000) >> 3;
+            var rSource = opCode & 0b00000111;
+
+            var destination = Z80.Alu.Registers8Bit.Names[rDestination];
+            var source = Z80.Alu.Registers8Bit.Names[rSource];
+
+            return $"ld {destination}, {source}";
+        }
     }
 }

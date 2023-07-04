@@ -12,5 +12,10 @@
             Z80.Registers.IY = Z80.Memory.ReadWord(Z80.Registers.SP);
             Z80.Registers.SP += 2;
         }
+
+        public override string ToString(byte opCode)
+        {
+            return "pop iy";
+        }
     }
 }

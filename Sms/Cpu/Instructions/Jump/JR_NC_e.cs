@@ -14,16 +14,25 @@
 
             if (condition)
             {
-                var e = Z80.Memory[Z80.Registers.PC++] - 126;
+                var e = (sbyte)Z80.Memory[Z80.Registers.PC++];
 
-                Z80.Registers.PC = (ushort)(Z80.Registers.PC + e);
+                Z80.Registers.PC += (ushort)e;
 
                 cycles = 12;
             }
             else
             {
+                Z80.Registers.PC++;
+
                 cycles = 7;
             }
+        }
+
+        public override string ToString()
+        {
+            var e = (sbyte)Z80.Memory[(ushort)(Z80.Registers.PC + 1)] + 2;
+
+            return $"jr nc, 0x{e + Z80.Registers.PC:x}";
         }
     }
 }

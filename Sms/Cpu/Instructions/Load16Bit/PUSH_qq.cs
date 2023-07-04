@@ -17,7 +17,25 @@
             var qq = (opCode & 0b00110000) >> 4;
 
             Z80.Registers.SP -= 2;
-            Z80.Memory.WriteWord(Z80.Registers.SP, Z80.Alu.Registers16Bit[qq]);
+            if (qq == 0b11)
+            {
+                Z80.Memory.WriteWord(Z80.Registers.SP, Z80.Registers.AF);
+            }
+            else
+            {
+                Z80.Memory.WriteWord(Z80.Registers.SP, Z80.Alu.Registers16Bit[qq]);
+            }
+        }
+
+        public override string ToString(byte opCode)
+        {
+            var qq = (opCode & 0b00110000) >> 4;
+            var register = qq == 0b11 ? "af" : Z80.Alu.Registers16Bit.Names[qq];
+            var value = (qq == 0b11 ? Z80.Registers.AF : Z80.Alu.Registers16Bit[qq]);
+
+            Console.WriteLine($"push 0x{value:x}");
+
+            return $"push {register}";
         }
     }
 }

@@ -14,5 +14,10 @@
             Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.C, !Z80.Registers.F.HasFlag(Registers.Flags.C));
             Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.N, false);
         }
+
+        public override string ToString(byte opCode)
+        {
+            return "ccf";
+        }
     }
 }

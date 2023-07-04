@@ -121,5 +121,10 @@
                 Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.N, Z80.Registers.A == 0);
             }
         }
+
+        public override string ToString(byte opCode)
+        {
+            return "daa";
+        }
     }
 }

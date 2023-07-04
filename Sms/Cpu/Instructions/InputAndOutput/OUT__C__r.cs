@@ -18,5 +18,14 @@
 
             Z80.Ports[Z80.Registers.C] = Z80.Alu.Registers8Bit[r];
         }
+
+        public override string ToString(byte opCode)
+        {
+            var r = (opCode & 0b00111000) >> 3;
+
+            var register = Z80.Alu.Registers8Bit.Names[r];
+
+            return $"out (c), {register}";
+        }
     }
 }

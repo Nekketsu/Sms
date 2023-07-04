@@ -1,4 +1,7 @@
-﻿namespace Sms.Cpu.Instructions.InputAndOutput
+﻿using System.Diagnostics;
+using System.Text;
+
+namespace Sms.Cpu.Instructions.InputAndOutput
 {
     public class OTIR : EdInstruction
     {
@@ -10,23 +13,41 @@
 
         protected override void InnerExecute(byte opCode)
         {
-            Z80.Ports[Z80.Registers.C] = Z80.Memory[Z80.Registers.HL];
-            Z80.Registers.B = (byte)((Z80.Registers.B - 1) % 256);
-            Z80.Registers.HL++;
+            cycles = 0;
 
-            if (Z80.Registers.B != 0)
+            var output = new List<byte>();
+
+            do
             {
-                Z80.Registers.PC -= 2;
+                output.Add(Z80.Memory[Z80.Registers.HL]);
 
-                cycles = 21;
-            }
-            else
-            {
-                cycles = 16;
-            }
+                Z80.Ports[Z80.Registers.C] = Z80.Memory[Z80.Registers.HL];
+                Z80.Registers.B = (byte)((Z80.Registers.B - 1) % 256);
+                Z80.Registers.HL++;
 
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.Z, true);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.N, true);
+                if (Z80.Registers.B != 0)
+                {
+                    //Z80.Registers.PC -= 2;
+
+                    cycles += 21;
+                }
+                else
+                {
+                    Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.Z, true);
+                    Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.N, true);
+
+                    cycles += 16;
+                }
+            } while (Z80.Registers.B != 0);
+
+            var outputString = string.Join(' ', output.Select(o => o.ToString("x2")));
+
+            Console.WriteLine($"{outputString}");
+        }
+
+        public override string ToString(byte opCode)
+        {
+            return "otir";
         }
     }
 }

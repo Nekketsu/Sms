@@ -19,5 +19,14 @@
 
             Z80.Alu.Registers16Bit[r] = Z80.Alu.Inc(value);
         }
+
+        public override string ToString(byte opCode)
+        {
+            var r = (opCode & 0b00110000) >> 4;
+
+            var register = Z80.Alu.Registers16Bit.Names[r];
+
+            return $"inc {register}";
+        }
     }
 }

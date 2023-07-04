@@ -32,5 +32,25 @@
                 cycles = 5;
             }
         }
+
+        public override string ToString(byte opCode)
+        {
+            var cc = (opCode & 0b00111000) >> 3;
+            var flags = new Dictionary<int, string>
+            {
+                [0b000] = "nz",
+                [0b001] = "z",
+                [0b010] = "nc",
+                [0b011] = "c",
+                [0b100] = "po",
+                [0b101] = "pe",
+                [0b110] = "p",
+                [0b111] = "m"
+            };
+
+            var flag = flags[cc];
+
+            return $"ret {flag}";
+        }
     }
 }

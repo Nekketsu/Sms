@@ -20,5 +20,15 @@
 
             Z80.Alu.Registers16Bit[dd] = nn;
         }
+
+        public override string ToString(byte opCode)
+        {
+            var dd = (opCode & 0b00110000) >> 4;
+            var nn = Z80.Memory.ReadWord((ushort)(Z80.Registers.PC + 1));
+
+            var register = Z80.Alu.Registers16Bit.Names[dd];
+
+            return $"ld {register}, 0x{nn:x}";
+        }
     }
 }

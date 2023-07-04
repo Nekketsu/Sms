@@ -36,7 +36,7 @@
 
         public ushort AF
         {
-            get => (ushort)(A << 8 + (byte)F);
+            get => (ushort)((A << 8) + (byte)F);
             set
             {
                 A = (byte)(value >> 8);
@@ -46,7 +46,7 @@
 
         public ushort BC
         {
-            get => (ushort)(B << 8 + C);
+            get => (ushort)((B << 8) + C);
             set
             {
                 B = (byte)(value >> 8);
@@ -56,7 +56,7 @@
 
         public ushort DE
         {
-            get => (ushort)(D << 8 + E);
+            get => (ushort)((D << 8) + E);
             set
             {
                 D = (byte)(value >> 8);
@@ -65,7 +65,7 @@
         }
         public ushort HL
         {
-            get => (ushort)(H << 8 + L);
+            get => (ushort)((H << 8) + L);
             set
             {
                 H = (byte)(value >> 8);
@@ -75,7 +75,7 @@
 
         public ushort AFShadow
         {
-            get => (ushort)(AShadow << 8 + FShadow);
+            get => (ushort)((AShadow << 8) + FShadow);
             set
             {
                 AShadow = (byte)(value >> 8);
@@ -85,7 +85,7 @@
 
         public ushort BCShadow
         {
-            get => (ushort)(BShadow << 8 + CShadow);
+            get => (ushort)((BShadow << 8) + CShadow);
             set
             {
                 BShadow = (byte)(value >> 8);
@@ -95,7 +95,7 @@
 
         public ushort DEShadow
         {
-            get => (ushort)(DShadow << 8 + EShadow);
+            get => (ushort)((DShadow << 8) + EShadow);
             set
             {
                 DShadow = (byte)(value >> 8);
@@ -104,7 +104,7 @@
         }
         public ushort HLShadow
         {
-            get => (ushort)(HShadow << 8 + LShadow);
+            get => (ushort)((HShadow << 8) + LShadow);
             set
             {
                 HShadow = (byte)(value >> 8);

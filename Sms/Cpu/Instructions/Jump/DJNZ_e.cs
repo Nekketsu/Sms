@@ -14,16 +14,24 @@
 
             if (Z80.Registers.B != 0)
             {
-                var e = Z80.Memory[Z80.Registers.PC++] - 126;
+                var e = (sbyte)Z80.Memory[Z80.Registers.PC++];
 
-                Z80.Registers.PC = (ushort)(Z80.Registers.PC + e);
+                Z80.Registers.PC += (ushort)e;
 
                 cycles = 13;
             }
             else
             {
+                Z80.Registers.PC++;
                 cycles = 8;
             }
+        }
+
+        public override string ToString(byte opCode)
+        {
+            var e = (sbyte)Z80.Memory[(ushort)(Z80.Registers.PC + 1)] + 2;
+
+            return $"djnz 0x{e + Z80.Registers.PC:x}";
         }
     }
 }

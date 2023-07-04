@@ -11,5 +11,10 @@
         {
             Z80.State.InterruptMode = 1;
         }
+
+        public override string ToString(byte opCode)
+        {
+            return "im 1";
+        }
     }
 }
