@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sms.Tests", "Sms.Tests\Sms.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sms.Tools", "Sms.Tools\Sms.Tools.csproj", "{499AE5E4-0D43-4B97-BB69-B51F72574913}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sms.Zexall", "Sms.Zexall\Sms.Zexall.csproj", "{B089EF88-4CAB-4630-B41B-34F6A4A15D26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sms.Zexall", "Sms.Zexall\Sms.Zexall.csproj", "{B089EF88-4CAB-4630-B41B-34F6A4A15D26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sms.Debugger", "Sms.Debugger\Sms.Debugger.csproj", "{0870F59F-72BD-4C18-91A7-72ED1004B146}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{B089EF88-4CAB-4630-B41B-34F6A4A15D26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B089EF88-4CAB-4630-B41B-34F6A4A15D26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B089EF88-4CAB-4630-B41B-34F6A4A15D26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0870F59F-72BD-4C18-91A7-72ED1004B146}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0870F59F-72BD-4C18-91A7-72ED1004B146}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0870F59F-72BD-4C18-91A7-72ED1004B146}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0870F59F-72BD-4C18-91A7-72ED1004B146}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

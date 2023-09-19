@@ -1,38 +1,66 @@
-﻿namespace Sms.Cpu
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace Sms.Cpu
 {
-    public class Registers
+    [ObservableObject]
+    public partial class Registers
     {
-        public bool IFF1 { get; set; }
-        public bool IFF2 { get; set; }
+        [ObservableProperty]
+        private bool iFF1;
+        [ObservableProperty]
+        private bool iFF2;
 
-        public bool NMI { get; set; }
+        [ObservableProperty]
+        private bool nMI;
 
-        public ushort PC { get; set; }
-        public ushort SP { get; set; }
-        public byte R { get; set; }
-        public byte I { get; set; }
+        [ObservableProperty]
+        private ushort pC;
+        [ObservableProperty]
+        private ushort sP;
+        [ObservableProperty]
+        private byte r;
+        [ObservableProperty]
+        private byte i;
 
 
-        public byte A { get; set; }
-        public Flags F { get; set; }
-        public byte B { get; set; }
-        public byte C { get; set; }
-        public byte D { get; set; }
-        public byte E { get; set; }
-        public byte H { get; set; }
-        public byte L { get; set; }
+        [ObservableProperty]
+        private byte a;
+        [ObservableProperty]
+        private Flags f;
+        [ObservableProperty]
+        private byte b;
+        [ObservableProperty]
+        private byte c;
+        [ObservableProperty]
+        private byte d;
+        [ObservableProperty]
+        private byte e;
+        [ObservableProperty]
+        private byte h;
+        [ObservableProperty]
+        private byte l;
 
-        public byte AShadow { get; set; }
-        public byte FShadow { get; set; }
-        public byte BShadow { get; set; }
-        public byte CShadow { get; set; }
-        public byte DShadow { get; set; }
-        public byte EShadow { get; set; }
-        public byte HShadow { get; set; }
-        public byte LShadow { get; set; }
+        [ObservableProperty]
+        private byte aShadow;
+        [ObservableProperty]
+        private byte fShadow;
+        [ObservableProperty]
+        private byte bShadow;
+        [ObservableProperty]
+        private byte cShadow;
+        [ObservableProperty]
+        private byte dShadow;
+        [ObservableProperty]
+        private byte eShadow;
+        [ObservableProperty]
+        private byte hShadow;
+        [ObservableProperty]
+        private byte lShadow;
 
-        public ushort IX { get; set; }
-        public ushort IY { get; set; }
+        [ObservableProperty]
+        private ushort iX;
+        [ObservableProperty]
+        private ushort iY;
 
         public ushort AF
         {
@@ -102,6 +130,7 @@
                 EShadow = (byte)value;
             }
         }
+
         public ushort HLShadow
         {
             get => (ushort)((HShadow << 8) + LShadow);

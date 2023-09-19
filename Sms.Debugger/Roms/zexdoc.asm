@@ -1,18 +1,16 @@
-; Disassembly of the file "D:\Users\Nekketsu\source\repos\Sms\Sms.Zexall\Roms\zexall.sms"
+; Disassembly of the file "D:\Users\Nekketsu\source\repos\Sms\Sms.Zexall\Roms\zexdoc.sms"
 ; 
 ; CPU Type: Z80
 ; 
 ; Created with dZ80 2.0
 ; 
-; on Monday, 26 of June 2023 at 02:31 AM
+; on Monday, 26 of June 2023 at 02:35 AM
 ; 
 0000 f3        di      
 0001 ed56      im      1
 0003 31f0c3    ld      sp,0c3f0h
-0006 c3fb2a    jp      2afbh
-
-Initialise_SDSC:
-0009 cd1800    call    0018h ; DetectPort3EValue
+0006 c3f92a    jp      2af9h
+0009 cd1800    call    0018h
 000c 3a00c0    ld      a,(0c000h)
 000f f604      or      04h
 0011 d33e      out     (3eh),a
@@ -20,12 +18,11 @@ Initialise_SDSC:
 0015 d3fc      out     (0fch),a
 0017 c9        ret     
 
-DetectPort3EValue:
 0018 212600    ld      hl,0026h
-001b 1182c0    ld      de,0c082h ; TestInRAM
+001b 1182c0    ld      de,0c082h
 001e 013300    ld      bc,0033h
 0021 edb0      ldir    
-0023 c382c0    jp      0c082h ; TestInRAM
+0023 c382c0    jp      0c082h
 0026 21b0c0    ld      hl,0c0b0h
 0029 7e        ld      a,(hl)
 002a b7        or      a
@@ -34,7 +31,7 @@ DetectPort3EValue:
 002f f5        push    af
 0030 e5        push    hl
 0031 212600    ld      hl,0026h
-0034 1182c0    ld      de,0c082h ; TestInRAM
+0034 1182c0    ld      de,0c082h
 0037 0633      ld      b,33h
 0039 1a        ld      a,(de)
 003a be        cp      (hl)
@@ -60,8 +57,6 @@ DetectPort3EValue:
 0055 ab        xor     e
 0056 cbe3      set     4,e
 0058 00        nop     
-
-PrintChar_SDSC:
 0059 f5        push    af
 005a fe0d      cp      0dh
 005c 2002      jr      nz,0060h
@@ -131,14 +126,15 @@ PrintChar_SDSC:
 00ad ff        rst     38h
 00ae ff        rst     38h
 00af ff        rst     38h
-00b0 ff        rst     38h
+00b0 d7        rst     10h
 00b1 00        nop     
 00b2 ff        rst     38h
 00b3 ff        rst     38h
-00b4 63        ld      h,e
-00b5 8e        adc     a,(hl)
-00b6 3f        ccf     
-00b7 1e3c      ld      e,3ch
+00b4 f3        di      
+00b5 90        sub     b
+00b6 89        adc     a,c
+00b7 a0        and     b
+00b8 3c        inc     a
 00b9 61        ld      h,c
 00ba 64        ld      h,h
 00bb 63        ld      h,e
@@ -211,12 +207,13 @@ PrintChar_SDSC:
 0109 ff        rst     38h
 010a ff        rst     38h
 010b ff        rst     38h
-010c ff        rst     38h
+010c d7        rst     10h
 010d 00        nop     
 010e ff        rst     38h
 010f ff        rst     38h
-0110 de0a      sbc     a,0ah
-0112 d40e61    call    nc,610eh
+0110 1165fc    ld      de,0fc65h
+0113 90        sub     b
+0114 61        ld      h,c
 0115 64        ld      h,h
 0116 64        ld      h,h
 0117 2068      jr      nz,0181h
@@ -281,13 +278,12 @@ PrintChar_SDSC:
 015f ff        rst     38h
 0160 ff        rst     38h
 0161 ff        rst     38h
-0162 ff        rst     38h
+0162 d7        rst     10h
 0163 00        nop     
 0164 ff        rst     38h
 0165 ff        rst     38h
-0166 d676      sub     76h
-0168 2c        inc     l
-0169 69        ld      l,c
+0166 c359f7    jp      0f759h
+0169 a2        and     d
 016a 61        ld      h,c
 016b 64        ld      h,h
 016c 64        ld      h,h
@@ -353,13 +349,14 @@ PrintChar_SDSC:
 01b5 ff        rst     38h
 01b6 ff        rst     38h
 01b7 ff        rst     38h
-01b8 ff        rst     38h
+01b8 d7        rst     10h
 01b9 00        nop     
 01ba ff        rst     38h
 01bb ff        rst     38h
-01bc 70        ld      (hl),b
-01bd deb8      sbc     a,0b8h
-01bf b0        or      b
+01bc 5f        ld      e,a
+01bd c8        ret     z
+
+01be 28e9      jr      z,01a9h
 01c0 61        ld      h,c
 01c1 64        ld      h,h
 01c2 64        ld      h,h
@@ -432,13 +429,15 @@ PrintChar_SDSC:
 020b 00        nop     
 020c 00        nop     
 020d 00        nop     
-020e ff        rst     38h
+020e d7        rst     10h
 020f 00        nop     
 0210 00        nop     
 0211 00        nop     
-0212 42        ld      b,d
-0213 d6db      sub     0dbh
-0215 1661      ld      d,61h
+0212 48        ld      c,b
+0213 79        ld      a,c
+0214 93        sub     e
+0215 60        ld      h,b
+0216 61        ld      h,c
 0217 6c        ld      l,h
 0218 75        ld      (hl),l
 0219 6f        ld      l,a
@@ -502,16 +501,14 @@ PrintChar_SDSC:
 0257 00        nop     
 0258 00        nop     
 0259 ff        rst     38h
-025a ff        rst     38h
+025a d7        rst     10h
 025b 00        nop     
 025c 00        nop     
 025d 00        nop     
-025e ae        xor     (hl)
-025f e9        jp      (hl)
-0260 7b        ld      a,e
-0261 6e        ld      l,(hl)
-0262 61        ld      h,c
-0263 6c        ld      l,h
+025e 7f        ld      a,a
+025f 65        ld      h,l
+0260 0a        ld      a,(bc)
+0261 22616c    ld      (6c61h),hl
 0264 75        ld      (hl),l
 0265 6f        ld      l,a
 0266 70        ld      (hl),b
@@ -573,13 +570,12 @@ PrintChar_SDSC:
 02a2 00        nop     
 02a3 ff        rst     38h
 02a4 00        nop     
-02a5 ff        rst     38h
+02a5 d7        rst     10h
 02a6 00        nop     
 02a7 00        nop     
 02a8 00        nop     
-02a9 e43830    call    po,3038h
-02ac ce61      adc     a,61h
-02ae 6c        ld      l,h
+02a9 55        ld      d,l
+02aa ddfdc2616c  jp      nz,6c61h
 02af 75        ld      (hl),l
 02b0 6f        ld      l,a
 02b1 70        ld      (hl),b
@@ -641,14 +637,14 @@ PrintChar_SDSC:
 02ed ff        rst     38h
 02ee 00        nop     
 02ef 00        nop     
-02f0 ff        rst     38h
+02f0 d7        rst     10h
 02f1 00        nop     
 02f2 00        nop     
 02f3 00        nop     
-02f4 bb        cp      e
-02f5 29        add     hl,hl
-02f6 72        ld      (hl),d
-02f7 39        add     hl,sp
+02f4 b7        or      a
+02f5 14        inc     d
+02f6 53        ld      d,e
+02f7 60        ld      h,b
 02f8 61        ld      h,c
 02f9 6c        ld      l,h
 02fa 75        ld      (hl),l
@@ -712,13 +708,14 @@ PrintChar_SDSC:
 0338 00        nop     
 0339 00        nop     
 033a 00        nop     
-033b ff        rst     38h
+033b d7        rst     10h
 033c 00        nop     
 033d 00        nop     
 033e 00        nop     
-033f e3        ex      (sp),hl
-0340 44        ld      b,h
-0341 fd93      sub     e
+033f ba        cp      d
+0340 bc        cp      h
+0341 23        inc     hl
+0342 29        add     hl,hl
 0343 61        ld      h,c
 0344 6c        ld      l,h
 0345 75        ld      (hl),l
@@ -782,12 +779,12 @@ PrintChar_SDSC:
 0383 00        nop     
 0384 00        nop     
 0385 00        nop     
-0386 ff        rst     38h
+0386 d7        rst     10h
 0387 00        nop     
 0388 00        nop     
 0389 00        nop     
-038a 2c        inc     l
-038b f27318    jp      p,1873h
+038a 9f        sbc     a,a
+038b 2277c2    ld      (0c277h),hl
 038e 61        ld      h,c
 038f 6c        ld      l,h
 0390 75        ld      (hl),l
@@ -851,12 +848,14 @@ PrintChar_SDSC:
 03ce 00        nop     
 03cf 00        nop     
 03d0 00        nop     
-03d1 ff        rst     38h
+03d1 d7        rst     10h
 03d2 00        nop     
 03d3 00        nop     
 03d4 00        nop     
-03d5 dd48      ld      c,b
-03d7 e4c961    call    po,61c9h
+03d5 f7        rst     30h
+03d6 2e37      ld      l,37h
+03d8 a6        and     (hl)
+03d9 61        ld      h,c
 03da 6c        ld      l,h
 03db 75        ld      (hl),l
 03dc 6f        ld      l,a
@@ -919,12 +918,13 @@ PrintChar_SDSC:
 0419 00        nop     
 041a 00        nop     
 041b 00        nop     
-041c ff        rst     38h
+041c d7        rst     10h
 041d 00        nop     
 041e 00        nop     
 041f 00        nop     
-0420 f2b612    jp      p,12b6h
-0423 2f        cpl     
+0420 b2        or      d
+0421 fe08      cp      08h
+0423 0d        dec     c
 0424 61        ld      h,c
 0425 6c        ld      l,h
 0426 75        ld      (hl),l
@@ -991,13 +991,14 @@ PrintChar_SDSC:
 0467 00        nop     
 0468 00        nop     
 0469 00        nop     
-046a ff        rst     38h
+046a d7        rst     10h
 046b 00        nop     
 046c 00        nop     
 046d 00        nop     
-046e 0666      ld      b,66h
-0470 c7        rst     00h
-0471 11616c    ld      de,6c61h
+046e b5        or      l
+046f 1a        ld      a,(de)
+0470 3d        dec     a
+0471 ca616c    jp      z,6c61h
 0474 75        ld      (hl),l
 0475 6f        ld      l,a
 0476 70        ld      (hl),b
@@ -1054,13 +1055,15 @@ PrintChar_SDSC:
 04b2 00        nop     
 04b3 00        nop     
 04b4 00        nop     
-04b5 ff        rst     38h
+04b5 d7        rst     10h
 04b6 00        nop     
 04b7 00        nop     
 04b8 00        nop     
-04b9 77        ld      (hl),a
-04ba e682      and     82h
-04bc 27        daa     
+04b9 37        scf     
+04ba 1f        rra     
+04bb f8        ret     m
+
+04bc 23        inc     hl
 04bd 61        ld      h,c
 04be 6c        ld      l,h
 04bf 75        ld      (hl),l
@@ -1121,13 +1124,14 @@ PrintChar_SDSC:
 04ff 00        nop     
 0500 00        nop     
 0501 00        nop     
-0502 ff        rst     38h
+0502 d7        rst     10h
 0503 00        nop     
 0504 00        nop     
 0505 00        nop     
-0506 ccdc1a    call    z,1adch
-0509 3061      jr      nc,056ch
-050b 6c        ld      l,h
+0506 7b        ld      a,e
+0507 05        dec     b
+0508 7f        ld      a,a
+0509 ec616c    call    pe,6c61h
 050c 75        ld      (hl),l
 050d 6f        ld      l,a
 050e 70        ld      (hl),b
@@ -1186,13 +1190,13 @@ PrintChar_SDSC:
 054c 00        nop     
 054d 00        nop     
 054e 00        nop     
-054f ff        rst     38h
+054f d7        rst     10h
 0550 00        nop     
 0551 00        nop     
 0552 00        nop     
-0553 d9        exx     
-0554 61        ld      h,c
-0555 2ebe      ld      l,0beh
+0553 9e        sbc     a,(hl)
+0554 e7        rst     20h
+0555 f6c4      or      0c4h
 0557 61        ld      h,c
 0558 6c        ld      l,h
 0559 75        ld      (hl),l
@@ -1253,14 +1257,12 @@ PrintChar_SDSC:
 0599 00        nop     
 059a 00        nop     
 059b 00        nop     
-059c ff        rst     38h
+059c d7        rst     10h
 059d 00        nop     
 059e 00        nop     
 059f 00        nop     
-05a0 3d        dec     a
-05a1 6a        ld      l,d
-05a2 4e        ld      c,(hl)
-05a3 44        ld      b,h
+05a0 27        daa     
+05a1 ec13a6    call    pe,0a613h
 05a4 61        ld      h,c
 05a5 6c        ld      l,h
 05a6 75        ld      (hl),l
@@ -1318,14 +1320,14 @@ PrintChar_SDSC:
 05e6 00        nop     
 05e7 00        nop     
 05e8 00        nop     
-05e9 ff        rst     38h
+05e9 d7        rst     10h
 05ea 00        nop     
 05eb 00        nop     
 05ec 00        nop     
-05ed 6c        ld      l,h
-05ee 50        ld      d,b
-05ef 6e        ld      l,(hl)
-05f0 f4616c    call    p,6c61h
+05ed 2b        dec     hl
+05ee c2d52d    jp      nz,2dd5h
+05f1 61        ld      h,c
+05f2 6c        ld      l,h
 05f3 75        ld      (hl),l
 05f4 6f        ld      l,a
 05f5 70        ld      (hl),b
@@ -1467,10 +1469,10 @@ PrintChar_SDSC:
 0692 ff        rst     38h
 0693 00        nop     
 0694 00        nop     
-0695 a9        xor     c
+0695 4b        ld      c,e
 0696 37        scf     
-0697 a1        and     c
-0698 61        ld      h,c
+0697 45        ld      b,l
+0698 1d        dec     e
 0699 62        ld      h,d
 069a 69        ld      l,c
 069b 74        ld      (hl),h
@@ -1546,13 +1548,14 @@ PrintChar_SDSC:
 06ea 00        nop     
 06eb 00        nop     
 06ec 00        nop     
-06ed ff        rst     38h
+06ed d7        rst     10h
 06ee 00        nop     
 06ef 00        nop     
 06f0 00        nop     
-06f1 1000      djnz    06f3h
-06f3 88        adc     a,b
-06f4 7f        ld      a,a
+06f1 6b        ld      l,e
+06f2 7e        ld      a,(hl)
+06f3 b6        or      (hl)
+06f4 bf        cp      a
 06f5 63        ld      h,e
 06f6 70        ld      (hl),b
 06f7 64        ld      h,h
@@ -1612,15 +1615,14 @@ PrintChar_SDSC:
 0731 00        nop     
 0732 00        nop     
 0733 00        nop     
-0734 ff        rst     38h
+0734 d7        rst     10h
 0735 00        nop     
 0736 00        nop     
 0737 00        nop     
-0738 67        ld      h,a
-0739 59        ld      e,c
-073a 55        ld      d,l
-073b 05        dec     b
-073c 63        ld      h,e
+0738 74        ld      (hl),h
+0739 ba        cp      d
+073a f3        di      
+073b 1063      djnz    07a0h
 073d 70        ld      (hl),b
 073e 69        ld      l,c
 073f 3c        inc     a
@@ -1660,7 +1662,7 @@ PrintChar_SDSC:
 0764 00        nop     
 0765 00        nop     
 0766 00        nop     
-0767 ff        rst     38h
+0767 d7        rst     10h
 0768 00        nop     
 0769 00        nop     
 076a 00        nop     
@@ -1684,9 +1686,10 @@ PrintChar_SDSC:
 077c 00        nop     
 077d 00        nop     
 077e 00        nop     
-077f c6ea      add     a,0eah
-0781 3f        ccf     
-0782 85        add     a,l
+077f 70        ld      (hl),b
+0780 b7        or      a
+0781 45        ld      b,l
+0782 fb        ei      
 0783 3c        inc     a
 0784 73        ld      (hl),e
 0785 63        ld      h,e
@@ -1754,10 +1757,10 @@ PrintChar_SDSC:
 07c6 00        nop     
 07c7 00        nop     
 07c8 00        nop     
-07c9 c5        push    bc
-07ca ef        rst     28h
-07cb 74        ld      (hl),h
-07cc f9        ld      sp,hl
+07c9 63        ld      h,e
+07ca ae        xor     (hl)
+07cb 5a        ld      e,d
+07cc 13        inc     de
 07cd 63        ld      h,e
 07ce 70        ld      (hl),b
 07cf 6c        ld      l,h
@@ -1795,7 +1798,7 @@ PrintChar_SDSC:
 07f2 00        nop     
 07f3 00        nop     
 07f4 00        nop     
-07f5 ff        rst     38h
+07f5 d7        rst     10h
 07f6 ff        rst     38h
 07f7 00        nop     
 07f8 00        nop     
@@ -1819,10 +1822,10 @@ PrintChar_SDSC:
 080a 00        nop     
 080b 00        nop     
 080c 00        nop     
-080d 1f        rra     
-080e a9        xor     c
-080f be        cp      (hl)
-0810 4a        ld      c,d
+080d 9b        sbc     a,e
+080e 4b        ld      c,e
+080f a6        and     (hl)
+0810 75        ld      (hl),l
 0811 64        ld      h,h
 0812 61        ld      h,c
 0813 61        ld      h,c
@@ -1881,14 +1884,14 @@ PrintChar_SDSC:
 084a 00        nop     
 084b 00        nop     
 084c 00        nop     
-084d ff        rst     38h
+084d d7        rst     10h
 084e 00        nop     
 084f 00        nop     
 0850 00        nop     
-0851 89        adc     a,c
-0852 5c        ld      e,h
-0853 bf        cp      a
-0854 57        ld      d,a
+0851 d1        pop     de
+0852 88        adc     a,b
+0853 15        dec     d
+0854 a4        and     h
 0855 3c        inc     a
 0856 69        ld      l,c
 0857 6e        ld      l,(hl)
@@ -1952,15 +1955,13 @@ PrintChar_SDSC:
 0896 00        nop     
 0897 00        nop     
 0898 00        nop     
-0899 ff        rst     38h
+0899 d7        rst     10h
 089a 00        nop     
 089b 00        nop     
 089c 00        nop     
-089d 88        adc     a,b
-089e 42        ld      b,d
-089f f7        rst     30h
-08a0 a3        and     e
-08a1 3c        inc     a
+089d 5f        ld      e,a
+089e 68        ld      l,b
+089f 22643c    ld      (3c64h),hl
 08a2 69        ld      l,c
 08a3 6e        ld      l,(hl)
 08a4 63        ld      h,e
@@ -2021,15 +2022,12 @@ PrintChar_SDSC:
 08e2 00        nop     
 08e3 00        nop     
 08e4 00        nop     
-08e5 ff        rst     38h
+08e5 d7        rst     10h
 08e6 00        nop     
 08e7 00        nop     
 08e8 00        nop     
-08e9 7c        ld      a,h
-08ea 2886      jr      z,0872h
-08ec 5e        ld      e,(hl)
-08ed 3c        inc     a
-08ee 69        ld      l,c
+08e9 d2ae3b    jp      nc,3baeh
+08ec ec3c69    call    pe,693ch
 08ef 6e        ld      l,(hl)
 08f0 63        ld      h,e
 08f1 7c        ld      a,h
@@ -2093,13 +2091,14 @@ PrintChar_SDSC:
 092f 00        nop     
 0930 00        nop     
 0931 00        nop     
-0932 ff        rst     38h
+0932 d7        rst     10h
 0933 00        nop     
 0934 00        nop     
 0935 00        nop     
-0936 28ca      jr      z,0902h
-0938 b0        or      b
-0939 113c69    ld      de,693ch
+0936 c28455    jp      nz,5584h
+0939 4c        ld      c,h
+093a 3c        inc     a
+093b 69        ld      l,c
 093c 6e        ld      l,(hl)
 093d 63        ld      h,e
 093e 7c        ld      a,h
@@ -2158,14 +2157,13 @@ PrintChar_SDSC:
 097b 00        nop     
 097c 00        nop     
 097d 00        nop     
-097e ff        rst     38h
+097e d7        rst     10h
 097f 00        nop     
 0980 00        nop     
 0981 00        nop     
-0982 e3        ex      (sp),hl
-0983 58        ld      e,b
-0984 8b        adc     a,e
-0985 40        ld      b,b
+0982 45        ld      b,l
+0983 23        inc     hl
+0984 de10      sbc     a,10h
 0986 3c        inc     a
 0987 69        ld      l,c
 0988 6e        ld      l,(hl)
@@ -2228,13 +2226,13 @@ PrintChar_SDSC:
 09c7 00        nop     
 09c8 00        nop     
 09c9 00        nop     
-09ca ff        rst     38h
+09ca d7        rst     10h
 09cb 00        nop     
 09cc 00        nop     
 09cd 00        nop     
-09ce c6d6      add     a,0d6h
-09d0 4c        ld      c,h
-09d1 1f        rra     
+09ce ae        xor     (hl)
+09cf c6d4      add     a,0d4h
+09d1 2c        inc     l
 09d2 3c        inc     a
 09d3 69        ld      l,c
 09d4 6e        ld      l,(hl)
@@ -2297,15 +2295,14 @@ PrintChar_SDSC:
 0a14 00        nop     
 0a15 00        nop     
 0a16 00        nop     
-0a17 ff        rst     38h
+0a17 d7        rst     10h
 0a18 00        nop     
 0a19 00        nop     
 0a1a 00        nop     
-0a1b 46        ld      b,(hl)
-0a1c 0ecf      ld      c,0cfh
-0a1e 92        sub     d
-0a1f 3c        inc     a
-0a20 69        ld      l,c
+0a1b e1        pop     hl
+0a1c 75        ld      (hl),l
+0a1d af        xor     a
+0a1e cc3c69    call    z,693ch
 0a21 6e        ld      l,(hl)
 0a22 63        ld      h,e
 0a23 7c        ld      a,h
@@ -2363,14 +2360,15 @@ PrintChar_SDSC:
 0a60 00        nop     
 0a61 00        nop     
 0a62 00        nop     
-0a63 ff        rst     38h
+0a63 d7        rst     10h
 0a64 00        nop     
 0a65 00        nop     
 0a66 00        nop     
-0a67 ef        rst     28h
-0a68 a0        and     b
-0a69 f9        ld      sp,hl
-0a6a dc3c69    call    c,693ch
+0a67 1c        inc     e
+0a68 ed84      db      0edh, 84h        ; Undocumented 8 T-State NOP
+0a6a 7d        ld      a,l
+0a6b 3c        inc     a
+0a6c 69        ld      l,c
 0a6d 6e        ld      l,(hl)
 0a6e 63        ld      h,e
 0a6f 7c        ld      a,h
@@ -2429,12 +2427,12 @@ PrintChar_SDSC:
 0aac 00        nop     
 0aad 00        nop     
 0aae 00        nop     
-0aaf ff        rst     38h
+0aaf d7        rst     10h
 0ab0 00        nop     
 0ab1 00        nop     
 0ab2 00        nop     
-0ab3 f489fa    call    p,0fa89h
-0ab6 b6        or      (hl)
+0ab3 fc0d6d    call    m,6d0dh
+0ab6 4a        ld      c,d
 0ab7 3c        inc     a
 0ab8 69        ld      l,c
 0ab9 6e        ld      l,(hl)
@@ -2498,16 +2496,14 @@ PrintChar_SDSC:
 0af9 00        nop     
 0afa 00        nop     
 0afb 00        nop     
-0afc ff        rst     38h
+0afc d7        rst     10h
 0afd 00        nop     
 0afe 00        nop     
 0aff 00        nop     
-0b00 f1        pop     af
-0b01 88        adc     a,b
-0b02 62        ld      h,d
-0b03 04        inc     b
-0b04 3c        inc     a
-0b05 69        ld      l,c
+0b00 a5        and     l
+0b01 4d        ld      c,l
+0b02 be        cp      (hl)
+0b03 313c69    ld      sp,693ch
 0b06 6e        ld      l,(hl)
 0b07 63        ld      h,e
 0b08 7c        ld      a,h
@@ -2568,14 +2564,16 @@ PrintChar_SDSC:
 0b46 00        nop     
 0b47 00        nop     
 0b48 00        nop     
-0b49 ff        rst     38h
+0b49 d7        rst     10h
 0b4a 00        nop     
 0b4b 00        nop     
 0b4c 00        nop     
-0b4d 57        ld      d,a
-0b4e eb        ex      de,hl
-0b4f 0f        rrca    
-0b50 f43c69    call    p,693ch
+0b4d 50        ld      d,b
+0b4e 5d        ld      e,l
+0b4f 51        ld      d,c
+0b50 a3        and     e
+0b51 3c        inc     a
+0b52 69        ld      l,c
 0b53 6e        ld      l,(hl)
 0b54 63        ld      h,e
 0b55 7c        ld      a,h
@@ -2637,14 +2635,12 @@ PrintChar_SDSC:
 0b93 00        nop     
 0b94 00        nop     
 0b95 00        nop     
-0b96 ff        rst     38h
+0b96 d7        rst     10h
 0b97 00        nop     
 0b98 00        nop     
 0b99 00        nop     
-0b9a b6        or      (hl)
-0b9b 53        ld      d,e
-0b9c 88        adc     a,b
-0b9d 94        sub     h
+0b9a 56        ld      d,(hl)
+0b9b cd06f3    call    0f306h
 0b9e 3c        inc     a
 0b9f 69        ld      l,c
 0ba0 6e        ld      l,(hl)
@@ -2708,13 +2704,14 @@ PrintChar_SDSC:
 0bdf 00        nop     
 0be0 00        nop     
 0be1 00        nop     
-0be2 ff        rst     38h
+0be2 d7        rst     10h
 0be3 00        nop     
 0be4 00        nop     
 0be5 00        nop     
-0be6 64        ld      h,h
-0be7 0e3d      ld      c,3dh
-0be9 80        add     a,b
+0be6 46        ld      b,(hl)
+0be7 76        halt    
+0be8 1d        dec     e
+0be9 6b        ld      l,e
 0bea 3c        inc     a
 0beb 69        ld      l,c
 0bec 6e        ld      l,(hl)
@@ -2777,13 +2774,14 @@ PrintChar_SDSC:
 0c2e 00        nop     
 0c2f 00        nop     
 0c30 00        nop     
-0c31 ff        rst     38h
+0c31 d7        rst     10h
 0c32 00        nop     
 0c33 00        nop     
 0c34 00        nop     
-0c35 cb40      bit     0,b
-0c37 b1        or      c
-0c38 82        add     a,d
+0c35 5d        ld      e,l
+0c36 ac        xor     h
+0c37 d5        push    de
+0c38 27        daa     
 0c39 3c        inc     a
 0c3a 69        ld      l,c
 0c3b 6e        ld      l,(hl)
@@ -2844,14 +2842,14 @@ PrintChar_SDSC:
 0c7b 00        nop     
 0c7c 00        nop     
 0c7d 00        nop     
-0c7e ff        rst     38h
+0c7e d7        rst     10h
 0c7f 00        nop     
 0c80 00        nop     
 0c81 00        nop     
-0c82 8d        adc     a,l
-0c83 24        inc     h
-0c84 9a        sbc     a,d
-0c85 60        ld      h,b
+0c82 88        adc     a,b
+0c83 97        sub     a
+0c84 c7        rst     00h
+0c85 15        dec     d
 0c86 3c        inc     a
 0c87 69        ld      l,c
 0c88 6e        ld      l,(hl)
@@ -2916,16 +2914,15 @@ PrintChar_SDSC:
 0cd1 00        nop     
 0cd2 00        nop     
 0cd3 00        nop     
-0cd4 ff        rst     38h
+0cd4 d7        rst     10h
 0cd5 00        nop     
 0cd6 00        nop     
 0cd7 00        nop     
-0cd8 0f        rrca    
-0cd9 53        ld      d,e
-0cda b4        or      h
-0cdb 7d        ld      a,l
-0cdc 3c        inc     a
-0cdd 69        ld      l,c
+0cd8 cf        rst     08h
+0cd9 c8        ret     z
+
+0cda b6        or      (hl)
+0cdb 223c69    ld      (693ch),hl
 0cde 6e        ld      l,(hl)
 0cdf 63        ld      h,e
 0ce0 7c        ld      a,h
@@ -2984,14 +2981,13 @@ PrintChar_SDSC:
 0d1f 00        nop     
 0d20 00        nop     
 0d21 00        nop     
-0d22 ff        rst     38h
+0d22 d7        rst     10h
 0d23 00        nop     
 0d24 00        nop     
 0d25 00        nop     
-0d26 1d        dec     e
-0d27 0675      ld      b,75h
-0d29 78        ld      a,b
-0d2a 3c        inc     a
+0d26 bb        cp      e
+0d27 96        sub     (hl)
+0d28 e4c13c    call    po,3cc1h
 0d2b 69        ld      l,c
 0d2c 6e        ld      l,(hl)
 0d2d 63        ld      h,e
@@ -3052,14 +3048,14 @@ PrintChar_SDSC:
 0d6d 00        nop     
 0d6e 00        nop     
 0d6f 00        nop     
-0d70 ff        rst     38h
+0d70 d7        rst     10h
 0d71 00        nop     
 0d72 00        nop     
 0d73 00        nop     
-0d74 d6ad      sub     0adh
-0d76 e1        pop     hl
-0d77 61        ld      h,c
-0d78 3c        inc     a
+0d74 58        ld      e,b
+0d75 07        rlca    
+0d76 24        inc     h
+0d77 ce3c      adc     a,3ch
 0d79 69        ld      l,c
 0d7a 6e        ld      l,(hl)
 0d7b 63        ld      h,e
@@ -3123,13 +3119,14 @@ PrintChar_SDSC:
 0dbb 00        nop     
 0dbc 00        nop     
 0dbd 00        nop     
-0dbe ff        rst     38h
+0dbe d7        rst     10h
 0dbf 00        nop     
 0dc0 00        nop     
 0dc1 00        nop     
-0dc2 283a      jr      z,0dfeh
-0dc4 9a        sbc     a,d
-0dc5 3d        dec     a
+0dc2 29        add     hl,hl
+0dc3 b5        or      l
+0dc4 0d        dec     c
+0dc5 35        dec     (hl)
 0dc6 3c        inc     a
 0dc7 69        ld      l,c
 0dc8 6e        ld      l,(hl)
@@ -3910,12 +3907,13 @@ PrintChar_SDSC:
 1135 00        nop     
 1136 00        nop     
 1137 00        nop     
-1138 ff        rst     38h
+1138 d7        rst     10h
 1139 ff        rst     38h
 113a 00        nop     
 113b 00        nop     
-113c dc37bb    call    c,0bb37h
-113f a6        and     (hl)
+113c 24        inc     h
+113d 39        add     hl,sp
+113e f60d      or      0dh
 1140 6c        ld      l,h
 1141 64        ld      h,h
 1142 2061      jr      nz,11a5h
@@ -4445,14 +4443,13 @@ PrintChar_SDSC:
 1391 ff        rst     38h
 1392 ff        rst     38h
 1393 ff        rst     38h
-1394 ff        rst     38h
+1394 d7        rst     10h
 1395 ff        rst     38h
 1396 00        nop     
 1397 00        nop     
-1398 1842      jr      13dch
-139a d8        ret     c
-
-139b 4b        ld      c,e
+1398 5d        ld      e,l
+1399 1e1c      ld      e,1ch
+139b 64        ld      h,h
 139c 6c        ld      l,h
 139d 64        ld      h,h
 139e 203c      jr      nz,13dch
@@ -4547,14 +4544,14 @@ PrintChar_SDSC:
 13ff ff        rst     38h
 1400 ff        rst     38h
 1401 ff        rst     38h
-1402 ff        rst     38h
+1402 d7        rst     10h
 1403 ff        rst     38h
 1404 00        nop     
 1405 00        nop     
-1406 2b        dec     hl
-1407 bb        cp      e
-1408 02        ld      (bc),a
-1409 52        ld      d,d
+1406 4c        ld      c,h
+1407 9e        sbc     a,(hl)
+1408 4b        ld      c,e
+1409 7b        ld      a,e
 140a 6c        ld      l,h
 140b 64        ld      h,h
 140c 203c      jr      nz,144ah
@@ -4680,12 +4677,14 @@ PrintChar_SDSC:
 1497 00        nop     
 1498 00        nop     
 1499 00        nop     
-149a ff        rst     38h
+149a d7        rst     10h
 149b ff        rst     38h
 149c 00        nop     
 149d 00        nop     
-149e 063a      ld      b,3ah
-14a0 dbd9      in      a,(0d9h)
+149e c9        ret     
+
+149f 262d      ld      h,2dh
+14a1 e5        push    hl
 14a2 6c        ld      l,h
 14a3 64        ld      h,h
 14a4 2061      jr      nz,1507h
@@ -4759,14 +4758,15 @@ PrintChar_SDSC:
 14f3 00        nop     
 14f4 00        nop     
 14f5 00        nop     
-14f6 ff        rst     38h
+14f6 d7        rst     10h
 14f7 00        nop     
 14f8 00        nop     
 14f9 00        nop     
-14fa 03        inc     bc
-14fb a4        and     h
-14fc fb        ei      
-14fd 216c64    ld      hl,646ch
+14fa f8        ret     m
+
+14fb 2148b7    ld      hl,0b748h
+14fe 6c        ld      l,h
+14ff 64        ld      h,h
 1500 64        ld      h,h
 1501 3c        inc     a
 1502 72        ld      (hl),d
@@ -4825,12 +4825,12 @@ PrintChar_SDSC:
 153e 00        nop     
 153f 00        nop     
 1540 00        nop     
-1541 ff        rst     38h
+1541 d7        rst     10h
 1542 00        nop     
 1543 00        nop     
 1544 00        nop     
-1545 e4e46a    call    po,6ae4h
-1548 92        sub     d
+1545 e22ab3    jp      po,0b32ah
+1548 0f        rrca    
 1549 6c        ld      l,h
 154a 64        ld      h,h
 154b 64        ld      h,h
@@ -4890,15 +4890,14 @@ PrintChar_SDSC:
 1589 00        nop     
 158a 00        nop     
 158b 00        nop     
-158c ff        rst     38h
+158c d7        rst     10h
 158d 00        nop     
 158e 00        nop     
 158f 00        nop     
-1590 12        ld      (de),a
-1591 6e        ld      l,(hl)
-1592 18dc      jr      1570h
-1594 6c        ld      l,h
-1595 64        ld      h,h
+1590 47        ld      b,a
+1591 00        nop     
+1592 98        sbc     a,b
+1593 d46c64    call    nc,646ch
 1596 69        ld      l,c
 1597 3c        inc     a
 1598 72        ld      (hl),d
@@ -4959,13 +4958,13 @@ PrintChar_SDSC:
 15d4 00        nop     
 15d5 00        nop     
 15d6 00        nop     
-15d7 ff        rst     38h
+15d7 d7        rst     10h
 15d8 00        nop     
 15d9 00        nop     
 15da 00        nop     
-15db 34        inc     (hl)
-15dc 56        ld      d,(hl)
-15dd db83      in      a,(83h)
+15db 382f      jr      c,160ch
+15dd a5        and     l
+15de 23        inc     hl
 15df 6c        ld      l,h
 15e0 64        ld      h,h
 15e1 69        ld      l,c
@@ -5003,7 +5002,7 @@ PrintChar_SDSC:
 160b 00        nop     
 160c 00        nop     
 160d 00        nop     
-160e ff        rst     38h
+160e d7        rst     10h
 160f ff        rst     38h
 1610 00        nop     
 1611 00        nop     
@@ -5027,9 +5026,10 @@ PrintChar_SDSC:
 1623 00        nop     
 1624 00        nop     
 1625 00        nop     
-1626 1ef6      ld      e,0f6h
-1628 65        ld      h,l
-1629 15        dec     d
+1626 6a        ld      l,d
+1627 3c        inc     a
+1628 3b        dec     sp
+1629 bd        cp      l
 162a 6e        ld      l,(hl)
 162b 65        ld      h,l
 162c 67        ld      h,a
@@ -5085,14 +5085,12 @@ PrintChar_SDSC:
 1663 00        nop     
 1664 00        nop     
 1665 00        nop     
-1666 ff        rst     38h
+1666 d7        rst     10h
 1667 ff        rst     38h
 1668 00        nop     
 1669 00        nop     
-166a 27        daa     
-166b 66        ld      h,(hl)
-166c bb        cp      e
-166d 62        ld      h,d
+166a f7        rst     30h
+166b da9257    jp      c,5792h
 166e 3c        inc     a
 166f 72        ld      (hl),d
 1670 72        ld      (hl),d
@@ -5152,12 +5150,13 @@ PrintChar_SDSC:
 16ad 00        nop     
 16ae 00        nop     
 16af 00        nop     
-16b0 ff        rst     38h
+16b0 d7        rst     10h
 16b1 00        nop     
 16b2 00        nop     
 16b3 00        nop     
-16b4 fa4801    jp      m,0148h
-16b7 29        add     hl,hl
+16b4 25        dec     h
+16b5 13        inc     de
+16b6 30ae      jr      nc,1666h
 16b8 3c        inc     a
 16b9 72        ld      (hl),d
 16ba 6c        ld      l,h
@@ -5231,10 +5230,8 @@ PrintChar_SDSC:
 1706 00        nop     
 1707 00        nop     
 1708 b4        or      h
-1709 34        inc     (hl)
-170a 7c        ld      a,h
-170b 81        add     a,c
-170c 73        ld      (hl),e
+1709 0e85      ld      c,85h
+170b cb73      bit     6,e
 170d 68        ld      l,b
 170e 66        ld      h,(hl)
 170f 2f        cpl     
@@ -5308,10 +5305,10 @@ PrintChar_SDSC:
 1759 ff        rst     38h
 175a 00        nop     
 175b 00        nop     
-175c 15        dec     d
-175d 0c        inc     c
-175e 42        ld      b,d
-175f ed3c      db      0edh, 3ch        ; Undocumented 8 T-State NOP
+175c ee0c      xor     0ch
+175e 82        add     a,d
+175f 8b        adc     a,e
+1760 3c        inc     a
 1761 72        ld      (hl),d
 1762 6c        ld      l,h
 1763 63        ld      h,e
@@ -5416,15 +5413,14 @@ PrintChar_SDSC:
 17ca ff        rst     38h
 17cb ff        rst     38h
 17cc ff        rst     38h
-17cd ff        rst     38h
+17cd d7        rst     10h
 17ce ff        rst     38h
 17cf 00        nop     
 17d0 00        nop     
-17d1 fdac      xor     iyh
-17d3 f7        rst     30h
-17d4 00        nop     
-17d5 3c        inc     a
-17d6 73        ld      (hl),e
+17d1 90        sub     b
+17d2 aa        xor     d
+17d3 19        add     hl,de
+17d4 cd3c73    call    733ch
 17d7 65        ld      h,l
 17d8 74        ld      (hl),h
 17d9 7c        ld      a,h
@@ -5506,13 +5502,14 @@ PrintChar_SDSC:
 182c 00        nop     
 182d 00        nop     
 182e 00        nop     
-182f ff        rst     38h
+182f d7        rst     10h
 1830 00        nop     
 1831 00        nop     
 1832 00        nop     
-1833 dbf4      in      a,(0f4h)
-1835 71        ld      (hl),c
-1836 a8        xor     b
+1833 17        rla     
+1834 7e        ld      a,(hl)
+1835 3c        inc     a
+1836 b8        cp      b
 1837 3c        inc     a
 1838 73        ld      (hl),e
 1839 65        ld      h,l
@@ -7945,10 +7942,10 @@ PrintChar_SDSC:
 2438 112c00    ld      de,002ch
 243b 19        add     hl,de
 243c eb        ex      de,hl
-243d cdf428    call    28f4h ; OutputText
+243d cdf428    call    28f4h
 2440 3e20      ld      a,20h
-2442 cd0829    call    2908h ; PrintChar
-2445 cd2e2c    call    2c2eh
+2442 cd0829    call    2908h
+2445 cd332c    call    2c33h
 2448 3a99c0    ld      a,(0c099h)
 244b fe76      cp      76h
 244d 2812      jr      z,2461h
@@ -7957,7 +7954,7 @@ PrintChar_SDSC:
 2453 c25b24    jp      nz,245bh
 2456 3a9ac0    ld      a,(0c09ah)
 2459 fe76      cp      76h
-245b c482c0    call    nz,0c082h ; TestInRAM
+245b c482c0    call    nz,0c082h
 245e cde825    call    25e8h
 2461 cd8725    call    2587h
 2464 c4aa25    call    nz,25aah
@@ -7982,20 +7979,20 @@ PrintChar_SDSC:
 2491 c34824    jp      2448h
 2494 113c00    ld      de,003ch
 2497 19        add     hl,de
-2498 cd192c    call    2c19h
-249b 118a29    ld      de,298ah
+2498 cd1e2c    call    2c1eh
+249b 118829    ld      de,2988h
 249e cabb24    jp      z,24bbh
 24a1 e5        push    hl
 24a2 215cc0    ld      hl,0c05ch
-24a5 118e29    ld      de,298eh
-24a8 cdf428    call    28f4h ; OutputText
+24a5 118c29    ld      de,298ch
+24a8 cdf428    call    28f4h
 24ab cdc628    call    28c6h
-24ae 119529    ld      de,2995h
-24b1 cdf428    call    28f4h ; Output Text
+24ae 119329    ld      de,2993h
+24b1 cdf428    call    28f4h
 24b4 e1        pop     hl
 24b5 cdc628    call    28c6h
-24b8 11a029    ld      de,29a0h
-24bb cdf428    call    28f4h ; Output Text
+24b8 119e29    ld      de,299eh
+24bb cdf428    call    28f4h
 24be e1        pop     hl
 24bf 23        inc     hl
 24c0 23        inc     hl
@@ -8244,8 +8241,6 @@ PrintChar_SDSC:
 261d 2d        dec     l
 261e 5c        ld      e,h
 261f 7c        ld      a,h
-
-PrintChar_SMS:
 2620 f5        push    af
 2621 d5        push    de
 2622 fe0d      cp      0dh
@@ -8466,8 +8461,6 @@ PrintChar_SMS:
 2793 210d37    ld      hl,370dh
 2796 23        inc     hl
 2797 07        rlca    
-
-Initialise_Screen:
 2798 f5        push    af
 2799 c5        push    bc
 279a d5        push    de
@@ -8629,14 +8622,13 @@ Initialise_Screen:
 28c4 f1        pop     af
 28c5 c9        ret     
 
-PrintHex32:
 28c6 f5        push    af
 28c7 c5        push    bc
 28c8 e5        push    hl
 28c9 0604      ld      b,04h
 28cb c5        push    bc
 28cc 7e        ld      a,(hl)
-28cd cdd828    call    28d8h; PrintByte
+28cd cdd828    call    28d8h
 28d0 23        inc     hl
 28d1 c1        pop     bc
 28d2 10f7      djnz    28cbh
@@ -8645,16 +8637,13 @@ PrintHex32:
 28d6 f1        pop     af
 28d7 c9        ret     
 
-PrintByte:
 28d8 f5        push    af
 28d9 0f        rrca    
 28da 0f        rrca    
 28db 0f        rrca    
 28dc 0f        rrca    
-28dd cde128    call    28e1h ; PrintNibble
+28dd cde128    call    28e1h
 28e0 f1        pop     af
-
-PrintNibble:
 28e1 c5        push    bc
 28e2 e5        push    hl
 28e3 e60f      and     0fh
@@ -8662,12 +8651,11 @@ PrintNibble:
 28e7 daec28    jp      c,28ech
 28ea c627      add     a,27h
 28ec c630      add     a,30h
-28ee cd0829    call    2908h ; PrintChar
+28ee cd0829    call    2908h
 28f1 e1        pop     hl
 28f2 c1        pop     bc
 28f3 c9        ret     
 
-OutputText:
 28f4 f5        push    af
 28f5 c5        push    bc
 28f6 d5        push    de
@@ -8675,7 +8663,7 @@ OutputText:
 28f8 1a        ld      a,(de)
 28f9 fe00      cp      00h
 28fb 2806      jr      z,2903h
-28fd cd0829    call    2908h ; PrintChar
+28fd cd0829    call    2908h
 2900 13        inc     de
 2901 18f5      jr      28f8h
 2903 e1        pop     hl
@@ -8684,625 +8672,617 @@ OutputText:
 2906 f1        pop     af
 2907 c9        ret     
 
-PrintChar:
 2908 e5        push    hl
-2909 cd5900    call    0059h ; PrintChar_SDSC
-290c cd2026    call    2620h ; PrintChar_SMS
-290f cd0e2c    call    2c0eh ; PrintChar_SRAM
+2909 cd5900    call    0059h
+290c cd2026    call    2620h
+290f cd132c    call    2c13h
 2912 e1        pop     hl
 2913 c9        ret     
 
-2914 55        ld      d,l
-2915 6e        ld      l,(hl)
-2916 64        ld      h,h
-2917 6f        ld      l,a
-2918 63        ld      h,e
-2919 75        ld      (hl),l
-291a 6d        ld      l,l
-291b 65        ld      h,l
-291c 6e        ld      l,(hl)
-291d 74        ld      (hl),h
-291e 65        ld      h,l
-291f 64        ld      h,h
-2920 2066      jr      nz,2988h
-2922 6c        ld      l,h
-2923 61        ld      h,c
-2924 67        ld      h,a
-2925 73        ld      (hl),e
-2926 2076      jr      nz,299eh
-2928 65        ld      h,l
-2929 72        ld      (hl),d
-292a 73        ld      (hl),e
-292b 69        ld      l,c
-292c 6f        ld      l,a
-292d 6e        ld      l,(hl)
-292e 0d        dec     c
-292f 4f        ld      c,a
-2930 75        ld      (hl),l
-2931 74        ld      (hl),h
-2932 70        ld      (hl),b
-2933 75        ld      (hl),l
-2934 74        ld      (hl),h
-2935 73        ld      (hl),e
-2936 3a0d00    ld      a,(000dh)
-2939 2a2053    ld      hl,(5320h)
-293c 44        ld      b,h
-293d 53        ld      d,e
-293e 43        ld      b,e
-293f 2044      jr      nz,2985h
-2941 65        ld      h,l
-2942 62        ld      h,d
-2943 75        ld      (hl),l
-2944 67        ld      h,a
-2945 2043      jr      nz,298ah
-2947 6f        ld      l,a
-2948 6e        ld      l,(hl)
-2949 73        ld      (hl),e
-294a 6f        ld      l,a
-294b 6c        ld      l,h
-294c 65        ld      h,l
-294d 0d        dec     c
-294e 00        nop     
-294f 2a2053    ld      hl,(5320h)
-2952 52        ld      d,d
-2953 41        ld      b,c
-2954 4d        ld      c,l
-2955 0d        dec     c
-2956 00        nop     
-2957 2a2053    ld      hl,(5320h)
-295a 4d        ld      c,l
-295b 53        ld      d,e
-295c 204d      jr      nz,29abh
-295e 6f        ld      l,a
-295f 64        ld      h,h
-2960 65        ld      h,l
-2961 2034      jr      nz,2997h
-2963 0d        dec     c
-2964 00        nop     
-2965 2a2054    ld      hl,(5420h)
-2968 4d        ld      c,l
-2969 53        ld      d,e
-296a 39        add     hl,sp
-296b 39        add     hl,sp
-296c 313820    ld      sp,2038h
-296f 54        ld      d,h
-2970 65        ld      h,l
-2971 78        ld      a,b
-2972 74        ld      (hl),h
-2973 204d      jr      nz,29c2h
-2975 6f        ld      l,a
-2976 64        ld      h,h
-2977 65        ld      h,l
-2978 0d        dec     c
-2979 00        nop     
-297a 54        ld      d,h
-297b 65        ld      h,l
+2914 44        ld      b,h
+2915 6f        ld      l,a
+2916 63        ld      h,e
+2917 75        ld      (hl),l
+2918 6d        ld      l,l
+2919 65        ld      h,l
+291a 6e        ld      l,(hl)
+291b 74        ld      (hl),h
+291c 65        ld      h,l
+291d 64        ld      h,h
+291e 2066      jr      nz,2986h
+2920 6c        ld      l,h
+2921 61        ld      h,c
+2922 67        ld      h,a
+2923 73        ld      (hl),e
+2924 2076      jr      nz,299ch
+2926 65        ld      h,l
+2927 72        ld      (hl),d
+2928 73        ld      (hl),e
+2929 69        ld      l,c
+292a 6f        ld      l,a
+292b 6e        ld      l,(hl)
+292c 0d        dec     c
+292d 4f        ld      c,a
+292e 75        ld      (hl),l
+292f 74        ld      (hl),h
+2930 70        ld      (hl),b
+2931 75        ld      (hl),l
+2932 74        ld      (hl),h
+2933 73        ld      (hl),e
+2934 3a0d00    ld      a,(000dh)
+2937 2a2053    ld      hl,(5320h)
+293a 44        ld      b,h
+293b 53        ld      d,e
+293c 43        ld      b,e
+293d 2044      jr      nz,2983h
+293f 65        ld      h,l
+2940 62        ld      h,d
+2941 75        ld      (hl),l
+2942 67        ld      h,a
+2943 2043      jr      nz,2988h
+2945 6f        ld      l,a
+2946 6e        ld      l,(hl)
+2947 73        ld      (hl),e
+2948 6f        ld      l,a
+2949 6c        ld      l,h
+294a 65        ld      h,l
+294b 0d        dec     c
+294c 00        nop     
+294d 2a2053    ld      hl,(5320h)
+2950 52        ld      d,d
+2951 41        ld      b,c
+2952 4d        ld      c,l
+2953 0d        dec     c
+2954 00        nop     
+2955 2a2053    ld      hl,(5320h)
+2958 4d        ld      c,l
+2959 53        ld      d,e
+295a 204d      jr      nz,29a9h
+295c 6f        ld      l,a
+295d 64        ld      h,h
+295e 65        ld      h,l
+295f 2034      jr      nz,2995h
+2961 0d        dec     c
+2962 00        nop     
+2963 2a2054    ld      hl,(5420h)
+2966 4d        ld      c,l
+2967 53        ld      d,e
+2968 39        add     hl,sp
+2969 39        add     hl,sp
+296a 313820    ld      sp,2038h
+296d 54        ld      d,h
+296e 65        ld      h,l
+296f 78        ld      a,b
+2970 74        ld      (hl),h
+2971 204d      jr      nz,29c0h
+2973 6f        ld      l,a
+2974 64        ld      h,h
+2975 65        ld      h,l
+2976 0d        dec     c
+2977 00        nop     
+2978 54        ld      d,h
+2979 65        ld      h,l
+297a 73        ld      (hl),e
+297b 74        ld      (hl),h
 297c 73        ld      (hl),e
-297d 74        ld      (hl),h
-297e 73        ld      (hl),e
-297f 2063      jr      nz,29e4h
-2981 6f        ld      l,a
-2982 6d        ld      l,l
-2983 70        ld      (hl),b
-2984 6c        ld      l,h
+297d 2063      jr      nz,29e2h
+297f 6f        ld      l,a
+2980 6d        ld      l,l
+2981 70        ld      (hl),b
+2982 6c        ld      l,h
+2983 65        ld      h,l
+2984 74        ld      (hl),h
 2985 65        ld      h,l
-2986 74        ld      (hl),h
-2987 65        ld      h,l
-2988 0d        dec     c
-2989 00        nop     
-298a 4f        ld      c,a
-298b 4b        ld      c,e
+2986 0d        dec     c
+2987 00        nop     
+2988 4f        ld      c,a
+2989 4b        ld      c,e
+298a 0d        dec     c
+298b 00        nop     
 298c 0d        dec     c
-298d 00        nop     
-298e 0d        dec     c
-298f 2043      jr      nz,29d4h
-2991 52        ld      d,d
-2992 43        ld      b,e
-2993 2000      jr      nz,2995h
-2995 2065      jr      nz,29fch
-2997 78        ld      a,b
-2998 70        ld      (hl),b
-2999 65        ld      h,l
-299a 63        ld      h,e
-299b 74        ld      (hl),h
-299c 65        ld      h,l
-299d 64        ld      h,h
-299e 2000      jr      nz,29a0h
-29a0 0d        dec     c
-29a1 00        nop     
-29a2 42        ld      b,d
-29a3 61        ld      h,c
-29a4 73        ld      (hl),e
-29a5 65        ld      h,l
-29a6 64        ld      h,h
-29a7 206f      jr      nz,2a18h
-29a9 6e        ld      l,(hl)
-29aa 205a      jr      nz,2a06h
-29ac 45        ld      b,l
-29ad 58        ld      e,b
-29ae 41        ld      b,c
-29af 4c        ld      c,h
-29b0 4c        ld      c,h
-29b1 2062      jr      nz,2a15h
-29b3 79        ld      a,c
-29b4 2046      jr      nz,29fch
-29b6 72        ld      (hl),d
-29b7 61        ld      h,c
-29b8 6e        ld      l,(hl)
-29b9 6b        ld      l,e
-29ba 2043      jr      nz,29ffh
-29bc 72        ld      (hl),d
-29bd 69        ld      l,c
-29be 6e        ld      l,(hl)
-29bf 67        ld      h,a
-29c0 6c        ld      l,h
-29c1 65        ld      h,l
-29c2 2c        inc     l
-29c3 2077      jr      nz,2a3ch
-29c5 69        ld      l,c
-29c6 74        ld      (hl),h
-29c7 68        ld      l,b
-29c8 2063      jr      nz,2a2dh
-29ca 72        ld      (hl),d
-29cb 65        ld      h,l
-29cc 64        ld      h,h
-29cd 69        ld      l,c
-29ce 74        ld      (hl),h
-29cf 2074      jr      nz,2a45h
-29d1 6f        ld      l,a
-29d2 204a      jr      nz,2a1eh
-29d4 2e47      ld      l,47h
-29d6 2e48      ld      l,48h
-29d8 61        ld      h,c
-29d9 72        ld      (hl),d
-29da 73        ld      (hl),e
-29db 74        ld      (hl),h
-29dc 6f        ld      l,a
-29dd 6e        ld      l,(hl)
-29de 0a        ld      a,(bc)
-29df 53        ld      d,e
-29e0 65        ld      h,l
-29e1 65        ld      h,l
-29e2 2068      jr      nz,2a4ch
-29e4 74        ld      (hl),h
-29e5 74        ld      (hl),h
-29e6 70        ld      (hl),b
-29e7 73        ld      (hl),e
-29e8 3a2f2f    ld      a,(2f2fh)
+298d 2043      jr      nz,29d2h
+298f 52        ld      d,d
+2990 43        ld      b,e
+2991 2000      jr      nz,2993h
+2993 2065      jr      nz,29fah
+2995 78        ld      a,b
+2996 70        ld      (hl),b
+2997 65        ld      h,l
+2998 63        ld      h,e
+2999 74        ld      (hl),h
+299a 65        ld      h,l
+299b 64        ld      h,h
+299c 2000      jr      nz,299eh
+299e 0d        dec     c
+299f 00        nop     
+29a0 42        ld      b,d
+29a1 61        ld      h,c
+29a2 73        ld      (hl),e
+29a3 65        ld      h,l
+29a4 64        ld      h,h
+29a5 206f      jr      nz,2a16h
+29a7 6e        ld      l,(hl)
+29a8 205a      jr      nz,2a04h
+29aa 45        ld      b,l
+29ab 58        ld      e,b
+29ac 41        ld      b,c
+29ad 4c        ld      c,h
+29ae 4c        ld      c,h
+29af 2062      jr      nz,2a13h
+29b1 79        ld      a,c
+29b2 2046      jr      nz,29fah
+29b4 72        ld      (hl),d
+29b5 61        ld      h,c
+29b6 6e        ld      l,(hl)
+29b7 6b        ld      l,e
+29b8 2043      jr      nz,29fdh
+29ba 72        ld      (hl),d
+29bb 69        ld      l,c
+29bc 6e        ld      l,(hl)
+29bd 67        ld      h,a
+29be 6c        ld      l,h
+29bf 65        ld      h,l
+29c0 2c        inc     l
+29c1 2077      jr      nz,2a3ah
+29c3 69        ld      l,c
+29c4 74        ld      (hl),h
+29c5 68        ld      l,b
+29c6 2063      jr      nz,2a2bh
+29c8 72        ld      (hl),d
+29c9 65        ld      h,l
+29ca 64        ld      h,h
+29cb 69        ld      l,c
+29cc 74        ld      (hl),h
+29cd 2074      jr      nz,2a43h
+29cf 6f        ld      l,a
+29d0 204a      jr      nz,2a1ch
+29d2 2e47      ld      l,47h
+29d4 2e48      ld      l,48h
+29d6 61        ld      h,c
+29d7 72        ld      (hl),d
+29d8 73        ld      (hl),e
+29d9 74        ld      (hl),h
+29da 6f        ld      l,a
+29db 6e        ld      l,(hl)
+29dc 0a        ld      a,(bc)
+29dd 53        ld      d,e
+29de 65        ld      h,l
+29df 65        ld      h,l
+29e0 2068      jr      nz,2a4ah
+29e2 74        ld      (hl),h
+29e3 74        ld      (hl),h
+29e4 70        ld      (hl),b
+29e5 73        ld      (hl),e
+29e6 3a2f2f    ld      a,(2f2fh)
+29e9 77        ld      (hl),a
+29ea 77        ld      (hl),a
 29eb 77        ld      (hl),a
-29ec 77        ld      (hl),a
-29ed 77        ld      (hl),a
-29ee 2e73      ld      l,73h
-29f0 6d        ld      l,l
-29f1 73        ld      (hl),e
-29f2 70        ld      (hl),b
-29f3 6f        ld      l,a
-29f4 77        ld      (hl),a
-29f5 65        ld      h,l
-29f6 72        ld      (hl),d
-29f7 2e6f      ld      l,6fh
-29f9 72        ld      (hl),d
-29fa 67        ld      h,a
-29fb 2f        cpl     
-29fc 48        ld      c,b
-29fd 6f        ld      l,a
-29fe 6d        ld      l,l
-29ff 65        ld      h,l
-2a00 62        ld      h,d
-2a01 72        ld      (hl),d
-2a02 65        ld      h,l
-2a03 77        ld      (hl),a
-2a04 2f        cpl     
-2a05 5a        ld      e,d
-2a06 45        ld      b,l
-2a07 58        ld      e,b
-2a08 41        ld      b,c
-2a09 4c        ld      c,h
-2a0a 4c        ld      c,h
-2a0b 2d        dec     l
+29ec 2e73      ld      l,73h
+29ee 6d        ld      l,l
+29ef 73        ld      (hl),e
+29f0 70        ld      (hl),b
+29f1 6f        ld      l,a
+29f2 77        ld      (hl),a
+29f3 65        ld      h,l
+29f4 72        ld      (hl),d
+29f5 2e6f      ld      l,6fh
+29f7 72        ld      (hl),d
+29f8 67        ld      h,a
+29f9 2f        cpl     
+29fa 48        ld      c,b
+29fb 6f        ld      l,a
+29fc 6d        ld      l,l
+29fd 65        ld      h,l
+29fe 62        ld      h,d
+29ff 72        ld      (hl),d
+2a00 65        ld      h,l
+2a01 77        ld      (hl),a
+2a02 2f        cpl     
+2a03 5a        ld      e,d
+2a04 45        ld      b,l
+2a05 58        ld      e,b
+2a06 41        ld      b,c
+2a07 4c        ld      c,h
+2a08 4c        ld      c,h
+2a09 2d        dec     l
+2a0a 53        ld      d,e
+2a0b 4d        ld      c,l
 2a0c 53        ld      d,e
-2a0d 4d        ld      c,l
-2a0e 53        ld      d,e
-2a0f 0a        ld      a,(bc)
-2a10 46        ld      b,(hl)
-2a11 6f        ld      l,a
-2a12 6e        ld      l,(hl)
-2a13 74        ld      (hl),h
-2a14 73        ld      (hl),e
-2a15 2066      jr      nz,2a7dh
-2a17 72        ld      (hl),d
-2a18 6f        ld      l,a
-2a19 6d        ld      l,l
-2a1a 2062      jr      nz,2a7eh
-2a1c 79        ld      a,c
-2a1d 2044      jr      nz,2a63h
-2a1f 61        ld      h,c
-2a20 6d        ld      l,l
-2a21 69        ld      l,c
-2a22 65        ld      h,l
-2a23 6e        ld      l,(hl)
-2a24 2047      jr      nz,2a6dh
-2a26 75        ld      (hl),l
-2a27 61        ld      h,c
-2a28 72        ld      (hl),d
-2a29 64        ld      h,h
-2a2a 2c        inc     l
-2a2b 2073      jr      nz,2aa0h
-2a2d 65        ld      h,l
-2a2e 65        ld      h,l
-2a2f 2068      jr      nz,2a99h
-2a31 74        ld      (hl),h
-2a32 74        ld      (hl),h
-2a33 70        ld      (hl),b
-2a34 73        ld      (hl),e
-2a35 3a2f2f    ld      a,(2f2fh)
-2a38 64        ld      h,h
-2a39 61        ld      h,c
-2a3a 6d        ld      l,l
-2a3b 69        ld      l,c
-2a3c 65        ld      h,l
-2a3d 6e        ld      l,(hl)
-2a3e 67        ld      h,a
-2a3f 2e63      ld      l,63h
-2a41 6f        ld      l,a
-2a42 6d        ld      l,l
-2a43 2f        cpl     
-2a44 74        ld      (hl),h
-2a45 79        ld      a,c
-2a46 70        ld      (hl),b
-2a47 6f        ld      l,a
-2a48 67        ld      h,a
-2a49 72        ld      (hl),d
-2a4a 61        ld      h,c
-2a4b 70        ld      (hl),b
-2a4c 68        ld      l,b
-2a4d 79        ld      a,c
-2a4e 2f        cpl     
-2a4f 7a        ld      a,d
-2a50 78        ld      a,b
-2a51 2d        dec     l
-2a52 6f        ld      l,a
-2a53 72        ld      (hl),d
+2a0d 0a        ld      a,(bc)
+2a0e 46        ld      b,(hl)
+2a0f 6f        ld      l,a
+2a10 6e        ld      l,(hl)
+2a11 74        ld      (hl),h
+2a12 73        ld      (hl),e
+2a13 2066      jr      nz,2a7bh
+2a15 72        ld      (hl),d
+2a16 6f        ld      l,a
+2a17 6d        ld      l,l
+2a18 2062      jr      nz,2a7ch
+2a1a 79        ld      a,c
+2a1b 2044      jr      nz,2a61h
+2a1d 61        ld      h,c
+2a1e 6d        ld      l,l
+2a1f 69        ld      l,c
+2a20 65        ld      h,l
+2a21 6e        ld      l,(hl)
+2a22 2047      jr      nz,2a6bh
+2a24 75        ld      (hl),l
+2a25 61        ld      h,c
+2a26 72        ld      (hl),d
+2a27 64        ld      h,h
+2a28 2c        inc     l
+2a29 2073      jr      nz,2a9eh
+2a2b 65        ld      h,l
+2a2c 65        ld      h,l
+2a2d 2068      jr      nz,2a97h
+2a2f 74        ld      (hl),h
+2a30 74        ld      (hl),h
+2a31 70        ld      (hl),b
+2a32 73        ld      (hl),e
+2a33 3a2f2f    ld      a,(2f2fh)
+2a36 64        ld      h,h
+2a37 61        ld      h,c
+2a38 6d        ld      l,l
+2a39 69        ld      l,c
+2a3a 65        ld      h,l
+2a3b 6e        ld      l,(hl)
+2a3c 67        ld      h,a
+2a3d 2e63      ld      l,63h
+2a3f 6f        ld      l,a
+2a40 6d        ld      l,l
+2a41 2f        cpl     
+2a42 74        ld      (hl),h
+2a43 79        ld      a,c
+2a44 70        ld      (hl),b
+2a45 6f        ld      l,a
+2a46 67        ld      h,a
+2a47 72        ld      (hl),d
+2a48 61        ld      h,c
+2a49 70        ld      (hl),b
+2a4a 68        ld      l,b
+2a4b 79        ld      a,c
+2a4c 2f        cpl     
+2a4d 7a        ld      a,d
+2a4e 78        ld      a,b
+2a4f 2d        dec     l
+2a50 6f        ld      l,a
+2a51 72        ld      (hl),d
+2a52 69        ld      l,c
+2a53 67        ld      h,a
 2a54 69        ld      l,c
-2a55 67        ld      h,a
-2a56 69        ld      l,c
-2a57 6e        ld      l,(hl)
-2a58 73        ld      (hl),e
-2a59 2f        cpl     
-2a5a 00        nop     
-2a5b 27        daa     
-2a5c 0e75      ld      c,75h
-2a5e 0e69      ld      c,69h
+2a55 6e        ld      l,(hl)
+2a56 73        ld      (hl),e
+2a57 2f        cpl     
+2a58 00        nop     
+2a59 27        daa     
+2a5a 0e75      ld      c,75h
+2a5c 0e69      ld      c,69h
+2a5e 0f        rrca    
+2a5f b7        or      a
 2a60 0f        rrca    
-2a61 b7        or      a
-2a62 0f        rrca    
-2a63 ae        xor     (hl)
-2a64 11d40d    ld      de,0dd4h
-2a67 c30eaf    jp      0af0eh
-2a6a 1000      djnz    2a6ch
-2a6c 116214    ld      de,1462h
-2a6f be        cp      (hl)
-2a70 14        inc     d
-2a71 09        add     hl,bc
+2a61 ae        xor     (hl)
+2a62 11d40d    ld      de,0dd4h
+2a65 c30eaf    jp      0af0eh
+2a68 1000      djnz    2a6ah
+2a6a 116214    ld      de,1462h
+2a6d be        cp      (hl)
+2a6e 14        inc     d
+2a6f 09        add     hl,bc
+2a70 15        dec     d
+2a71 54        ld      d,h
 2a72 15        dec     d
-2a73 54        ld      d,h
+2a73 9f        sbc     a,a
 2a74 15        dec     d
-2a75 9f        sbc     a,a
-2a76 15        dec     d
-2a77 160f      ld      d,0fh
-2a79 05        dec     b
-2a7a 1058      djnz    2ad4h
-2a7c 1052      djnz    2ad0h
-2a7e 115219    ld      de,1952h
-2a81 43        ld      b,e
-2a82 07        rlca    
-2a83 00        nop     
-2a84 19        add     hl,de
-2a85 8d        adc     a,l
-2a86 07        rlca    
-2a87 b1        or      c
-2a88 12        ld      (de),a
-2a89 cc16f7    call    z,0f716h
-2a8c 17        rla     
-2a8d 5b        ld      e,e
-2a8e 12        ld      (de),a
-2a8f aa        xor     d
-2a90 1803      jr      2a95h
-2a92 13        inc     de
-2a93 0112ad    ld      bc,0ad12h
-2a96 08        ex      af,af'
-2a97 92        sub     d
-2a98 09        add     hl,bc
-2a99 77        ld      (hl),a
-2a9a 0a        ld      a,(bc)
-2a9b c40a11    call    nz,110ah
+2a75 160f      ld      d,0fh
+2a77 05        dec     b
+2a78 1058      djnz    2ad2h
+2a7a 1052      djnz    2aceh
+2a7c 115219    ld      de,1952h
+2a7f 43        ld      b,e
+2a80 07        rlca    
+2a81 00        nop     
+2a82 19        add     hl,de
+2a83 8d        adc     a,l
+2a84 07        rlca    
+2a85 b1        or      c
+2a86 12        ld      (de),a
+2a87 cc16f7    call    z,0f716h
+2a8a 17        rla     
+2a8b 5b        ld      e,e
+2a8c 12        ld      (de),a
+2a8d aa        xor     d
+2a8e 1803      jr      2a93h
+2a90 13        inc     de
+2a91 0112ad    ld      bc,0ad12h
+2a94 08        ex      af,af'
+2a95 92        sub     d
+2a96 09        add     hl,bc
+2a97 77        ld      (hl),a
+2a98 0a        ld      a,(bc)
+2a99 c40a11    call    nz,110ah
+2a9c 0b        dec     bc
+2a9d f9        ld      sp,hl
 2a9e 0b        dec     bc
-2a9f f9        ld      sp,hl
-2aa0 0b        dec     bc
-2aa1 50        ld      d,b
-2aa2 1806      jr      2aaah
-2aa4 065c      ld      b,5ch
-2aa6 13        inc     de
-2aa7 15        dec     d
+2a9f 50        ld      d,b
+2aa0 1806      jr      2aa8h
+2aa2 065c      ld      b,5ch
+2aa4 13        inc     de
+2aa5 15        dec     d
+2aa6 08        ex      af,af'
+2aa7 61        ld      h,c
 2aa8 08        ex      af,af'
-2aa9 61        ld      h,c
-2aaa 08        ex      af,af'
-2aab fa0846    jp      m,4608h
+2aa9 fa0846    jp      m,4608h
+2aac 09        add     hl,bc
+2aad df        rst     18h
 2aae 09        add     hl,bc
-2aaf df        rst     18h
-2ab0 09        add     hl,bc
-2ab1 2b        dec     hl
-2ab2 0a        ld      a,(bc)
-2ab3 5e        ld      e,(hl)
+2aaf 2b        dec     hl
+2ab0 0a        ld      a,(bc)
+2ab1 5e        ld      e,(hl)
+2ab2 0b        dec     bc
+2ab3 aa        xor     d
 2ab4 0b        dec     bc
-2ab5 aa        xor     d
-2ab6 0b        dec     bc
-2ab7 9c        sbc     a,h
-2ab8 0c        inc     c
-2ab9 ea0c38    jp      pe,380ch
+2ab5 9c        sbc     a,h
+2ab6 0c        inc     c
+2ab7 ea0c38    jp      pe,380ch
+2aba 0d        dec     c
+2abb 86        add     a,(hl)
 2abc 0d        dec     c
-2abd 86        add     a,(hl)
-2abe 0d        dec     c
-2abf 2017      jr      nz,2ad8h
-2ac1 ca1395    jp      z,9513h
-2ac4 17        rla     
-2ac5 46        ld      b,(hl)
-2ac6 0c        inc     c
-2ac7 78        ld      a,b
-2ac8 162e      ld      d,2eh
-2aca 1632      ld      d,32h
-2acc 04        inc     b
-2acd b5        or      l
-2ace 06fc      ld      b,0fch
-2ad0 06d1      ld      b,0d1h
-2ad2 07        rlca    
-2ad3 ea15d6    jp      pe,0d615h
-2ad6 012202    ld      bc,0222h
-2ad9 6d        ld      l,l
+2abd 2017      jr      nz,2ad6h
+2abf ca1395    jp      z,9513h
+2ac2 17        rla     
+2ac3 46        ld      b,(hl)
+2ac4 0c        inc     c
+2ac5 78        ld      a,b
+2ac6 162e      ld      d,2eh
+2ac8 1632      ld      d,32h
+2aca 04        inc     b
+2acb b5        or      l
+2acc 06fc      ld      b,0fch
+2ace 06d1      ld      b,0d1h
+2ad0 07        rlca    
+2ad1 ea15d6    jp      pe,0d615h
+2ad4 012202    ld      bc,0222h
+2ad7 6d        ld      l,l
+2ad8 02        ld      (bc),a
+2ad9 b8        cp      b
 2ada 02        ld      (bc),a
-2adb b8        cp      b
-2adc 02        ld      (bc),a
-2add 03        inc     bc
+2adb 03        inc     bc
+2adc 03        inc     bc
+2add 4e        ld      c,(hl)
 2ade 03        inc     bc
-2adf 4e        ld      c,(hl)
-2ae0 03        inc     bc
-2ae1 e40399    call    po,9903h
-2ae4 03        inc     bc
-2ae5 7d        ld      a,l
-2ae6 04        inc     b
-2ae7 ca0417    jp      z,1704h
+2adf e40399    call    po,9903h
+2ae2 03        inc     bc
+2ae3 7d        ld      a,l
+2ae4 04        inc     b
+2ae5 ca0417    jp      z,1704h
+2ae8 05        dec     b
+2ae9 64        ld      h,h
 2aea 05        dec     b
-2aeb 64        ld      h,h
-2aec 05        dec     b
-2aed d4002a    call    nc,2a00h
-2af0 018001    ld      bc,0180h
-2af3 59        ld      e,c
-2af4 0678      ld      b,78h
-2af6 00        nop     
-2af7 b1        or      c
-2af8 05        dec     b
-2af9 00        nop     
-2afa 00        nop     
-
-Start:
-2afb af        xor     a
-2afc 3280c0    ld      (0c080h),a
-2aff cd9827    call    2798h ; Initialise_Screen
-2b02 cd0900    call    0009h ; Initialise_SDSC
-2b05 cdf22b    call    2bf2h ; InitialiseRAM
-2b08 dd21e07f  ld      ix,7fe0h
-2b0c dd6e0c    ld      l,(ix+0ch)
-2b0f dd660d    ld      h,(ix+0dh)
-2b12 7e        ld      a,(hl)
-2b13 b7        or      a
-2b14 2806      jr      z,2b1ch
-2b16 cd0829    call    2908h ; PrintChar
-2b19 23        inc     hl
-2b1a 18f6      jr      2b12h
-2b1c 3e20      ld      a,20h
-2b1e cd0829    call    2908h ; PrintChar
-2b21 dd7e04    ld      a,(ix+04h)
-2b24 cde128    call    28e1h
-2b27 3e2e      ld      a,2eh
-2b29 cd0829    call    2908h ; PrintChar
-2b2c dd7e05    ld      a,(ix+05h)
-2b2f cdd828    call    28d8h
-2b32 3e0d      ld      a,0dh
-2b34 cd0829    call    2908h ; PrintChar
-2b37 111429    ld      de,2914h
-2b3a cdf428    call    28f4h ; OutputText
-2b3d 113929    ld      de,2939h
-2b40 cdf428    call    28f4h ; OutputText
-2b43 115729    ld      de,2957h
-2b46 3a81c0    ld      a,(0c081h)
-2b49 b7        or      a
-2b4a 2003      jr      nz,2b4fh
-2b4c 116529    ld      de,2965h
-2b4f cdf428    call    28f4h ; OutputText
-2b52 114f29    ld      de,294fh
-2b55 cdf428    call    28f4h ; OutputText
-2b58 3e0d      ld      a,0dh
-2b5a cd0829    call    2908h ; PrintChar
-2b5d 1182c0    ld      de,0c082h ; TestInRAM
-2b60 21842b    ld      hl,2b84h
-2b63 016e00    ld      bc,006eh
-2b66 edb0      ldir    
-2b68 215b2a    ld      hl,2a5bh
-2b6b 7e        ld      a,(hl)
-2b6c 23        inc     hl
-2b6d b6        or      (hl)
-2b6e 2807      jr      z,2b77h
-2b70 2b        dec     hl
-2b71 cd0024    call    2400h
-2b74 c36b2b    jp      2b6bh
-2b77 117a29    ld      de,297ah
-2b7a cdf428    call    28f4h ; OutputText
-2b7d 3e01      ld      a,01h
-2b7f d3fc      out     (0fch),a
-2b81 c3812b    jp      2b81h
-2b84 f5        push    af
-2b85 c5        push    bc
-2b86 d5        push    de
-2b87 e5        push    hl
-2b88 ed735ac0  ld      (0c05ah),sp
-2b8c 3172c0    ld      sp,0c072h
-2b8f fde1      pop     iy
-2b91 dde1      pop     ix
-2b93 e1        pop     hl
-2b94 d1        pop     de
-2b95 c1        pop     bc
-2b96 f1        pop     af
-2b97 ed7b7ec0  ld      sp,(0c07eh)
+2aeb d4002a    call    nc,2a00h
+2aee 018001    ld      bc,0180h
+2af1 59        ld      e,c
+2af2 0678      ld      b,78h
+2af4 00        nop     
+2af5 b1        or      c
+2af6 05        dec     b
+2af7 00        nop     
+2af8 00        nop     
+2af9 af        xor     a
+2afa 3280c0    ld      (0c080h),a
+2afd cd9827    call    2798h
+2b00 cd0900    call    0009h
+2b03 cdf72b    call    2bf7h
+2b06 dd21e07f  ld      ix,7fe0h
+2b0a dd6e0c    ld      l,(ix+0ch)
+2b0d dd660d    ld      h,(ix+0dh)
+2b10 7e        ld      a,(hl)
+2b11 b7        or      a
+2b12 2806      jr      z,2b1ah
+2b14 cd0829    call    2908h
+2b17 23        inc     hl
+2b18 18f6      jr      2b10h
+2b1a 3e20      ld      a,20h
+2b1c cd0829    call    2908h
+2b1f dd7e04    ld      a,(ix+04h)
+2b22 cde128    call    28e1h
+2b25 3e2e      ld      a,2eh
+2b27 cd0829    call    2908h
+2b2a dd7e05    ld      a,(ix+05h)
+2b2d cdd828    call    28d8h
+2b30 3e0d      ld      a,0dh
+2b32 cd0829    call    2908h
+2b35 111429    ld      de,2914h
+2b38 cdf428    call    28f4h
+2b3b 113729    ld      de,2937h
+2b3e cdf428    call    28f4h
+2b41 115529    ld      de,2955h
+2b44 3a81c0    ld      a,(0c081h)
+2b47 b7        or      a
+2b48 2003      jr      nz,2b4dh
+2b4a 116329    ld      de,2963h
+2b4d cdf428    call    28f4h
+2b50 114d29    ld      de,294dh
+2b53 cdf428    call    28f4h
+2b56 3e0d      ld      a,0dh
+2b58 cd0829    call    2908h
+2b5b 1182c0    ld      de,0c082h
+2b5e 21822b    ld      hl,2b82h
+2b61 017500    ld      bc,0075h
+2b64 edb0      ldir    
+2b66 21592a    ld      hl,2a59h
+2b69 7e        ld      a,(hl)
+2b6a 23        inc     hl
+2b6b b6        or      (hl)
+2b6c 2807      jr      z,2b75h
+2b6e 2b        dec     hl
+2b6f cd0024    call    2400h
+2b72 c3692b    jp      2b69h
+2b75 117829    ld      de,2978h
+2b78 cdf428    call    28f4h
+2b7b 3e01      ld      a,01h
+2b7d d3fc      out     (0fch),a
+2b7f c37f2b    jp      2b7fh
+2b82 f5        push    af
+2b83 c5        push    bc
+2b84 d5        push    de
+2b85 e5        push    hl
+2b86 ed735ac0  ld      (0c05ah),sp
+2b8a 3172c0    ld      sp,0c072h
+2b8d fde1      pop     iy
+2b8f dde1      pop     ix
+2b91 e1        pop     hl
+2b92 d1        pop     de
+2b93 c1        pop     bc
+2b94 f1        pop     af
+2b95 ed7b7ec0  ld      sp,(0c07eh)
+2b99 00        nop     
+2b9a 00        nop     
 2b9b 00        nop     
 2b9c 00        nop     
-2b9d 00        nop     
-2b9e 00        nop     
-2b9f ed736ec0  ld      (0c06eh),sp
-2ba3 316ec0    ld      sp,0c06eh
-2ba6 f5        push    af
-2ba7 c5        push    bc
-2ba8 d5        push    de
-2ba9 e5        push    hl
-2baa dde5      push    ix
-2bac fde5      push    iy
-2bae ed7b5ac0  ld      sp,(0c05ah)
-2bb2 2a70c0    ld      hl,(0c070h)
-2bb5 2260c0    ld      (0c060h),hl
-2bb8 2160c0    ld      hl,0c060h
-2bbb 0610      ld      b,10h
-2bbd d9        exx     
-2bbe 215cc0    ld      hl,0c05ch
-2bc1 e5        push    hl
-2bc2 56        ld      d,(hl)
-2bc3 23        inc     hl
-2bc4 5e        ld      e,(hl)
-2bc5 23        inc     hl
-2bc6 46        ld      b,(hl)
-2bc7 23        inc     hl
-2bc8 4e        ld      c,(hl)
-2bc9 d9        exx     
-2bca 7e        ld      a,(hl)
-2bcb d9        exx     
-2bcc a9        xor     c
-2bcd 6f        ld      l,a
-2bce 2608      ld      h,08h
-2bd0 29        add     hl,hl
-2bd1 29        add     hl,hl
-2bd2 78        ld      a,b
-2bd3 ae        xor     (hl)
-2bd4 4f        ld      c,a
-2bd5 23        inc     hl
-2bd6 7b        ld      a,e
-2bd7 ae        xor     (hl)
-2bd8 47        ld      b,a
-2bd9 23        inc     hl
-2bda 7a        ld      a,d
-2bdb ae        xor     (hl)
-2bdc 5f        ld      e,a
-2bdd 23        inc     hl
-2bde 56        ld      d,(hl)
-2bdf d9        exx     
-2be0 23        inc     hl
-2be1 10e7      djnz    2bcah
-2be3 d9        exx     
-2be4 e1        pop     hl
-2be5 72        ld      (hl),d
-2be6 23        inc     hl
-2be7 73        ld      (hl),e
-2be8 23        inc     hl
-2be9 70        ld      (hl),b
-2bea 23        inc     hl
-2beb 71        ld      (hl),c
-2bec d9        exx     
-2bed e1        pop     hl
-2bee d1        pop     de
-2bef c1        pop     bc
-2bf0 f1        pop     af
-2bf1 c9        ret     
+2b9d ed736ec0  ld      (0c06eh),sp
+2ba1 316ec0    ld      sp,0c06eh
+2ba4 f5        push    af
+2ba5 c5        push    bc
+2ba6 d5        push    de
+2ba7 e5        push    hl
+2ba8 dde5      push    ix
+2baa fde5      push    iy
+2bac ed7b5ac0  ld      sp,(0c05ah)
+2bb0 2a70c0    ld      hl,(0c070h)
+2bb3 2260c0    ld      (0c060h),hl
+2bb6 216cc0    ld      hl,0c06ch
+2bb9 7e        ld      a,(hl)
+2bba e6d7      and     0d7h
+2bbc 77        ld      (hl),a
+2bbd 2160c0    ld      hl,0c060h
+2bc0 0610      ld      b,10h
+2bc2 d9        exx     
+2bc3 215cc0    ld      hl,0c05ch
+2bc6 e5        push    hl
+2bc7 56        ld      d,(hl)
+2bc8 23        inc     hl
+2bc9 5e        ld      e,(hl)
+2bca 23        inc     hl
+2bcb 46        ld      b,(hl)
+2bcc 23        inc     hl
+2bcd 4e        ld      c,(hl)
+2bce d9        exx     
+2bcf 7e        ld      a,(hl)
+2bd0 d9        exx     
+2bd1 a9        xor     c
+2bd2 6f        ld      l,a
+2bd3 2608      ld      h,08h
+2bd5 29        add     hl,hl
+2bd6 29        add     hl,hl
+2bd7 78        ld      a,b
+2bd8 ae        xor     (hl)
+2bd9 4f        ld      c,a
+2bda 23        inc     hl
+2bdb 7b        ld      a,e
+2bdc ae        xor     (hl)
+2bdd 47        ld      b,a
+2bde 23        inc     hl
+2bdf 7a        ld      a,d
+2be0 ae        xor     (hl)
+2be1 5f        ld      e,a
+2be2 23        inc     hl
+2be3 56        ld      d,(hl)
+2be4 d9        exx     
+2be5 23        inc     hl
+2be6 10e7      djnz    2bcfh
+2be8 d9        exx     
+2be9 e1        pop     hl
+2bea 72        ld      (hl),d
+2beb 23        inc     hl
+2bec 73        ld      (hl),e
+2bed 23        inc     hl
+2bee 70        ld      (hl),b
+2bef 23        inc     hl
+2bf0 71        ld      (hl),c
+2bf1 d9        exx     
+2bf2 e1        pop     hl
+2bf3 d1        pop     de
+2bf4 c1        pop     bc
+2bf5 f1        pop     af
+2bf6 c9        ret     
 
-InitialiseRAM:
-2bf2 af        xor     a
-2bf3 32ffff    ld      (0ffffh),a
-2bf6 3e08      ld      a,08h
-2bf8 32fcff    ld      (0fffch),a
-2bfb 210080    ld      hl,8000h
-2bfe 221fc1    ld      (0c11fh),hl
-2c01 010040    ld      bc,4000h
-2c04 3e20      ld      a,20h
-2c06 77        ld      (hl),a
-2c07 23        inc     hl
-2c08 0b        dec     bc
-2c09 78        ld      a,b
-2c0a b1        or      c
-2c0b 20f7      jr      nz,2c04h
-2c0d c9        ret     
+2bf7 af        xor     a
+2bf8 32ffff    ld      (0ffffh),a
+2bfb 3e08      ld      a,08h
+2bfd 32fcff    ld      (0fffch),a
+2c00 210080    ld      hl,8000h
+2c03 221fc1    ld      (0c11fh),hl
+2c06 010040    ld      bc,4000h
+2c09 3e20      ld      a,20h
+2c0b 77        ld      (hl),a
+2c0c 23        inc     hl
+2c0d 0b        dec     bc
+2c0e 78        ld      a,b
+2c0f b1        or      c
+2c10 20f7      jr      nz,2c09h
+2c12 c9        ret     
 
-PrintChar_SRAM:
-2c0e e5        push    hl
-2c0f 2a1fc1    ld      hl,(0c11fh)
-2c12 77        ld      (hl),a
-2c13 23        inc     hl
-2c14 221fc1    ld      (0c11fh),hl
-2c17 e1        pop     hl
-2c18 c9        ret     
+2c13 e5        push    hl
+2c14 2a1fc1    ld      hl,(0c11fh)
+2c17 77        ld      (hl),a
+2c18 23        inc     hl
+2c19 221fc1    ld      (0c11fh),hl
+2c1c e1        pop     hl
+2c1d c9        ret     
 
-2c19 c5        push    bc
-2c1a d5        push    de
-2c1b e5        push    hl
-2c1c 115cc0    ld      de,0c05ch
-2c1f 0604      ld      b,04h
-2c21 1a        ld      a,(de)
-2c22 be        cp      (hl)
-2c23 c22a2c    jp      nz,2c2ah
-2c26 23        inc     hl
-2c27 13        inc     de
-2c28 10f7      djnz    2c21h
-2c2a e1        pop     hl
-2c2b d1        pop     de
-2c2c c1        pop     bc
-2c2d c9        ret     
+2c1e c5        push    bc
+2c1f d5        push    de
+2c20 e5        push    hl
+2c21 115cc0    ld      de,0c05ch
+2c24 0604      ld      b,04h
+2c26 1a        ld      a,(de)
+2c27 be        cp      (hl)
+2c28 c22f2c    jp      nz,2c2fh
+2c2b 23        inc     hl
+2c2c 13        inc     de
+2c2d 10f7      djnz    2c26h
+2c2f e1        pop     hl
+2c30 d1        pop     de
+2c31 c1        pop     bc
+2c32 c9        ret     
 
-2c2e f5        push    af
-2c2f c5        push    bc
-2c30 e5        push    hl
-2c31 215cc0    ld      hl,0c05ch
-2c34 3eff      ld      a,0ffh
-2c36 0604      ld      b,04h
-2c38 77        ld      (hl),a
-2c39 23        inc     hl
-2c3a 10fc      djnz    2c38h
-2c3c e1        pop     hl
-2c3d c1        pop     bc
-2c3e f1        pop     af
-2c3f c9        ret     
+2c33 f5        push    af
+2c34 c5        push    bc
+2c35 e5        push    hl
+2c36 215cc0    ld      hl,0c05ch
+2c39 3eff      ld      a,0ffh
+2c3b 0604      ld      b,04h
+2c3d 77        ld      (hl),a
+2c3e 23        inc     hl
+2c3f 10fc      djnz    2c3dh
+2c41 e1        pop     hl
+2c42 c1        pop     bc
+2c43 f1        pop     af
+2c44 c9        ret     
 
-2c40 5a        ld      e,d
-2c41 3830      jr      c,2c73h
-2c43 2049      jr      nz,2c8eh
-2c45 6e        ld      l,(hl)
-2c46 73        ld      (hl),e
-2c47 74        ld      (hl),h
-2c48 72        ld      (hl),d
-2c49 75        ld      (hl),l
-2c4a 63        ld      h,e
-2c4b 74        ld      (hl),h
-2c4c 69        ld      l,c
-2c4d 6f        ld      l,a
-2c4e 6e        ld      l,(hl)
-2c4f 2045      jr      nz,2c96h
-2c51 78        ld      a,b
-2c52 65        ld      h,l
-2c53 72        ld      (hl),d
-2c54 63        ld      h,e
-2c55 69        ld      l,c
-2c56 73        ld      (hl),e
+2c45 5a        ld      e,d
+2c46 3830      jr      c,2c78h
+2c48 2049      jr      nz,2c93h
+2c4a 6e        ld      l,(hl)
+2c4b 73        ld      (hl),e
+2c4c 74        ld      (hl),h
+2c4d 72        ld      (hl),d
+2c4e 75        ld      (hl),l
+2c4f 63        ld      h,e
+2c50 74        ld      (hl),h
+2c51 69        ld      l,c
+2c52 6f        ld      l,a
+2c53 6e        ld      l,(hl)
+2c54 2045      jr      nz,2c9bh
+2c56 78        ld      a,b
 2c57 65        ld      h,l
 2c58 72        ld      (hl),d
-2c59 00        nop     
-2c5a 00        nop     
-2c5b 00        nop     
-2c5c 00        nop     
-2c5d 00        nop     
+2c59 63        ld      h,e
+2c5a 69        ld      l,c
+2c5b 73        ld      (hl),e
+2c5c 65        ld      h,l
+2c5d 72        ld      (hl),d
 2c5e 00        nop     
 2c5f 00        nop     
 2c60 00        nop     
@@ -30690,9 +30670,9 @@ PrintChar_SRAM:
 7fe7 1021      djnz    800ah
 7fe9 20a2      jr      nz,7f8dh
 7feb 1f        rra     
-7fec 40        ld      b,b
+7fec 45        ld      b,l
 7fed 2c        inc     l
-7fee a2        and     d
+7fee a0        and     b
 7fef 29        add     hl,hl
 7ff0 54        ld      d,h
 7ff1 4d        ld      c,l
@@ -30703,8 +30683,8 @@ PrintChar_SRAM:
 7ff7 41        ld      b,c
 7ff8 00        nop     
 7ff9 00        nop     
-7ffa 70        ld      (hl),b
-7ffb 45        ld      b,l
+7ffa 88        adc     a,b
+7ffb 3d        dec     a
 7ffc 00        nop     
 7ffd 00        nop     
 7ffe 00        nop     
@@ -47223,8 +47203,6 @@ c07e 00        nop
 c07f 00        nop     
 c080 00        nop     
 c081 00        nop     
-
-TestInRAM:
 c082 00        nop     
 c083 00        nop     
 c084 00        nop     

@@ -12,7 +12,7 @@ public class CpmMapper : Mapper
         get => data[address];
         set
         {
-            Console.WriteLine($"MEMORY[0x{address:x}] = 0x{value:x}");
+            //Console.WriteLine($"MEMORY[0x{address:x}] = 0x{value:x}");
             data[address] = value;
         }
     }

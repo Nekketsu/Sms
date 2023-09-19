@@ -29,8 +29,6 @@
 
                 if (Z80.Registers.BC != 0)
                 {
-                    //Z80.Registers.PC -= 2;
-
                     cycles += 21;
                 }
                 else
@@ -38,10 +36,6 @@
                     cycles += 16;
                 }
             } while (Z80.Registers.BC != 0);
-
-            var outputString = string.Join(' ', output.Select(o => o.ToString("x2")));
-
-            Console.WriteLine($"{outputString}");
         }
 
         public override string ToString(byte opCode)

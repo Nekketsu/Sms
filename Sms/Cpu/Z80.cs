@@ -5,6 +5,8 @@ namespace Sms
 {
     public class Z80
     {
+        public IProgress<TraceData> Trace { get; set; }
+
         public Alu Alu { get; }
         public Mapper Memory { get; }
         public Registers Registers { get; }

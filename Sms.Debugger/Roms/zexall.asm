@@ -8629,14 +8629,13 @@ Initialise_Screen:
 28c4 f1        pop     af
 28c5 c9        ret     
 
-PrintHex32:
 28c6 f5        push    af
 28c7 c5        push    bc
 28c8 e5        push    hl
 28c9 0604      ld      b,04h
 28cb c5        push    bc
 28cc 7e        ld      a,(hl)
-28cd cdd828    call    28d8h; PrintByte
+28cd cdd828    call    28d8h
 28d0 23        inc     hl
 28d1 c1        pop     bc
 28d2 10f7      djnz    28cbh
@@ -8645,16 +8644,13 @@ PrintHex32:
 28d6 f1        pop     af
 28d7 c9        ret     
 
-PrintByte:
 28d8 f5        push    af
 28d9 0f        rrca    
 28da 0f        rrca    
 28db 0f        rrca    
 28dc 0f        rrca    
-28dd cde128    call    28e1h ; PrintNibble
+28dd cde128    call    28e1h
 28e0 f1        pop     af
-
-PrintNibble:
 28e1 c5        push    bc
 28e2 e5        push    hl
 28e3 e60f      and     0fh

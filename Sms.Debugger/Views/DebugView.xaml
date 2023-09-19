@@ -1,0 +1,162 @@
+﻿<UserControl x:Class="Sms.Debugger.Views.DebugView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Sms.Debugger.Views"
+             xmlns:Extensions="clr-namespace:Sms.Debugger.Extensions"
+             xmlns:Converters="clr-namespace:Sms.Debugger.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             FontFamily="Cascadia Code">
+
+    <UserControl.Resources>
+        <Converters:FlagsToByteConverter x:Key="FlagsToByteConverter" />
+        <Converters:FlagsToStringConverter x:Key="FlagsToStringConverter" />
+        <Converters:NumberConverter x:Key="NumberConverter" />
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <TextBox Text="{Binding Instructions}" Width="100" />
+            <Button Command="{Binding StepCommand}" Content="Step" />
+            
+            <TextBox Text="{Binding ProgramCounter, Converter={StaticResource NumberConverter}}" Width="100" />
+            <Button Command="{Binding RunUntilPcCommand}" Content="Run until PC" />
+            
+            <TextBox Text="{Binding OpCode, Converter={StaticResource NumberConverter}}" Width="100" />
+            <Button Command="{Binding RunUntilOpCodeCommand}" Content="Run Until OP Code" />
+
+            <Button Command="{Binding RunTestCommand}" Content="Run Test" />
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Main registers" />
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="Alternate registers" />
+
+                    <UniformGrid Grid.Row="1" Grid.Column="0">
+                        <TextBlock Text="A" />
+                        <TextBlock Text="{Binding Z80.Registers.A, FallbackValue=0, StringFormat={}{0:x2}}" />
+
+                        <TextBlock Text="{Binding Z80.Registers.F, FallbackValue=0, Converter={StaticResource FlagsToByteConverter}, StringFormat={}{0:x2}}" />
+                        <TextBlock Text="F" />
+
+                        <TextBlock Text="B" />
+                        <TextBlock Text="{Binding Z80.Registers.B, FallbackValue=0, StringFormat={}{0:x2}}" />
+
+                        <TextBlock Text="{Binding Z80.Registers.C, FallbackValue=0, StringFormat={}{0:x2}}" />
+                        <TextBlock Text="C" />
+
+                        <TextBlock Text="D" />
+                        <TextBlock Text="{Binding Z80.Registers.D, FallbackValue=0, StringFormat={}{0:x2}}" />
+
+                        <TextBlock Text="{Binding Z80.Registers.E, FallbackValue=0, StringFormat={}{0:x2}}" />
+                        <TextBlock Text="E" />
+
+                        <TextBlock Text="H" />
+                        <TextBlock Text="{Binding Z80.Registers.H, FallbackValue=0, StringFormat={}{0:x2}}" />
+
+                        <TextBlock Text="{Binding Z80.Registers.L, FallbackValue=0, StringFormat={}{0:x2}}" />
+                        <TextBlock Text="L" />
+                    </UniformGrid>
+
+                    <UniformGrid Grid.Row="1" Grid.Column="1">
+                        <TextBlock Text="A'" />
+                        <TextBlock Text="{Binding Z80.Registers.AShadow, FallbackValue=0, StringFormat={}{0:x2}}" />
+
+                        <TextBlock Text="{Binding Z80.Registers.FShadow, FallbackValue=0, Converter={StaticResource FlagsToByteConverter}, StringFormat={}{0:x2}}" />
+                        <TextBlock Text="F'" />
+
+                        <TextBlock Text="B'" />
+                        <TextBlock Text="{Binding Z80.Registers.BShadow, FallbackValue=0, StringFormat={}{0:x2}}" />
+
+                        <TextBlock Text="{Binding Z80.Registers.CShadow, FallbackValue=0, StringFormat={}{0:x2}}" />
+                        <TextBlock Text="C'" />
+
+                        <TextBlock Text="D'" />
+                        <TextBlock Text="{Binding Z80.Registers.DShadow, FallbackValue=0, StringFormat={}{0:x2}}" />
+
+                        <TextBlock Text="{Binding Z80.Registers.EShadow, FallbackValue=0, StringFormat={}{0:x2}}" />
+                        <TextBlock Text="E'" />
+
+                        <TextBlock Text="H'" />
+                        <TextBlock Text="{Binding Z80.Registers.HShadow, FallbackValue=0, StringFormat={}{0:x2}}" />
+
+                        <TextBlock Text="{Binding Z80.Registers.LShadow, FallbackValue=0, StringFormat={}{0:x2}}" />
+                        <TextBlock Text="L'" />
+                    </UniformGrid>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Index X" />
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Z80.Registers.IX, FallbackValue=0, StringFormat={}{0:x4}}" />
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Index Y" />
+                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Z80.Registers.IY, FallbackValue=0, StringFormat={}{0:x4}}" />
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Stack Pointer" />
+                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Z80.Registers.SP, FallbackValue=0, StringFormat={}{0:x4}}" />
+
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Program Counter" />
+                    <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding Z80.Registers.PC, FallbackValue=0, StringFormat={}{0:x4}}" />
+
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Flags" />
+                    <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding Z80.Registers.F, FallbackValue=0, Converter={StaticResource FlagsToStringConverter}}" />
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    
+                    <ListBox Grid.Column="0" ItemsSource="{Binding Stack}" SelectionMode="Extended" />
+                    <ListBox Grid.Column="1" ItemsSource="{Binding Memory}" SelectionMode="Extended" />
+                </Grid>
+            </Grid>
+
+            <ListBox Grid.Column="1" ItemsSource="{Binding Trace}" Extensions:ListBoxBehavior.AutoScroll="False" SelectionMode="Extended">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <Run Text="{Binding PC, StringFormat={}{0:x4}: }" />
+                            <Run Text="{Binding OpCode, StringFormat={}{0:x2}}" />
+                            <Run Text="{Binding Instruction, StringFormat={}    {0}}" FontWeight="Bold" />
+                            <Run Text="{Binding InstructionName, StringFormat={}{0,16}}" />
+                        </TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+    </Grid>
+</UserControl>

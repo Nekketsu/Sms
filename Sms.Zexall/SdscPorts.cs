@@ -1,6 +1,8 @@
-﻿namespace Sms.Zexall
+﻿using System.Diagnostics;
+
+namespace Sms.Zexall
 {
-    public class NullPorts : IPortMapping
+    public class SdscPorts : IPortMapping
     {
         public Dictionary<byte, Func<byte>> PortReaders => new Dictionary<byte, Func<byte>>();
 
@@ -8,7 +10,7 @@
         {
             [0x3E] = _ => { },
             [0xFC] = _ => { },
-            [0xFD] = _ => { }
+            [0xFD] = c => Debug.Write((char)c)
         };
     }
 }
