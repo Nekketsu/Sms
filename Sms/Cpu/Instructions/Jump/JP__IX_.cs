@@ -9,7 +9,7 @@
 
         protected override void InnerExecute(byte opCode)
         {
-            Z80.Registers.PC = Z80.Memory[Z80.Registers.IX];
+            Z80.Registers.PC = Z80.Registers.IX;
         }
 
         public override string ToString(byte opCode)

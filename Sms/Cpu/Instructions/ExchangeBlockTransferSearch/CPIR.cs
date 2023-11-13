@@ -15,10 +15,10 @@
             Z80.Registers.HL++;
             Z80.Registers.BC--;
 
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.S, result < 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.S, (result & (1 << 7)) != 0);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.Z, result == 0);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.H, (Z80.Registers.A & 0b00001111) == 0);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.PV, Z80.Registers.BC == 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.H, ((Z80.Registers.A ^ result ^ value) & (1 << 4)) != 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.PV, Z80.Registers.BC != 0);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.N, true);
 
             if (Z80.Registers.BC != 0 && result != 0)

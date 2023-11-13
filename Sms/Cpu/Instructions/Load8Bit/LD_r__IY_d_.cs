@@ -14,7 +14,7 @@
 
         protected override void InnerExecute(byte opCode)
         {
-            var r = (opCode & 00111000) >> 3;
+            var r = (opCode & 0b00111000) >> 3;
             var d = (sbyte)Z80.Memory[Z80.Registers.PC++];
 
             Z80.Alu.Registers8Bit[r] = Z80.Memory[(ushort)(Z80.Registers.IY + d)];

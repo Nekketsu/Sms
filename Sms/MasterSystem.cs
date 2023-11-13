@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Sms.Memory;
+using System.Diagnostics;
 
 namespace Sms
 {

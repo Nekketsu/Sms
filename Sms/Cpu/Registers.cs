@@ -156,12 +156,18 @@ namespace Sms.Cpu
             /// Parity or Overflow Flag
             /// </summary>
             PV = 4,
-            // Bit 3: Not used
+            /// <summary>
+            /// Not used
+            /// </summary>
+            X1 = 8,
             /// <summary>
             /// Half Carry Flag
             /// </summary>
             H = 16,
-            // Bit 5: Not used
+            /// <summary>
+            /// Not used
+            /// </summary>
+            X2 = 32,
             /// <summary>
             /// Zero Flag
             /// </summary>

@@ -19,9 +19,7 @@
 
             var value = Z80.Memory[Z80.Registers.HL];
 
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.Z, value.HasBit(b));
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.H, true);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.N, false);
+            Z80.Alu.TestBit(value, b, opCode == 0x7e);
         }
     }
 }

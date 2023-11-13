@@ -33,7 +33,7 @@ namespace Sms.Cpu
 
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.S, Z80.Registers.A.HasBit(7));
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.Z, Z80.Registers.A == 0);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, ((before ^ result) & 0xF) != 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, ((before ^ value ^ result) & (1 << 4)) != 0);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, before.HasBit(7) == value.HasBit(7) && before.HasBit(7) != Z80.Registers.A.HasBit(7));
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, false);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.C, result > 0xFF);
@@ -46,7 +46,7 @@ namespace Sms.Cpu
 
             var ushortResult = (ushort)result;
 
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, ((before ^ result) & 0xFFF) != 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, ((before ^ result ^ value) & (1 << 12)) != 0);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, false);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.C, result > 0xFFFF);
 
@@ -62,8 +62,8 @@ namespace Sms.Cpu
 
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.S, ushortResult.HasBit(15));
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.Z, ushortResult == 0);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, ((before ^ result) & 0xFFF) != 0);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, before.HasBit(15) == value.HasBit(15) && before.HasBit(15) != Z80.Registers.A.HasBit(15));
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, ((before ^ value ^ result) & (1 << 12)) != 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, before.HasBit(15) == value.HasBit(15) && before.HasBit(15) != ushortResult.HasBit(15));
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, false);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.C, result > 0xFFFF);
 
@@ -79,8 +79,8 @@ namespace Sms.Cpu
 
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.S, Z80.Registers.A.HasBit(7));
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.Z, Z80.Registers.A == 0);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, ((before ^ result) & 0x10) != 0);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, before.HasBit(7) == value.HasBit(7) && before.HasBit(7) != Z80.Registers.A.HasBit(7));
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, ((before ^ result ^ value) & (1 << 4)) != 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, before.HasBit(7) != value.HasBit(7) && before.HasBit(7) != Z80.Registers.A.HasBit(7));
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, true);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.C, result < 0);
         }
@@ -92,10 +92,10 @@ namespace Sms.Cpu
 
             var ushortResult = (ushort)result;
 
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.S, Z80.Registers.A.HasBit(15));
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.Z, Z80.Registers.A == 0);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, ((before ^ result) & 0x1000) != 0);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, before.HasBit(15) == value.HasBit(15) && before.HasBit(15) != ushortResult.HasBit(15));
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.S, ushortResult.HasBit(15));
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.Z, ushortResult == 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, ((before ^ result ^ value) & (1 << 12)) != 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, before.HasBit(15) != value.HasBit(15) && before.HasBit(15) != ushortResult.HasBit(15));
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, true);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.C, result < 0);
 
@@ -112,7 +112,7 @@ namespace Sms.Cpu
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.S, Z80.Registers.A.HasBit(7));
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.Z, Z80.Registers.A == 0);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, true);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, before.HasBit(7) == value.HasBit(7) && before.HasBit(7) != Z80.Registers.A.HasBit(7));
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, Z80.Registers.A.HasEvenParity());
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, false);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.C, false);
         }
@@ -127,7 +127,7 @@ namespace Sms.Cpu
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.S, Z80.Registers.A.HasBit(7));
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.Z, Z80.Registers.A == 0);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, false);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, before.HasBit(7) == value.HasBit(7) && before.HasBit(7) != Z80.Registers.A.HasBit(7));
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, Z80.Registers.A.HasEvenParity());
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, false);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.C, false);
         }
@@ -142,7 +142,7 @@ namespace Sms.Cpu
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.S, Z80.Registers.A.HasBit(7));
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.Z, Z80.Registers.A == 0);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, false);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, before.HasBit(7) == value.HasBit(7) && before.HasBit(7) != Z80.Registers.A.HasBit(7));
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, Z80.Registers.A.HasEvenParity());
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, false);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.C, false);
         }
@@ -155,8 +155,8 @@ namespace Sms.Cpu
 
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.S, byteResult.HasBit(7));
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.Z, byteResult == 0);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, ((before ^ result) & 0x10) != 0);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, before.HasBit(7) == value.HasBit(7) && before.HasBit(7) != byteResult.HasBit(7));
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, ((before ^ result ^ value) & (1 << 4)) != 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, before.HasBit(7) != value.HasBit(7) && before.HasBit(7) != byteResult.HasBit(7));
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, true);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.C, result < 0);
         }
@@ -167,7 +167,7 @@ namespace Sms.Cpu
 
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.S, result.HasBit(7));
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.Z, result == 0);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, ((value ^ result) & 0xF) != 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, (value & 0xF) == 0xF);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, value == 0x7F);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, false);
 
@@ -185,7 +185,7 @@ namespace Sms.Cpu
 
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.S, result.HasBit(7));
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.Z, result == 0);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, ((value ^ result) & 0xF) != 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, (value & 0xF) == 0);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, value == 0x80);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, true);
 
@@ -239,6 +239,16 @@ namespace Sms.Cpu
             return opCodeCycles;
         }
 
+        public void TestBit(byte value, int bit, bool checkSign = false)
+        {
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.Z, !value.HasBit(bit));
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, true);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, false);
+
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.S, checkSign && value.HasBit(7));
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, !value.HasBit(bit));
+        }
+
         public void PushWordOnStack(ushort word)
         {
             var hi = (byte)(word >> 8);
@@ -248,6 +258,86 @@ namespace Sms.Cpu
             Z80.Memory[Z80.Registers.SP] = hi;
             Z80.Registers.SP--;
             Z80.Memory[Z80.Registers.SP] = lo;
+        }
+
+        public void Ldi()
+        {
+            var value = Z80.Memory[Z80.Registers.HL];
+            Z80.Memory[Z80.Registers.DE] = value;
+            Z80.Registers.DE++;
+            Z80.Registers.HL++;
+            Z80.Registers.BC--;
+
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, false);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, Z80.Registers.BC != 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, false);
+        }
+
+        public void Ldd()
+        {
+            var value = Z80.Memory.ReadWord(Z80.Registers.HL);
+            Z80.Memory.WriteWord(Z80.Registers.DE, value);
+            Z80.Registers.DE--;
+            Z80.Registers.HL--;
+            Z80.Registers.BC--;
+
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, false);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, Z80.Registers.BC != 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, false);
+        }
+
+        public void Outi()
+        {
+            var value = Z80.Memory[Z80.Registers.HL];
+            Z80.Registers.B--;
+            Z80.Ports[Z80.Registers.C] = value;
+            Z80.Registers.HL++;
+
+            var k = value + Z80.Registers.L;
+
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.S, Z80.Registers.B.HasBit(7));
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.Z, Z80.Registers.B == 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, k > 255);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, ((ushort)((k & 0x7) ^ Z80.Registers.B)).HasEvenParity());
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, value.HasBit(7));
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.C, k > 255);
+        }
+
+        public void Ind()
+        {
+            var value = Z80.Ports[Z80.Registers.C];
+            Z80.Memory[Z80.Registers.HL] = value;
+            Z80.Registers.B--;
+            Z80.Registers.HL--;
+
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.Z, Z80.Registers.B == 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, true);
+
+            var k = Z80.Registers.L + ((Z80.Registers.C - 1) & 255);
+
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.S, Z80.Registers.B.HasBit(7));
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.Z, Z80.Registers.B == 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, k > 255);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, ((ushort)((k & 0x7) ^ Z80.Registers.B)).HasEvenParity());
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, value.HasBit(7));
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.C, k > 255);
+        }
+
+        public void Ini()
+        {
+            var value = Z80.Ports[Z80.Registers.C];
+            Z80.Memory[Z80.Registers.HL] = value;
+            Z80.Registers.B--;
+            Z80.Registers.HL++;
+
+            var k = Z80.Registers.L + ((Z80.Registers.C + 1) & 255);
+
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.S, Z80.Registers.B.HasBit(7));
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.Z, Z80.Registers.B == 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, k > 255);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, ((ushort)((k & 0x7) ^ Z80.Registers.B)).HasEvenParity());
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, value.HasBit(7));
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.C, k > 255);
         }
     }
 }

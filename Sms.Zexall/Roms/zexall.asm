@@ -7914,6 +7914,8 @@ PrintChar_SDSC:
 23fd ef        rst     28h
 23fe 02        ld      (bc),a
 23ff 2d        dec     l
+
+StartTest:
 2400 e5        push    hl
 2401 3eff      ld      a,0ffh
 2403 321dc1    ld      (0c11dh),a
@@ -7948,7 +7950,9 @@ PrintChar_SDSC:
 243d cdf428    call    28f4h ; OutputText
 2440 3e20      ld      a,20h
 2442 cd0829    call    2908h ; PrintChar
-2445 cd2e2c    call    2c2eh
+2445 cd2e2c    call    2c2eh ; InitialiseCRC
+
+TestLoop:
 2448 3a99c0    ld      a,(0c099h)
 244b fe76      cp      76h
 244d 2812      jr      z,2461h
@@ -7979,7 +7983,8 @@ PrintChar_SDSC:
 2489 0610      ld      b,10h
 248b 1170c0    ld      de,0c070h
 248e cdc224    call    24c2h
-2491 c34824    jp      2448h
+2491 c34824    jp      2448h ; TestLoop
+
 2494 113c00    ld      de,003ch
 2497 19        add     hl,de
 2498 cd192c    call    2c19h
@@ -7989,11 +7994,11 @@ PrintChar_SDSC:
 24a2 215cc0    ld      hl,0c05ch
 24a5 118e29    ld      de,298eh
 24a8 cdf428    call    28f4h ; OutputText
-24ab cdc628    call    28c6h
+24ab cdc628    call    28c6h ; PrintHex32
 24ae 119529    ld      de,2995h
 24b1 cdf428    call    28f4h ; Output Text
 24b4 e1        pop     hl
-24b5 cdc628    call    28c6h
+24b5 cdc628    call    28c6h ; PrintHex32
 24b8 11a029    ld      de,29a0h
 24bb cdf428    call    28f4h ; Output Text
 24be e1        pop     hl
@@ -9102,7 +9107,7 @@ Start:
 2b1c 3e20      ld      a,20h
 2b1e cd0829    call    2908h ; PrintChar
 2b21 dd7e04    ld      a,(ix+04h)
-2b24 cde128    call    28e1h
+2b24 cde128    call    28e1h ; PrintNibble
 2b27 3e2e      ld      a,2eh
 2b29 cd0829    call    2908h ; PrintChar
 2b2c dd7e05    ld      a,(ix+05h)
@@ -9124,16 +9129,18 @@ Start:
 2b58 3e0d      ld      a,0dh
 2b5a cd0829    call    2908h ; PrintChar
 2b5d 1182c0    ld      de,0c082h ; TestInRAM
-2b60 21842b    ld      hl,2b84h
-2b63 016e00    ld      bc,006eh
+2b60 21842b    ld      hl,2b84h ; TestCode
+2b63 016e00    ld      bc,006eh ; (_sizeof_TestCode)
 2b66 edb0      ldir    
+
+; Run tests, stop when first word test data is 0
 2b68 215b2a    ld      hl,2a5bh
 2b6b 7e        ld      a,(hl)
 2b6c 23        inc     hl
 2b6d b6        or      (hl)
 2b6e 2807      jr      z,2b77h
 2b70 2b        dec     hl
-2b71 cd0024    call    2400h
+2b71 cd0024    call    2400h ; StartTest
 2b74 c36b2b    jp      2b6bh
 2b77 117a29    ld      de,297ah
 2b7a cdf428    call    28f4h ; OutputText

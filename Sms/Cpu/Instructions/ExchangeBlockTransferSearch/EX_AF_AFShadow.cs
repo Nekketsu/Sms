@@ -11,5 +11,10 @@
         {
             (Z80.Registers.AF, Z80.Registers.AFShadow) = (Z80.Registers.AFShadow, Z80.Registers.AF);
         }
+
+        public override string ToString(byte opCode)
+        {
+            return "ex af, af'";
+        }
     }
 }

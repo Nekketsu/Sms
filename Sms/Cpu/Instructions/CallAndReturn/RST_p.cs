@@ -29,8 +29,7 @@
                 _ => throw new NotImplementedException()
             });
 
-            Z80.Memory[--Z80.Registers.SP] = (byte)((Z80.Registers.PC & 0xFF00) >> 8);
-            Z80.Memory[--Z80.Registers.SP] = (byte)((Z80.Registers.PC & 0xFF00) >> 8);
+            Z80.Alu.PushWordOnStack(Z80.Registers.PC);
             Z80.Registers.PC = p;
         }
 

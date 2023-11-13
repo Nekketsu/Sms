@@ -21,9 +21,7 @@
 
             var value = Z80.Alu.Registers8Bit[r];
 
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.Z, value.HasBit(b));
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.H, true);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.N, false);
+            Z80.Alu.TestBit(value, b, opCode >= 0x78);
         }
 
         public override string ToString(byte opCode)

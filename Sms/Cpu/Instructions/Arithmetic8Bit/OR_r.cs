@@ -16,7 +16,7 @@
             var r = opCode & 0b00000111;
             var value = Z80.Alu.Registers8Bit[r];
 
-            Z80.Alu.And(value);
+            Z80.Alu.Or(value);
         }
 
         public override string ToString(byte opCode)

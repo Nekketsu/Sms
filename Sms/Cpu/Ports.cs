@@ -22,7 +22,7 @@
         public byte this[byte port]
         {
             get => PortReaders[port]();
-            set => PortWriters[port](value);
+            set => PortWriters.GetValueOrDefault(port)?.Invoke(value);
         }
     }
 }

@@ -10,9 +10,7 @@
 
         protected override void InnerExecute(byte opCode)
         {
-            Z80.Memory[Z80.Registers.HL] = Z80.Ports[Z80.Registers.C];
-            Z80.Registers.B = (byte)((Z80.Registers.B - 1) % 256);
-            Z80.Registers.HL++;
+            Z80.Alu.Ini();
 
             if (Z80.Registers.B != 0)
             {
@@ -24,9 +22,6 @@
             {
                 cycles = 16;
             }
-
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.Z, true);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.N, true);
         }
     }
 }

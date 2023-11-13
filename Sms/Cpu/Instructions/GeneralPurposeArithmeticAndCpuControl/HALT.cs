@@ -9,6 +9,7 @@
 
         protected override void InnerExecute(byte opCode)
         {
+            Z80.Registers.PC--;
             Z80.State.Halted = true;
         }
     }

@@ -12,6 +12,8 @@
             var pcLow = Z80.Memory[Z80.Registers.SP++];
             var pcHigh = Z80.Memory[Z80.Registers.SP++];
 
+            Z80.Registers.IFF1 = Z80.Registers.IFF2;
+
             Z80.Registers.PC = (ushort)((pcHigh << 8) | pcLow);
         }
     }

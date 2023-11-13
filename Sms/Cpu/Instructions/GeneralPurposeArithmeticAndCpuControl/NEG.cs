@@ -15,7 +15,7 @@
 
             Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.S, Z80.Registers.A.HasBit(7));
             Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.Z, Z80.Registers.A == 0);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.H, ((before ^ Z80.Registers.A) & 0xF) != 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.H, ((before ^ Z80.Registers.A) & (1 << 4)) != 0);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.PV, before == 0x80);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.N, true);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.C, before != 0);

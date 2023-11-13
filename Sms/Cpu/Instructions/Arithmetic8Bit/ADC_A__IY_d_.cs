@@ -8,7 +8,7 @@
 
         protected override void InnerExecute(byte opCode)
         {
-            var d = Z80.Memory[Z80.Registers.PC++];
+            var d = (sbyte)Z80.Memory[Z80.Registers.PC++];
             var value = Z80.Memory[(ushort)(Z80.Registers.IY + d)];
             var CY = Z80.Registers.F.HasFlag(Registers.Flags.C);
 

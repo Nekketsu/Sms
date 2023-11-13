@@ -10,6 +10,12 @@
         protected override void InnerExecute(byte opCode)
         {
             Z80.Registers.A = Z80.Registers.I;
+
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.S, (Z80.Registers.I & (1 << 7)) != 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.Z, Z80.Registers.I == 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.H, false);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.PV, Z80.Registers.IFF2);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.N, false);
         }
     }
 }

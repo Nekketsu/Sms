@@ -16,13 +16,11 @@
         protected override void InnerExecute(byte opCode)
         {
             var b = (opCode & 0b00111000) >> 3;
-            var d = Z80.Memory[(ushort)(Z80.Registers.PC - 2)];
+            var d = (sbyte)Z80.Memory[(ushort)(Z80.Registers.PC - 2)];
 
             var value = Z80.Memory[(ushort)(Z80.Registers.IY + d)];
 
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.Z, value.HasBit(b));
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.H, true);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.N, false);
+            Z80.Alu.TestBit(value, b, opCode >= 0x7e);
         }
     }
 }

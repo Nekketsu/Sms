@@ -1,4 +1,7 @@
-﻿namespace Sms.Cpu.Instructions.GeneralPurposeArithmeticAndCpuControl
+﻿using Sms.Cpu.Instructions.Arithmetic8Bit;
+using static Sms.Cpu.Registers;
+
+namespace Sms.Cpu.Instructions.GeneralPurposeArithmeticAndCpuControl
 {
     public class DAA : Instruction
     {
@@ -11,115 +14,61 @@
 
         protected override void InnerExecute(byte opCode)
         {
-            var cf = Z80.Registers.F.HasFlag(Registers.Flags.C);
+            var cf = Z80.Registers.F.HasFlag(Flags.C);
             var highNibble = (byte)((Z80.Registers.A & 0xF0) >> 4);
-            var hf = Z80.Registers.F.HasFlag(Registers.Flags.H);
+            var hf = Z80.Registers.F.HasFlag(Flags.H);
             var lowNibble = (byte)(Z80.Registers.A & 0x0F);
 
-            var diff = 0;
-            if (cf)
+            var adjustment = (cf, highNibble, hf, lowNibble) switch
             {
-                if (lowNibble >= 0xA && lowNibble <= 0xF)
-                {
-                    diff = 66;
-                }
-                else if (lowNibble >= 0 && lowNibble <= 9)
-                {
-                    diff = hf ? 66 : 60;
-                }
+                (false, >= 0x0 and <= 0x9, false, >= 0x0 and <= 0x9) => 0x0,
+                (false, >= 0x0 and <= 0x9, true,  >= 0x0 and <= 0x9) => 0x6,
+                (false, >= 0x0 and <= 0x8, _,     >= 0xA and <= 0xF) => 0x6,
+                (false, >= 0xA and <= 0xF, false, >= 0x0 and <= 0x9) => 0x60,
+                (true,  _,                 false, >= 0x0 and <= 0x9) => 0x60,
+                (true,  _,                 true,  >= 0x0 and <= 0x9) => 0x66,
+                (true,  _,                 _,     >= 0xA and <= 0xF) => 0x66,
+                (false, >= 0x9 and <= 0xF, _,     >= 0xA and <= 0xF) => 0x66,
+                (false, >= 0xA and <= 0xF, true,  >= 0x0 and <= 0x9) => 0x66,
+                _ => throw new NotImplementedException()
+            };
+
+            var cfAfter = (cf, highNibble, lowNibble) switch
+            {
+                (false, >= 0x0 and <= 0x9, >= 0x0 and <= 0x9) => false,
+                (false, >= 0x0 and <= 0x8, >= 0xA and <= 0xF) => false,
+                (false, >= 0x9 and <= 0xF, >= 0xA and <= 0xF) => true,
+                (false, >= 0xA and <= 0xF, >= 0x0 and <= 0x9) => true,
+                (true,  _,                 _                ) => true,
+                _ => throw new NotImplementedException()
+            };
+
+            var nf = Z80.Registers.F.HasFlag(Flags.N);
+            var hfAfter = (nf, hf, lowNibble) switch
+            {
+                (false, _,     >= 0x0 and <= 0x9) => false,
+                (false, _,     >= 0xA and <= 0xF) => true,
+                (true,  false, _                ) => false,
+                (true,  true,  >= 0x6 and <= 0xf) => false,
+                (true,  true,  >= 0x0 and <= 0x5) => true,
+                _ => throw new NotImplementedException()
+            };
+
+            
+            if (Z80.Registers.F.HasFlag(Flags.N))
+            {
+                Z80.Registers.A -= (byte)adjustment;
             }
             else
             {
-                if (lowNibble >= 0xA && lowNibble <= 0xF)
-                {
-                    if (highNibble >= 0 && highNibble <= 8)
-                    {
-                        diff = 6;
-                    }
-                    else if (highNibble >= 9 && highNibble <= 0xF)
-                    {
-                        diff = 66;
-                    }
-                }
-                else if (lowNibble >= 0 && lowNibble <= 9)
-                {
-                    if (highNibble >= 0 && highNibble <= 9)
-                    {
-                        diff = hf ? 6 : 0;
-                    }
-                    else if (highNibble >= 0xA && highNibble <= 0xF)
-                    {
-                        diff = hf ? 66 : 60;
-                    }
-                }
-
-                Z80.Registers.A += (byte)(Z80.Registers.F.HasFlag(Registers.Flags.N) ? -diff : diff);
-
-                if (!cf)
-                {
-                    if (lowNibble >= 0 && lowNibble <= 9)
-                    {
-                        if (highNibble >= 0 && highNibble <= 9)
-                        {
-                            cf = false;
-                        }
-                        else if (highNibble >= 0xA && highNibble <= 0xF)
-                        {
-                            cf = true;
-                        }
-                    }
-                    else if (lowNibble >= 0xA && lowNibble <= 0xF)
-                    {
-                        if (highNibble >= 0 && highNibble <= 8)
-                        {
-                            cf = false;
-                        }
-                        else if (highNibble >= 9 && highNibble <= 0xF)
-                        {
-                            cf = true;
-                        }
-                    }
-                }
-                Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.C, cf);
-
-                if (!Z80.Registers.F.HasFlag(Registers.Flags.N))
-                {
-                    if (lowNibble >= 0 && lowNibble <= 9)
-                    {
-                        hf = false;
-                    }
-                    else if (lowNibble >= 0xA && lowNibble <= 0xF)
-                    {
-                        hf = true;
-                    }
-                }
-                else
-                {
-                    if (!hf)
-                    {
-                        hf = false;
-                    }
-                    else if (hf)
-                    {
-                        if (lowNibble >= 6 && lowNibble <= 0xF)
-                        {
-                            hf = false;
-                        }
-                        else if (lowNibble >= 0 && lowNibble <= 5)
-                        {
-                            hf = true;
-                        }
-                    }
-                }
-
-                Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.H, hf);
-
-                Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.S, Z80.Registers.A.HasBit(7));
-                //Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.Y, Z80.Registers.A.HasBit(5));
-                //Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.X, Z80.Registers.A.HasBit(3));
-
-                Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.N, Z80.Registers.A == 0);
+                Z80.Registers.A += (byte)adjustment;
             }
+
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.S, Z80.Registers.A.HasBit(7));
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.Z, Z80.Registers.A == 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, hfAfter);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, Z80.Registers.A.HasEvenParity());
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.C, cfAfter);
         }
 
         public override string ToString(byte opCode)

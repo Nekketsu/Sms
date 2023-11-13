@@ -8,10 +8,11 @@
 
         protected override void InnerExecute(byte opCode)
         {
-            var d = Z80.Memory[Z80.Registers.PC++];
-            var value = Z80.Memory[(ushort)(Z80.Registers.IX + d)];
+            var d = (sbyte)Z80.Memory[Z80.Registers.PC++];
+            var address = (ushort)(Z80.Registers.IX + d);
+            var value = Z80.Memory[address];
 
-            Z80.Memory[(ushort)(Z80.Registers.IX + d)] = Z80.Alu.Inc(value);
+            Z80.Memory[address] = Z80.Alu.Inc(value);
         }
     }
 }

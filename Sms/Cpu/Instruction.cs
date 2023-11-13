@@ -22,7 +22,7 @@
                 InstructionName = GetType().Name
             });
 
-            Z80.Registers.R = (byte)(Z80.Registers.R % 128);
+            Z80.Registers.R = (byte)((Z80.Registers.R + 1) % 128);
             Z80.Registers.PC++; // In SMS it actually executes after "ExecuteOpCode",
                                 // but doing it here we prevent having to control jmp instructions
 

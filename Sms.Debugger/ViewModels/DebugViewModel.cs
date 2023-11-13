@@ -33,21 +33,27 @@ namespace Sms.Debugger.ViewModels
         [ObservableProperty]
         private string[] memory = Array.Empty<string>();
 
+        private TMS9918A vdp;
+
         public DebugViewModel()
         {
-            //var data = File.ReadAllBytes("Roms/zexall.sms");
-            var data = File.ReadAllBytes("Roms/zexdoc1.sms");
-            var mapper = new CpmMapper(data);
+            var zexallFile = "Roms/zexall.sms";
+            //var zexallFile = File.ReadAllBytes("Roms/zexdoc1.sms");
+            var zexallData = File.ReadAllBytes(zexallFile);
+
+            var mapper = new CpmMapper(zexallData);
 
             Z80 = new Z80(mapper);
+
             var keyboardJoypad = new KeyboardJoyPad();
             Z80.Ports.MapPorts(keyboardJoypad);
 
-            var vpd = new TMS9918A();
-            Z80.Ports.MapPorts(vpd);
+            //vdp = new TMS9918A();
+            //Z80.Ports.MapPorts(vdp);
+            Z80.Ports.MapPorts(new TestVdp());
 
-            var nullPorts = new SdscPorts();
-            Z80.Ports.MapPorts(nullPorts);
+            var sdscPorts = new SdscPorts();
+            Z80.Ports.MapPorts(sdscPorts);
 
             var progress = new Progress<TraceData>();
             progress.ProgressChanged += Progress_ProgressChanged;

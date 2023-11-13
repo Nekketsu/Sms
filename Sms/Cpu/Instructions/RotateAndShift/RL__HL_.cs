@@ -13,12 +13,12 @@
             var cy = value.HasBit(7);
 
             value = (byte)((value << 1) | (Z80.Registers.F.HasFlag(Registers.Flags.C) ? 1 : 0));
-            Z80.Memory[Z80.Registers.H] = value;
+            Z80.Memory[Z80.Registers.HL] = value;
 
             Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.S, value.HasBit(7));
             Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.Z, value == 0);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.H, false);
-            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.PV, value % 2 == 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.PV, value.HasEvenParity());
             Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.N, false);
             Z80.Registers.F = Z80.Registers.F.SetFlags(Registers.Flags.C, cy);
         }

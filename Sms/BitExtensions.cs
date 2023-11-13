@@ -1,4 +1,5 @@
-﻿using static Sms.Cpu.Registers;
+﻿using System.Numerics;
+using static Sms.Cpu.Registers;
 
 namespace Sms
 {
@@ -44,6 +45,32 @@ namespace Sms
         public static Flags SetFlags(this Flags value, Flags flags, bool on)
         {
             return on ? value |= flags : value &= ~flags;
+        }
+
+        public static bool HasEvenParity(this byte value)
+        {
+            var count = 0;
+
+            for (var i = 0; i < sizeof(byte) * 8; i++)
+            {
+                var mask = 1 << i;
+                count += ((value & mask) != 0) ? 1 : 0;
+            }
+
+            return count % 2 == 0;
+        }
+
+        public static bool HasEvenParity(this ushort value)
+        {
+            var count = 0;
+
+            for (var i = 0; i < sizeof(ushort) * 8; i++)
+            {
+                var mask = 1 << i;
+                count += ((value & mask) != 0) ? 1 : 0;
+            }
+
+            return count % 2 == 0;
         }
     }
 }

@@ -10,7 +10,7 @@
         protected override void InnerExecute(byte opCode)
         {
             Z80.Registers.SP -= 2;
-            Z80.Memory.WriteWord(Z80.Registers.SP, Z80.Registers.IX);
+            Z80.Memory.WriteWord(Z80.Registers.SP, Z80.Registers.IY);
         }
 
         public override string ToString(byte opCode)
