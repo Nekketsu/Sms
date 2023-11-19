@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Sms.Cpu;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -38,7 +39,6 @@ namespace Sms.Debugger.ViewModels
         public DebugViewModel()
         {
             var zexallFile = "Roms/zexall.sms";
-            //var zexallFile = File.ReadAllBytes("Roms/zexdoc1.sms");
             var zexallData = File.ReadAllBytes(zexallFile);
 
             var mapper = new CpmMapper(zexallData);
@@ -58,7 +58,7 @@ namespace Sms.Debugger.ViewModels
             var progress = new Progress<TraceData>();
             progress.ProgressChanged += Progress_ProgressChanged;
 
-            Z80.Trace = progress;
+            //Z80.Trace = progress;
         }
 
         private void Progress_ProgressChanged(object? sender, TraceData traceData)
@@ -81,19 +81,35 @@ namespace Sms.Debugger.ViewModels
         [RelayCommand]
         public void RunUntilPc()
         {
-            try
-            {
+            var notImplemented = new HashSet<string>();
+
+            //try
+            //{
                 while (Z80.Registers.PC != ProgramCounter)
                 {
-                    Z80.ExecuteNextInstruction();
+                    var pc = Z80.Registers.PC;
+                    try
+                    {
+                        Z80.ExecuteNextInstruction();
+                    }
+                    catch (Exception e)
+                    {
+                        //MessageBox.Show(e.ToString());
+                        if (e is NotImplementedException)
+                        {
+                            notImplemented.Add($"{Z80.Memory[pc]:x2} {Z80.Memory[(ushort)(pc + 1)]:x2} {Z80.Memory[(ushort)(pc + 2)]:x2} {Z80.Memory[(ushort)(pc + 3)]:x2}");
+                        }
+                    }
                 }
+
+                MessageBox.Show(string.Join(", ", notImplemented), "Not implemented");
 
                 RefreshStack();
                 RefreshMemory();
-            } catch (Exception e)
-            {
-                MessageBox.Show(e.ToString());
-            }
+            //} catch (Exception e)
+            //{
+            //    MessageBox.Show(e.ToString());
+            //}
         }
 
         [RelayCommand]

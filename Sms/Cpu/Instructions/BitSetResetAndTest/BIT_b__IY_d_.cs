@@ -7,10 +7,10 @@
 
         public BIT_b__IY_d_(Z80 z80) : base(z80)
         {
-            var opCodeBase = (byte)0b01000110;
+            var opCodeBase = (byte)0b01000000;
             var bValues = Enumerable.Range(0, 8);
 
-            OpCodes = bValues.Select(b => (byte)(opCodeBase | (b << 3))).ToArray();
+            OpCodes = bValues.SelectMany(b1 => bValues.Select(b2 => (byte)(opCodeBase | b1 << 3 | b2))).ToArray();
         }
 
         protected override void InnerExecute(byte opCode)
@@ -20,7 +20,7 @@
 
             var value = Z80.Memory[(ushort)(Z80.Registers.IY + d)];
 
-            Z80.Alu.TestBit(value, b, opCode >= 0x7e);
+            Z80.Alu.TestBit(value, b, opCode >= 0x78);
         }
     }
 }

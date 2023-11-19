@@ -58,9 +58,14 @@ namespace Sms.Cpu
         private byte lShadow;
 
         [ObservableProperty]
-        private ushort iX;
+        private byte iXH;
         [ObservableProperty]
-        private ushort iY;
+        private byte iXL;
+
+        [ObservableProperty]
+        private byte iYH;
+        [ObservableProperty]
+        private byte iYL;
 
         public ushort AF
         {
@@ -138,6 +143,26 @@ namespace Sms.Cpu
             {
                 HShadow = (byte)(value >> 8);
                 LShadow = (byte)value;
+            }
+        }
+
+        public ushort IX
+        {
+            get => (ushort)((IXH << 8) + IXL);
+            set
+            {
+                IXH = (byte)(value >> 8);
+                IXL = (byte)value;
+            }
+        }
+
+        public ushort IY
+        {
+            get => (ushort)((IYH << 8) + IYL);
+            set
+            {
+                IYH = (byte)(value >> 8);
+                IYL = (byte)value;
             }
         }
 

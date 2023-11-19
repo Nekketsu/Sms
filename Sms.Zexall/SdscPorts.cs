@@ -10,7 +10,7 @@ namespace Sms.Zexall
         {
             [0x3E] = _ => { },
             [0xFC] = _ => { },
-            [0xFD] = c => Debug.Write((char)c)
+            [0xFD] = c => Console.Write((char)c)
         };
     }
 }

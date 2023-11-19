@@ -6,12 +6,16 @@ namespace Sms.Cpu
     {
         private Z80 Z80 { get; }
         public Registers8Bit Registers8Bit { get; }
+        public Registers8BitIX Registers8BitIX { get; }
+        public Registers8BitIY Registers8BitIY { get; }
         public Registers16Bit Registers16Bit { get; }
 
         public Alu(Z80 z80)
         {
             Z80 = z80;
             Registers8Bit = new Registers8Bit(z80.Registers);
+            Registers8BitIX = new Registers8BitIX(z80.Registers);
+            Registers8BitIY = new Registers8BitIY(z80.Registers);
             Registers16Bit = new Registers16Bit(z80.Registers);
         }
 
@@ -331,6 +335,23 @@ namespace Sms.Cpu
             Z80.Registers.HL++;
 
             var k = Z80.Registers.L + ((Z80.Registers.C + 1) & 255);
+
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.S, Z80.Registers.B.HasBit(7));
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.Z, Z80.Registers.B == 0);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.H, k > 255);
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.PV, ((ushort)((k & 0x7) ^ Z80.Registers.B)).HasEvenParity());
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.N, value.HasBit(7));
+            Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.C, k > 255);
+        }
+
+        public void Outd()
+        {
+            var value = Z80.Memory[Z80.Registers.HL];
+            Z80.Registers.B--;
+            Z80.Ports[Z80.Registers.C] = value;
+            Z80.Registers.HL--;
+
+            var k = Z80.Registers.L + value;
 
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.S, Z80.Registers.B.HasBit(7));
             Z80.Registers.F = Z80.Registers.F.SetFlags(Flags.Z, Z80.Registers.B == 0);

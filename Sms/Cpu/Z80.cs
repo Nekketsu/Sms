@@ -76,6 +76,9 @@ namespace Sms
                 return instruction.Execute(opCode);
             }
 
+            Registers.PC++;
+            Registers.R = (byte)((Registers.R + 1) % 128);
+
             throw new NotImplementedException($"{opCode}");
         }
 
@@ -123,6 +126,15 @@ namespace Sms
         {
             var instructionType = typeof(TInstruction);
 
+            var test = instructionType
+                .Assembly
+                .GetTypes()
+                .Where(instruction => instruction.BaseType == instructionType && !instruction.IsAbstract)
+                .Select(instruction => (TInstruction)Activator.CreateInstance(instruction, this))
+                .SelectMany(instruction => instruction.OpCodes.Select(opCode => new { OpCode = opCode, Instruction = instruction }))
+                .Where(i => i.OpCode == 0x37)
+                .ToArray();
+
             var instructions = instructionType
                 .Assembly
                 .GetTypes()
@@ -132,6 +144,13 @@ namespace Sms
                 .ToDictionary(i => i.OpCode, i => i.Instruction);
 
             return instructions;
+        }
+
+        public ushort Mlt(byte operand1, byte operand2)
+        {
+            var result = (ushort)(operand1 * operand2);
+
+            return result;
         }
     }
 }
